@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,20 +8,18 @@
 
 <style>
 
-/* =========================================================
-   SYSTEM CORE
-========================================================= */
+/* ================================
+   CORE
+================================ */
 
 :root {
     --bg: #020608;
-    --panel: #050d11;
-    --panel2: #08151a;
+    --panel: #061015;
     --cyan: #00eaff;
     --green: #00ff9d;
     --white: #ecfbff;
     --muted: #66838d;
-    --line: rgba(0,234,255,.17);
-    --danger: #ff3c6e;
+    --line: rgba(0,234,255,.18);
 }
 
 * {
@@ -37,17 +34,8 @@ html {
 
 body {
     background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(0,234,255,.08),
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 80% 80%,
-            rgba(0,255,157,.04),
-            transparent 30%
-        ),
-        var(--bg);
+        radial-gradient(circle at 50% 0%, rgba(0,234,255,.08), transparent 35%),
+        #020608;
 
     color: var(--white);
 
@@ -56,30 +44,24 @@ body {
     overflow-x: hidden;
 }
 
-/* GRID */
+/* CYBER GRID */
 
 body::before {
     content: "";
 
     position: fixed;
+
     inset: 0;
 
     background-image:
-        linear-gradient(
-            rgba(0,234,255,.028) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(0,234,255,.028) 1px,
-            transparent 1px
-        );
+        linear-gradient(rgba(0,234,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,234,255,.025) 1px, transparent 1px);
 
-    background-size: 42px 42px;
+    background-size: 40px 40px;
 
     pointer-events: none;
 
-    z-index: -3;
+    z-index: -2;
 }
 
 /* SCANLINES */
@@ -88,6 +70,7 @@ body::after {
     content: "";
 
     position: fixed;
+
     inset: 0;
 
     background:
@@ -95,17 +78,18 @@ body::after {
             to bottom,
             transparent 0px,
             transparent 4px,
-            rgba(0,255,157,.014) 5px
+            rgba(0,255,157,.012) 5px
         );
 
     pointer-events: none;
 
-    z-index: 90;
+    z-index: 100;
 }
 
-/* =========================================================
-   ENTER SYSTEM SCREEN
-========================================================= */
+
+/* ================================
+   BOOT SCREEN
+================================ */
 
 .boot-screen {
 
@@ -123,18 +107,24 @@ body::after {
 
     z-index: 1000;
 
-    transition:
-        opacity .8s ease,
-        visibility .8s ease;
-}
-
-.boot-screen.hidden {
-
     opacity: 0;
 
     visibility: hidden;
 
     pointer-events: none;
+
+    transition: opacity .5s ease;
+}
+
+/* ONLY SHOW WHEN ACTIVE */
+
+.boot-screen.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
 }
 
 .boot-content {
@@ -145,15 +135,12 @@ body::after {
 
     font-size: 13px;
 
-    line-height: 1.8;
-
+    line-height: 1.9;
 }
 
 .boot-title {
 
     color: var(--cyan);
-
-    font-size: 13px;
 
     letter-spacing: 4px;
 
@@ -164,14 +151,14 @@ body::after {
 
     opacity: 0;
 
-    animation: bootLine .35s forwards;
+    animation: bootLine .4s forwards;
 }
 
 @keyframes bootLine {
 
     from {
         opacity: 0;
-        transform: translateX(-8px);
+        transform: translateX(-10px);
     }
 
     to {
@@ -188,44 +175,42 @@ body::after {
 
     margin-top: 25px;
 
-    background: #0a1b20;
-
-    overflow: hidden;
+    background: #0b1b20;
 }
 
 .boot-progress span {
 
     display: block;
 
-    width: 0%;
-
     height: 100%;
+
+    width: 0%;
 
     background: var(--green);
 
-    box-shadow:
-        0 0 15px var(--green);
+    box-shadow: 0 0 15px var(--green);
 
-    animation:
-        bootProgress 3.5s forwards;
+    animation: progress 3.4s linear forwards;
 }
 
-@keyframes bootProgress {
+@keyframes progress {
 
     to {
         width: 100%;
     }
 }
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
+
+/* ================================
+   NAV
+================================ */
 
 nav {
 
     position: absolute;
 
     top: 0;
+
     left: 0;
 
     width: 100%;
@@ -249,15 +234,14 @@ nav {
 
     letter-spacing: 4px;
 
-    text-shadow:
-        0 0 10px rgba(0,234,255,.6);
+    text-shadow: 0 0 12px rgba(0,234,255,.6);
 }
 
 .status {
 
     color: var(--green);
 
-    font-size: 11px;
+    font-size: 10px;
 
     letter-spacing: 2px;
 }
@@ -267,16 +251,16 @@ nav {
     display: inline-block;
 
     width: 7px;
-    height: 7px;
 
-    margin-right: 8px;
+    height: 7px;
 
     border-radius: 50%;
 
     background: var(--green);
 
-    box-shadow:
-        0 0 12px var(--green);
+    margin-right: 7px;
+
+    box-shadow: 0 0 12px var(--green);
 
     animation: pulse 1.5s infinite;
 }
@@ -288,9 +272,10 @@ nav {
     }
 }
 
-/* =========================================================
+
+/* ================================
    HERO
-========================================================= */
+================================ */
 
 .hero {
 
@@ -300,23 +285,20 @@ nav {
 
     display: grid;
 
-    grid-template-columns:
-        1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 
     align-items: center;
 
     gap: 40px;
 }
 
-/* HERO TEXT */
-
 .hero-small {
 
     color: var(--cyan);
 
-    letter-spacing: 5px;
+    font-size: 11px;
 
-    font-size: 12px;
+    letter-spacing: 5px;
 
     margin-bottom: 20px;
 }
@@ -325,8 +307,7 @@ nav {
 
     font-family: Arial, sans-serif;
 
-    font-size:
-        clamp(70px, 10vw, 150px);
+    font-size: clamp(70px, 10vw, 150px);
 
     line-height: .8;
 
@@ -337,8 +318,7 @@ nav {
 
     color: transparent;
 
-    -webkit-text-stroke:
-        1px var(--cyan);
+    -webkit-text-stroke: 1px var(--cyan);
 }
 
 .roles {
@@ -347,12 +327,11 @@ nav {
 
     font-family: Arial, sans-serif;
 
+    font-size: clamp(16px, 2vw, 25px);
+
     font-weight: bold;
 
-    font-size:
-        clamp(17px, 2.2vw, 28px);
-
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 .roles div:nth-child(1) {
@@ -371,30 +350,29 @@ nav {
 
     max-width: 650px;
 
-    margin-top: 28px;
+    margin-top: 25px;
 
     color: var(--muted);
 
-    font-size: 14px;
+    font-size: 13px;
 
     line-height: 1.9;
 }
 
-/* ENTER BUTTON */
+
+/* ENTER SYSTEM */
 
 .enter-btn {
 
-    display: inline-flex;
+    display: inline-block;
 
-    margin-top: 32px;
+    margin-top: 30px;
 
-    padding: 16px 24px;
+    padding: 15px 22px;
 
-    border:
-        1px solid var(--cyan);
+    border: 1px solid var(--cyan);
 
-    background:
-        rgba(0,234,255,.035);
+    background: rgba(0,234,255,.03);
 
     color: var(--cyan);
 
@@ -409,23 +387,23 @@ nav {
 
 .enter-btn:hover {
 
-    color: #001014;
-
     background: var(--cyan);
 
-    box-shadow:
-        0 0 35px rgba(0,234,255,.4);
+    color: #001014;
+
+    box-shadow: 0 0 30px rgba(0,234,255,.35);
 }
 
-/* =========================================================
-   INTERACTIVE WORKSTATION
-========================================================= */
+
+/* ================================
+   HACKER WORKSTATION
+================================ */
 
 .workstation {
 
     position: relative;
 
-    min-height: 560px;
+    min-height: 550px;
 
     display: flex;
 
@@ -434,27 +412,24 @@ nav {
     align-items: center;
 }
 
-/* AMBIENT GLOW */
-
 .workstation-glow {
 
     position: absolute;
 
-    width: 400px;
-    height: 400px;
+    width: 380px;
+
+    height: 380px;
 
     border-radius: 50%;
 
-    background:
-        rgba(0,234,255,.06);
+    background: rgba(0,234,255,.06);
 
     filter: blur(55px);
 
-    animation:
-        glowPulse 4s infinite alternate;
+    animation: glow 4s infinite alternate;
 }
 
-@keyframes glowPulse {
+@keyframes glow {
 
     from {
         transform: scale(.9);
@@ -464,6 +439,7 @@ nav {
         transform: scale(1.1);
     }
 }
+
 
 /* HOODED FIGURE */
 
@@ -476,11 +452,7 @@ nav {
     height: 350px;
 
     background:
-        linear-gradient(
-            140deg,
-            #17272d,
-            #020608 65%
-        );
+        linear-gradient(145deg, #17272d, #020608 65%);
 
     clip-path:
         polygon(
@@ -496,30 +468,23 @@ nav {
         );
 
     filter:
-        drop-shadow(
-            0 0 25px
-            rgba(0,234,255,.2)
-        );
-
-    transition: .5s;
+        drop-shadow(0 0 25px rgba(0,234,255,.2));
 
     cursor: pointer;
+
+    transition: .4s;
 
     z-index: 2;
 }
 
 .hacker:hover {
 
-    transform:
-        translateY(-8px)
-        scale(1.02);
+    transform: translateY(-8px);
 
     filter:
-        drop-shadow(
-            0 0 35px
-            rgba(0,234,255,.35)
-        );
+        drop-shadow(0 0 35px rgba(0,234,255,.4));
 }
+
 
 /* FACE */
 
@@ -528,13 +493,14 @@ nav {
     position: absolute;
 
     width: 140px;
+
     height: 170px;
 
     left: 70px;
+
     top: 85px;
 
-    border-radius:
-        50% 50% 48% 48%;
+    border-radius: 50%;
 
     background:
         radial-gradient(
@@ -543,6 +509,7 @@ nav {
             #010405 70%
         );
 }
+
 
 /* EYES */
 
@@ -580,9 +547,10 @@ nav {
     transform: rotate(-7deg);
 }
 
-/* =========================================================
+
+/* ================================
    LAPTOP
-========================================================= */
+================================ */
 
 .laptop {
 
@@ -596,29 +564,23 @@ nav {
 
     background: #02080b;
 
-    border:
-        2px solid
-        rgba(0,234,255,.55);
+    border: 2px solid rgba(0,234,255,.55);
 
-    box-shadow:
-        0 0 35px
-        rgba(0,234,255,.13);
-
-    z-index: 5;
+    box-shadow: 0 0 35px rgba(0,234,255,.13);
 
     cursor: pointer;
 
     transition: .3s;
+
+    z-index: 5;
 }
 
 .laptop:hover {
 
-    transform:
-        translateY(-5px);
+    transform: translateY(-6px);
 
     box-shadow:
-        0 0 45px
-        rgba(0,234,255,.25);
+        0 0 45px rgba(0,234,255,.25);
 }
 
 .screen {
@@ -629,17 +591,9 @@ nav {
 
     padding: 15px;
 
-    border:
-        1px solid
-        var(--line);
+    border: 1px solid var(--line);
 
-    background:
-        radial-gradient(
-            circle at 70% 20%,
-            rgba(0,255,157,.09),
-            transparent 35%
-        ),
-        #02080b;
+    background: #02080b;
 
     color: var(--green);
 
@@ -662,22 +616,19 @@ nav {
 
     background: #071419;
 
-    border:
-        1px solid
-        var(--line);
+    border: 1px solid var(--line);
 
-    transform:
-        skewX(-25deg);
+    transform: skewX(-25deg);
 }
 
-/* =========================================================
-   SECTION
-========================================================= */
+
+/* ================================
+   SECTIONS
+================================ */
 
 section {
 
-    width:
-        min(1200px, 88%);
+    width: min(1200px, 88%);
 
     margin: auto;
 
@@ -699,28 +650,23 @@ section {
 
     font-family: Arial, sans-serif;
 
-    font-size:
-        clamp(38px, 5vw, 68px);
+    font-size: clamp(38px, 5vw, 68px);
 
     margin-bottom: 45px;
 }
 
-/* =========================================================
-   MISSION CONSOLE
-========================================================= */
+
+/* ================================
+   CONSOLE
+================================ */
 
 .console {
 
-    border:
-        1px solid
-        var(--line);
+    border: 1px solid var(--line);
 
-    background:
-        rgba(4,13,17,.85);
+    background: rgba(4,13,17,.85);
 
-    box-shadow:
-        0 0 45px
-        rgba(0,234,255,.04);
+    box-shadow: 0 0 45px rgba(0,234,255,.04);
 }
 
 .console-top {
@@ -731,13 +677,11 @@ section {
 
     justify-content: space-between;
 
-    border-bottom:
-        1px solid
-        var(--line);
+    border-bottom: 1px solid var(--line);
 
     color: var(--muted);
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
 .console-body {
@@ -746,31 +690,31 @@ section {
 
     color: var(--green);
 
+    font-size: 12px;
+
     line-height: 2;
 }
 
 .console-command {
-
     color: var(--cyan);
 }
 
 .console-value {
-
     color: var(--white);
 }
 
-/* =========================================================
+
+/* ================================
    OPERATIONS
-========================================================= */
+================================ */
 
 .operations {
 
     display: grid;
 
-    grid-template-columns:
-        repeat(3,1fr);
+    grid-template-columns: repeat(3,1fr);
 
-    gap: 16px;
+    gap: 15px;
 }
 
 .card {
@@ -781,16 +725,14 @@ section {
 
     padding: 25px;
 
+    border: 1px solid var(--line);
+
     background:
         linear-gradient(
             145deg,
             rgba(0,234,255,.045),
             rgba(0,0,0,.1)
         );
-
-    border:
-        1px solid
-        var(--line);
 
     cursor: pointer;
 
@@ -799,15 +741,12 @@ section {
 
 .card:hover {
 
-    transform:
-        translateY(-7px);
+    transform: translateY(-7px);
 
-    border-color:
-        var(--cyan);
+    border-color: var(--cyan);
 
     box-shadow:
-        0 15px 35px
-        rgba(0,234,255,.09);
+        0 15px 35px rgba(0,234,255,.09);
 }
 
 .card-number {
@@ -825,8 +764,7 @@ section {
 
     font-size: 20px;
 
-    margin:
-        25px 0 15px;
+    margin: 25px 0 15px;
 }
 
 .card p {
@@ -845,12 +783,12 @@ section {
     bottom: 25px;
 
     left: 25px;
+
     right: 25px;
 
     height: 3px;
 
-    background:
-        #102329;
+    background: #102329;
 }
 
 .progress span {
@@ -859,32 +797,25 @@ section {
 
     height: 100%;
 
-    background:
-        var(--green);
+    background: var(--green);
 
-    box-shadow:
-        0 0 10px
-        var(--green);
+    box-shadow: 0 0 10px var(--green);
 }
 
-/* =========================================================
-   NETWORK RADAR
-========================================================= */
+
+/* ================================
+   RADAR
+================================ */
 
 .radar-box {
 
-    margin-top: 35px;
+    position: relative;
 
     height: 430px;
 
-    position: relative;
+    border: 1px solid var(--line);
 
-    border:
-        1px solid
-        var(--line);
-
-    background:
-        #030a0e;
+    background: #030a0e;
 
     overflow: hidden;
 
@@ -896,19 +827,18 @@ section {
     position: absolute;
 
     width: 310px;
+
     height: 310px;
 
-    border:
-        1px solid
-        rgba(0,234,255,.35);
-
-    border-radius: 50%;
-
     left: 50%;
+
     top: 50%;
 
-    transform:
-        translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+
+    border: 1px solid rgba(0,234,255,.35);
+
+    border-radius: 50%;
 }
 
 .radar::before,
@@ -918,28 +848,28 @@ section {
 
     position: absolute;
 
-    border:
-        1px solid
-        rgba(0,234,255,.2);
-
-    border-radius: 50%;
-
     left: 50%;
+
     top: 50%;
 
-    transform:
-        translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+
+    border: 1px solid rgba(0,234,255,.2);
+
+    border-radius: 50%;
 }
 
 .radar::before {
 
     width: 200px;
+
     height: 200px;
 }
 
 .radar::after {
 
     width: 100px;
+
     height: 100px;
 }
 
@@ -952,27 +882,22 @@ section {
     height: 1px;
 
     left: 50%;
+
     top: 50%;
 
-    transform-origin:
-        left center;
+    transform-origin: left center;
 
-    background:
-        var(--cyan);
+    background: var(--cyan);
 
-    box-shadow:
-        0 0 12px
-        var(--cyan);
+    box-shadow: 0 0 12px var(--cyan);
 
-    animation:
-        sweep 3s linear infinite;
+    animation: sweep 3s linear infinite;
 }
 
 @keyframes sweep {
 
     to {
-        transform:
-            rotate(360deg);
+        transform: rotate(360deg);
     }
 }
 
@@ -981,19 +906,16 @@ section {
     position: absolute;
 
     width: 9px;
+
     height: 9px;
 
     border-radius: 50%;
 
-    background:
-        var(--green);
+    background: var(--green);
 
-    box-shadow:
-        0 0 15px
-        var(--green);
+    box-shadow: 0 0 15px var(--green);
 
-    animation:
-        targetPulse 1.4s infinite alternate;
+    animation: targetPulse 1.4s infinite alternate;
 }
 
 @keyframes targetPulse {
@@ -1030,29 +952,30 @@ section {
     position: absolute;
 
     top: 20px;
+
     left: 20px;
 
     color: var(--green);
 
-    font-size: 11px;
+    font-size: 10px;
 
     line-height: 1.8;
+
+    z-index: 3;
 }
 
-/* =========================================================
+
+/* ================================
    CASE FILES
-========================================================= */
+================================ */
 
 .case {
 
-    border:
-        1px solid
-        var(--line);
+    border: 1px solid var(--line);
 
     margin-bottom: 12px;
 
-    background:
-        rgba(4,12,16,.7);
+    background: rgba(4,12,16,.7);
 }
 
 .case-header {
@@ -1090,8 +1013,7 @@ section {
 
     overflow: hidden;
 
-    transition:
-        max-height .45s ease;
+    transition: max-height .45s ease;
 }
 
 .case.open .case-content {
@@ -1101,8 +1023,7 @@ section {
 
 .case-content-inner {
 
-    padding:
-        0 22px 25px;
+    padding: 0 22px 25px;
 
     color: var(--muted);
 
@@ -1111,25 +1032,23 @@ section {
     line-height: 1.9;
 }
 
-/* =========================================================
+
+/* ================================
    LEARNING PATH
-========================================================= */
+================================ */
 
 .path {
 
     display: grid;
 
     gap: 12px;
-
-    position: relative;
 }
 
 .path-step {
 
     display: grid;
 
-    grid-template-columns:
-        55px 1fr;
+    grid-template-columns: 55px 1fr;
 
     align-items: center;
 
@@ -1137,12 +1056,9 @@ section {
 
     padding: 10px;
 
-    border:
-        1px solid
-        var(--line);
+    border: 1px solid var(--line);
 
-    background:
-        rgba(5,16,21,.7);
+    background: rgba(5,16,21,.7);
 
     cursor: pointer;
 
@@ -1152,19 +1068,17 @@ section {
 .path-step:hover,
 .path-step.active {
 
-    border-color:
-        var(--green);
+    border-color: var(--green);
 
-    background:
-        rgba(0,255,157,.055);
+    background: rgba(0,255,157,.055);
 
-    transform:
-        translateX(7px);
+    transform: translateX(7px);
 }
 
 .step-number {
 
     width: 30px;
+
     height: 30px;
 
     display: flex;
@@ -1173,9 +1087,7 @@ section {
 
     justify-content: center;
 
-    border:
-        1px solid
-        var(--cyan);
+    border: 1px solid var(--cyan);
 
     border-radius: 50%;
 
@@ -1198,16 +1110,16 @@ section {
     font-size: 10px;
 }
 
-/* =========================================================
+
+/* ================================
    SOCIALS
-========================================================= */
+================================ */
 
 .connect-grid {
 
     display: grid;
 
-    grid-template-columns:
-        repeat(4,1fr);
+    grid-template-columns: repeat(4,1fr);
 
     gap: 12px;
 }
@@ -1222,12 +1134,9 @@ section {
 
     color: var(--white);
 
-    border:
-        1px solid
-        var(--line);
+    border: 1px solid var(--line);
 
-    background:
-        rgba(0,234,255,.025);
+    background: rgba(0,234,255,.025);
 
     transition: .25s;
 }
@@ -1236,12 +1145,9 @@ section {
 
     color: var(--cyan);
 
-    border-color:
-        var(--cyan);
+    border-color: var(--cyan);
 
-    box-shadow:
-        0 0 25px
-        rgba(0,234,255,.1);
+    box-shadow: 0 0 25px rgba(0,234,255,.1);
 }
 
 .social small {
@@ -1257,9 +1163,10 @@ section {
     letter-spacing: 2px;
 }
 
-/* =========================================================
+
+/* ================================
    TERMINAL MODAL
-========================================================= */
+================================ */
 
 .modal {
 
@@ -1275,11 +1182,9 @@ section {
 
     padding: 20px;
 
-    background:
-        rgba(0,0,0,.82);
+    background: rgba(0,0,0,.82);
 
-    backdrop-filter:
-        blur(8px);
+    backdrop-filter: blur(8px);
 
     z-index: 200;
 
@@ -1299,24 +1204,17 @@ section {
 
 .modal-window {
 
-    width:
-        min(700px,100%);
+    width: min(700px,100%);
 
-    max-height:
-        80vh;
+    max-height: 80vh;
 
     overflow: auto;
 
-    background:
-        #03090c;
+    background: #03090c;
 
-    border:
-        1px solid
-        var(--cyan);
+    border: 1px solid var(--cyan);
 
-    box-shadow:
-        0 0 50px
-        rgba(0,234,255,.18);
+    box-shadow: 0 0 50px rgba(0,234,255,.18);
 }
 
 .modal-header {
@@ -1327,9 +1225,7 @@ section {
 
     padding: 15px 20px;
 
-    border-bottom:
-        1px solid
-        var(--line);
+    border-bottom: 1px solid var(--line);
 
     color: var(--cyan);
 
@@ -1340,7 +1236,7 @@ section {
 
     cursor: pointer;
 
-    color: var(--danger);
+    color: #ff3c6e;
 
     font-size: 18px;
 }
@@ -1368,34 +1264,28 @@ section {
 
     text-align: left;
 
-    background:
-        rgba(0,234,255,.025);
+    background: rgba(0,234,255,.025);
 
-    border:
-        1px solid
-        var(--line);
+    border: 1px solid var(--line);
 
     color: var(--cyan);
 
-    font-family:
-        "Courier New",
-        monospace;
+    font-family: "Courier New", monospace;
 
     cursor: pointer;
 }
 
 .command-button:hover {
 
-    background:
-        rgba(0,234,255,.08);
+    background: rgba(0,234,255,.08);
 
-    border-color:
-        var(--cyan);
+    border-color: var(--cyan);
 }
 
-/* =========================================================
+
+/* ================================
    FOOTER
-========================================================= */
+================================ */
 
 footer {
 
@@ -1403,9 +1293,7 @@ footer {
 
     text-align: center;
 
-    border-top:
-        1px solid
-        var(--line);
+    border-top: 1px solid var(--line);
 
     color: var(--muted);
 
@@ -1419,9 +1307,10 @@ footer span {
     color: var(--green);
 }
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+
+/* ================================
+   MOBILE
+================================ */
 
 @media(max-width:850px) {
 
@@ -1456,23 +1345,20 @@ footer span {
 
     .connect-grid {
 
-        grid-template-columns:
-            1fr 1fr;
+        grid-template-columns: 1fr 1fr;
     }
-
 }
 
 @media(max-width:500px) {
 
     nav {
 
-        padding:
-            20px;
+        padding: 20px;
     }
 
     .logo {
 
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .status {
@@ -1485,6 +1371,7 @@ footer span {
         width: 92%;
 
         padding-left: 4%;
+
         padding-right: 4%;
     }
 
@@ -1497,7 +1384,7 @@ footer span {
 
     .roles {
 
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .workstation {
@@ -1523,6 +1410,7 @@ footer span {
     .radar {
 
         width: 250px;
+
         height: 250px;
     }
 
@@ -1545,16 +1433,15 @@ footer span {
 }
 
 </style>
-
 </head>
 
 
 <body>
 
 
-<!-- =====================================================
+<!-- =========================================
      BOOT SCREEN
-===================================================== -->
+========================================= -->
 
 <div class="boot-screen" id="bootScreen">
 
@@ -1597,9 +1484,9 @@ footer span {
 </div>
 
 
-<!-- =====================================================
-     NAV
-===================================================== -->
+<!-- =========================================
+     NAVIGATION
+========================================= -->
 
 <nav>
 
@@ -1608,19 +1495,16 @@ footer span {
     </div>
 
     <div class="status">
-
         <span class="status-dot"></span>
-
         SYSTEM ONLINE
-
     </div>
 
 </nav>
 
 
-<!-- =====================================================
+<!-- =========================================
      HERO
-===================================================== -->
+========================================= -->
 
 <header class="hero">
 
@@ -1658,36 +1542,27 @@ footer span {
 
         </p>
 
-        <a
-            class="enter-btn"
-            id="enterSystem"
-        >
+        <a class="enter-btn" id="enterSystem">
             [ ENTER SYSTEM ]
         </a>
 
     </div>
 
 
-    <!-- WORKSTATION -->
+    <!-- HACKER -->
 
     <div class="workstation">
 
         <div class="workstation-glow"></div>
 
-        <div
-            class="hacker"
-            id="hacker"
-        >
+        <div class="hacker" id="hacker">
 
             <div class="face"></div>
 
         </div>
 
 
-        <div
-            class="laptop"
-            id="laptop"
-        >
+        <div class="laptop" id="laptop">
 
             <div class="screen">
 
@@ -1713,10 +1588,13 @@ footer span {
 
                 <br>
 
-                WEB_SECURITY ........ ACTIVE<br>
-                RECON ............... ACTIVE<br>
-                BURP_SUITE .......... ACTIVE<br>
-                LINUX ................ ACTIVE
+                WEB_SECURITY ..... ACTIVE<br>
+
+                RECON ............ ACTIVE<br>
+
+                BURP_SUITE ....... ACTIVE<br>
+
+                LINUX ............ ACTIVE
 
                 <br><br>
 
@@ -1735,9 +1613,9 @@ footer span {
 </header>
 
 
-<!-- =====================================================
-     SYSTEM CONSOLE
-===================================================== -->
+<!-- =========================================
+     MISSION CONSOLE
+========================================= -->
 
 <section id="console">
 
@@ -1766,9 +1644,7 @@ footer span {
         <div class="console-body">
 
             <div>
-                <span class="console-command">
-                    $
-                </span>
+                <span class="console-command">$</span>
                 identity.load()
             </div>
 
@@ -1803,9 +1679,7 @@ footer span {
             <br>
 
             <div>
-                <span class="console-command">
-                    $
-                </span>
+                <span class="console-command">$</span>
                 authorization.status()
             </div>
 
@@ -1823,9 +1697,9 @@ footer span {
 </section>
 
 
-<!-- =====================================================
+<!-- =========================================
      OPERATIONS
-===================================================== -->
+========================================= -->
 
 <section>
 
@@ -1836,7 +1710,6 @@ footer span {
     <h2 class="section-title">
         CURRENT OPERATIONS
     </h2>
-
 
     <div class="operations">
 
@@ -1969,7 +1842,7 @@ footer span {
             <p>
                 Studying common web application
                 vulnerabilities and learning
-                professional documentation.
+                professional security analysis.
             </p>
 
             <div class="progress">
@@ -1983,9 +1856,9 @@ footer span {
 </section>
 
 
-<!-- =====================================================
-     NETWORK MONITOR
-===================================================== -->
+<!-- =========================================
+     NETWORK
+========================================= -->
 
 <section>
 
@@ -1997,17 +1870,14 @@ footer span {
         NETWORK MONITOR
     </h2>
 
-    <div
-        class="radar-box"
-        id="radarBox"
-    >
+    <div class="radar-box" id="radarBox">
 
         <div class="radar-info">
 
             NETWORK // MONITOR<br>
 
             STATUS:
-            <span style="color:#00ff9d;">
+            <span id="scanStatus" style="color:#00ff9d;">
                 LIVE
             </span>
 
@@ -2020,13 +1890,9 @@ footer span {
 
             <br>
 
-            SCAN:
-            <span id="scanStatus">
-                ACTIVE
-            </span>
+            CLICK RADAR TO SCAN
 
         </div>
-
 
         <div class="radar">
 
@@ -2047,9 +1913,9 @@ footer span {
 </section>
 
 
-<!-- =====================================================
+<!-- =========================================
      CASE FILES
-===================================================== -->
+========================================= -->
 
 <section>
 
@@ -2196,9 +2062,9 @@ footer span {
 </section>
 
 
-<!-- =====================================================
+<!-- =========================================
      LEARNING PATH
-===================================================== -->
+========================================= -->
 
 <section>
 
@@ -2406,9 +2272,9 @@ footer span {
 </section>
 
 
-<!-- =====================================================
-     CONNECTIONS
-===================================================== -->
+<!-- =========================================
+     SOCIALS
+========================================= -->
 
 <section>
 
@@ -2485,20 +2351,16 @@ footer span {
 
         </a>
 
-
     </div>
 
 </section>
 
 
-<!-- =====================================================
-     TERMINAL MODAL
-===================================================== -->
+<!-- =========================================
+     TERMINAL
+========================================= -->
 
-<div
-    class="modal"
-    id="terminalModal"
->
+<div class="modal" id="terminalModal">
 
     <div class="modal-window">
 
@@ -2508,10 +2370,7 @@ footer span {
                 BRYAN@SECURITY // TERMINAL
             </span>
 
-            <span
-                class="close"
-                id="closeModal"
-            >
+            <span class="close" id="closeModal">
                 ×
             </span>
 
@@ -2577,9 +2436,9 @@ footer span {
 </div>
 
 
-<!-- =====================================================
+<!-- =========================================
      FOOTER
-===================================================== -->
+========================================= -->
 
 <footer>
 
@@ -2598,15 +2457,15 @@ footer span {
 </footer>
 
 
-<!-- =====================================================
+<!-- =========================================
      JAVASCRIPT
-===================================================== -->
+========================================= -->
 
 <script>
 
-/* =========================================================
-   BOOT SEQUENCE
-========================================================= */
+/* =========================================
+   ENTER SYSTEM
+========================================= */
 
 const bootScreen =
     document.getElementById("bootScreen");
@@ -2614,13 +2473,13 @@ const bootScreen =
 const enterSystem =
     document.getElementById("enterSystem");
 
-function enterSystemSequence() {
+enterSystem.addEventListener("click", function() {
 
-    bootScreen.classList.remove("hidden");
+    bootScreen.classList.add("active");
 
-    setTimeout(() => {
+    setTimeout(function() {
 
-        bootScreen.classList.add("hidden");
+        bootScreen.classList.remove("active");
 
         document
             .getElementById("console")
@@ -2630,17 +2489,12 @@ function enterSystemSequence() {
 
     }, 3700);
 
-}
-
-enterSystem.addEventListener(
-    "click",
-    enterSystemSequence
-);
+});
 
 
-/* =========================================================
-   LAPTOP TERMINAL
-========================================================= */
+/* =========================================
+   TERMINAL
+========================================= */
 
 const laptop =
     document.getElementById("laptop");
@@ -2673,25 +2527,23 @@ hacker.addEventListener(
 
 closeModal.addEventListener(
     "click",
-    () => {
+    function() {
+
         modal.classList.remove("show");
+
     }
 );
 
 
-/* CLOSE BY CLICKING OUTSIDE */
+/* CLICK OUTSIDE TERMINAL */
 
 modal.addEventListener(
     "click",
-    event => {
+    function(event) {
 
-        if (
-            event.target === modal
-        ) {
+        if (event.target === modal) {
 
-            modal.classList.remove(
-                "show"
-            );
+            modal.classList.remove("show");
 
         }
 
@@ -2699,27 +2551,28 @@ modal.addEventListener(
 );
 
 
-/* =========================================================
+/* =========================================
    TERMINAL COMMANDS
-========================================================= */
+========================================= */
 
 const output =
     document.getElementById("terminalOutput");
 
 const buttons =
-    document.querySelectorAll(
-        ".command-button"
-    );
+    document.querySelectorAll(".command-button");
 
 
-buttons.forEach(button => {
+buttons.forEach(function(button) {
 
     button.addEventListener(
         "click",
-        () => {
+        function() {
 
             const command =
                 button.dataset.command;
+
+
+            /* CLEAR */
 
             if (command === "clear") {
 
@@ -2729,12 +2582,15 @@ buttons.forEach(button => {
 
             }
 
+
             let response = "";
+
+
+            /* WHOAMI */
 
             if (command === "whoami") {
 
-                response =
-                    `
+                response = `
                     <br>
                     > executing whoami...
                     <br>
@@ -2746,14 +2602,16 @@ buttons.forEach(button => {
                     <br>
                     status: ACTIVE
                     <br>
-                    `;
+                `;
 
             }
 
+
+            /* STATUS */
+
             if (command === "status") {
 
-                response =
-                    `
+                response = `
                     <br>
                     > system.status()
                     <br>
@@ -2767,14 +2625,16 @@ buttons.forEach(button => {
                     <br>
                     TRAINING ............ ACTIVE
                     <br>
-                    `;
+                `;
 
             }
 
+
+            /* SCAN */
+
             if (command === "scan") {
 
-                response =
-                    `
+                response = `
                     <br>
                     > initiating simulated network scan...
                     <br>
@@ -2790,14 +2650,16 @@ buttons.forEach(button => {
                     <br>
                     > scan complete.
                     <br>
-                    `;
+                `;
 
             }
 
+
+            /* SKILLS */
+
             if (command === "skills") {
 
-                response =
-                    `
+                response = `
                     <br>
                     > loading operator skillset...
                     <br>
@@ -2815,17 +2677,12 @@ buttons.forEach(button => {
                     <br>
                     RECONNAISSANCE
                     <br>
-                    `;
+                `;
 
             }
 
-            output.innerHTML +=
-                response;
 
-            output.scrollIntoView({
-                behavior: "smooth",
-                block: "nearest"
-            });
+            output.innerHTML += response;
 
         }
     );
@@ -2833,29 +2690,24 @@ buttons.forEach(button => {
 });
 
 
-/* =========================================================
+/* =========================================
    CASE FILES
-========================================================= */
+========================================= */
 
 const cases =
-    document.querySelectorAll(
-        ".case"
-    );
+    document.querySelectorAll(".case");
 
-cases.forEach(caseFile => {
+
+cases.forEach(function(caseFile) {
 
     const header =
-        caseFile.querySelector(
-            ".case-header"
-        );
+        caseFile.querySelector(".case-header");
 
     header.addEventListener(
         "click",
-        () => {
+        function() {
 
-            caseFile.classList.toggle(
-                "open"
-            );
+            caseFile.classList.toggle("open");
 
         }
     );
@@ -2863,31 +2715,27 @@ cases.forEach(caseFile => {
 });
 
 
-/* =========================================================
+/* =========================================
    LEARNING PATH
-========================================================= */
+========================================= */
 
 const steps =
-    document.querySelectorAll(
-        ".path-step"
-    );
+    document.querySelectorAll(".path-step");
 
-steps.forEach(step => {
+
+steps.forEach(function(step) {
 
     step.addEventListener(
         "click",
-        () => {
+        function() {
 
-            steps.forEach(
-                item =>
-                    item.classList.remove(
-                        "active"
-                    )
-            );
+            steps.forEach(function(item) {
 
-            step.classList.add(
-                "active"
-            );
+                item.classList.remove("active");
+
+            });
+
+            step.classList.add("active");
 
         }
     );
@@ -2895,29 +2743,20 @@ steps.forEach(step => {
 });
 
 
-/* =========================================================
-   RADAR INTERACTION
-========================================================= */
+/* =========================================
+   RADAR
+========================================= */
 
 const radarBox =
-    document.getElementById(
-        "radarBox"
-    );
+    document.getElementById("radarBox");
 
 const scanStatus =
-    document.getElementById(
-        "scanStatus"
-    );
-
-const targetCount =
-    document.getElementById(
-        "targetCount"
-    );
+    document.getElementById("scanStatus");
 
 
 radarBox.addEventListener(
     "click",
-    () => {
+    function() {
 
         scanStatus.textContent =
             "SCANNING";
@@ -2925,10 +2764,8 @@ radarBox.addEventListener(
         scanStatus.style.color =
             "#00eaff";
 
-        targetCount.textContent =
-            "04";
 
-        setTimeout(() => {
+        setTimeout(function() {
 
             scanStatus.textContent =
                 "COMPLETE";
@@ -2942,21 +2779,19 @@ radarBox.addEventListener(
 );
 
 
-/* =========================================================
-   KEYBOARD TERMINAL
-========================================================= */
+/* =========================================
+   ESCAPE KEY
+========================================= */
 
 document.addEventListener(
     "keydown",
-    event => {
+    function(event) {
 
-        if (
-            event.key === "Escape"
-        ) {
+        if (event.key === "Escape") {
 
-            modal.classList.remove(
-                "show"
-            );
+            modal.classList.remove("show");
+
+            bootScreen.classList.remove("active");
 
         }
 
