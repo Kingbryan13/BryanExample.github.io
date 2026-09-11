@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,19 +10,19 @@
 <style>
 
 /* =========================================================
-   CORE
+   SYSTEM CORE
 ========================================================= */
 
 :root {
-    --bg: #02070a;
-    --panel: #061116;
-    --panel2: #08171d;
+    --bg: #020608;
+    --panel: #050d11;
+    --panel2: #08151a;
     --cyan: #00eaff;
     --green: #00ff9d;
-    --white: #e9fbff;
-    --muted: #63818c;
-    --line: rgba(0, 234, 255, .16);
-    --danger: #ff3864;
+    --white: #ecfbff;
+    --muted: #66838d;
+    --line: rgba(0,234,255,.17);
+    --danger: #ff3c6e;
 }
 
 * {
@@ -36,102 +37,254 @@ html {
 
 body {
     background:
-        radial-gradient(circle at 50% 10%, rgba(0, 234, 255, .08), transparent 35%),
-        radial-gradient(circle at 80% 70%, rgba(0, 255, 157, .035), transparent 30%),
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(0,234,255,.08),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(0,255,157,.04),
+            transparent 30%
+        ),
         var(--bg);
+
     color: var(--white);
+
     font-family: "Courier New", monospace;
+
     overflow-x: hidden;
 }
 
-/* Grid */
+/* GRID */
 
 body::before {
     content: "";
+
     position: fixed;
     inset: 0;
 
     background-image:
-        linear-gradient(rgba(0, 234, 255, .025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 234, 255, .025) 1px, transparent 1px);
+        linear-gradient(
+            rgba(0,234,255,.028) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0,234,255,.028) 1px,
+            transparent 1px
+        );
 
-    background-size: 45px 45px;
+    background-size: 42px 42px;
 
     pointer-events: none;
+
     z-index: -3;
 }
 
-/* Scanlines */
+/* SCANLINES */
 
 body::after {
     content: "";
+
     position: fixed;
     inset: 0;
 
-    background: repeating-linear-gradient(
-        to bottom,
-        transparent 0px,
-        transparent 3px,
-        rgba(0, 255, 157, .018) 4px
-    );
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 4px,
+            rgba(0,255,157,.014) 5px
+        );
 
     pointer-events: none;
-    z-index: 100;
+
+    z-index: 90;
 }
 
 /* =========================================================
-   NAV
+   ENTER SYSTEM SCREEN
+========================================================= */
+
+.boot-screen {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: #010406;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 1000;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+.boot-screen.hidden {
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+}
+
+.boot-content {
+
+    width: min(650px, 88%);
+
+    color: var(--green);
+
+    font-size: 13px;
+
+    line-height: 1.8;
+
+}
+
+.boot-title {
+
+    color: var(--cyan);
+
+    font-size: 13px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 25px;
+}
+
+.boot-line {
+
+    opacity: 0;
+
+    animation: bootLine .35s forwards;
+}
+
+@keyframes bootLine {
+
+    from {
+        opacity: 0;
+        transform: translateX(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.boot-progress {
+
+    width: 100%;
+
+    height: 3px;
+
+    margin-top: 25px;
+
+    background: #0a1b20;
+
+    overflow: hidden;
+}
+
+.boot-progress span {
+
+    display: block;
+
+    width: 0%;
+
+    height: 100%;
+
+    background: var(--green);
+
+    box-shadow:
+        0 0 15px var(--green);
+
+    animation:
+        bootProgress 3.5s forwards;
+}
+
+@keyframes bootProgress {
+
+    to {
+        width: 100%;
+    }
+}
+
+/* =========================================================
+   NAVIGATION
 ========================================================= */
 
 nav {
-    width: 100%;
-    padding: 24px 6%;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
     position: absolute;
+
     top: 0;
     left: 0;
+
+    width: 100%;
+
+    padding: 25px 6%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
 
     z-index: 20;
 }
 
 .logo {
+
     color: var(--cyan);
-    font-size: 18px;
+
     font-weight: bold;
+
     letter-spacing: 4px;
 
     text-shadow:
-        0 0 8px rgba(0, 234, 255, .7);
+        0 0 10px rgba(0,234,255,.6);
 }
 
 .status {
+
     color: var(--green);
-    font-size: 12px;
+
+    font-size: 11px;
+
     letter-spacing: 2px;
 }
 
 .status-dot {
+
     display: inline-block;
+
     width: 7px;
     height: 7px;
 
     margin-right: 8px;
 
     border-radius: 50%;
+
     background: var(--green);
 
-    box-shadow: 0 0 12px var(--green);
+    box-shadow:
+        0 0 12px var(--green);
 
     animation: pulse 1.5s infinite;
 }
 
 @keyframes pulse {
+
     50% {
-        opacity: .35;
+        opacity: .3;
     }
 }
 
@@ -140,51 +293,64 @@ nav {
 ========================================================= */
 
 .hero {
+
     min-height: 100vh;
 
-    padding: 130px 7% 70px;
+    padding: 130px 7% 80px;
 
     display: grid;
-    grid-template-columns: 1.05fr .95fr;
+
+    grid-template-columns:
+        1fr 1fr;
 
     align-items: center;
-    gap: 60px;
+
+    gap: 40px;
 }
 
-/* Left */
+/* HERO TEXT */
 
 .hero-small {
+
     color: var(--cyan);
+
     letter-spacing: 5px;
-    font-size: 13px;
+
+    font-size: 12px;
+
     margin-bottom: 20px;
 }
 
 .hero h1 {
-    font-family: Arial, sans-serif;
-    font-size: clamp(65px, 10vw, 145px);
-    line-height: .8;
-    letter-spacing: -8px;
 
-    text-shadow:
-        0 0 15px rgba(0, 234, 255, .18);
+    font-family: Arial, sans-serif;
+
+    font-size:
+        clamp(70px, 10vw, 150px);
+
+    line-height: .8;
+
+    letter-spacing: -8px;
 }
 
 .hero h1 span {
+
     color: transparent;
 
-    -webkit-text-stroke: 1px var(--cyan);
-
-    text-shadow:
-        0 0 15px rgba(0, 234, 255, .3);
+    -webkit-text-stroke:
+        1px var(--cyan);
 }
 
 .roles {
+
     margin-top: 35px;
 
     font-family: Arial, sans-serif;
-    font-size: clamp(18px, 2.2vw, 28px);
+
     font-weight: bold;
+
+    font-size:
+        clamp(17px, 2.2vw, 28px);
 
     line-height: 1.5;
 }
@@ -202,26 +368,33 @@ nav {
 }
 
 .hero-description {
+
     max-width: 650px;
 
     margin-top: 28px;
 
     color: var(--muted);
 
-    font-size: 15px;
+    font-size: 14px;
+
     line-height: 1.9;
 }
 
+/* ENTER BUTTON */
+
 .enter-btn {
+
     display: inline-flex;
 
-    margin-top: 35px;
+    margin-top: 32px;
 
-    padding: 16px 25px;
+    padding: 16px 24px;
 
-    border: 1px solid var(--cyan);
+    border:
+        1px solid var(--cyan);
 
-    background: rgba(0, 234, 255, .04);
+    background:
+        rgba(0,234,255,.035);
 
     color: var(--cyan);
 
@@ -229,158 +402,244 @@ nav {
 
     letter-spacing: 3px;
 
-    transition: .25s;
+    cursor: pointer;
+
+    transition: .3s;
 }
 
 .enter-btn:hover {
+
+    color: #001014;
+
     background: var(--cyan);
-    color: #001015;
 
     box-shadow:
-        0 0 25px rgba(0, 234, 255, .4);
+        0 0 35px rgba(0,234,255,.4);
 }
 
 /* =========================================================
-   HACKER VISUAL
+   INTERACTIVE WORKSTATION
 ========================================================= */
 
-.hacker-container {
-    min-height: 500px;
+.workstation {
 
     position: relative;
 
+    min-height: 560px;
+
     display: flex;
-    align-items: center;
+
     justify-content: center;
+
+    align-items: center;
 }
 
-.hacker-glow {
+/* AMBIENT GLOW */
+
+.workstation-glow {
+
     position: absolute;
 
-    width: 350px;
-    height: 350px;
+    width: 400px;
+    height: 400px;
 
     border-radius: 50%;
 
-    background: rgba(0, 234, 255, .07);
+    background:
+        rgba(0,234,255,.06);
 
-    filter: blur(50px);
+    filter: blur(55px);
+
+    animation:
+        glowPulse 4s infinite alternate;
 }
 
-/* Hood */
+@keyframes glowPulse {
 
-.hood {
+    from {
+        transform: scale(.9);
+    }
+
+    to {
+        transform: scale(1.1);
+    }
+}
+
+/* HOODED FIGURE */
+
+.hacker {
+
     position: relative;
 
-    width: 245px;
-    height: 300px;
+    width: 280px;
+
+    height: 350px;
 
     background:
-        linear-gradient(140deg, #17272d, #020609 65%);
+        linear-gradient(
+            140deg,
+            #17272d,
+            #020608 65%
+        );
 
-    clip-path: polygon(
-        50% 0%,
-        76% 13%,
-        94% 39%,
-        85% 80%,
-        65% 100%,
-        35% 100%,
-        15% 80%,
-        6% 39%,
-        24% 13%
-    );
+    clip-path:
+        polygon(
+            50% 0%,
+            76% 12%,
+            94% 39%,
+            85% 82%,
+            65% 100%,
+            35% 100%,
+            15% 82%,
+            6% 39%,
+            24% 12%
+        );
 
     filter:
-        drop-shadow(0 0 20px rgba(0, 234, 255, .2));
+        drop-shadow(
+            0 0 25px
+            rgba(0,234,255,.2)
+        );
+
+    transition: .5s;
+
+    cursor: pointer;
+
+    z-index: 2;
 }
 
-/* Face */
+.hacker:hover {
+
+    transform:
+        translateY(-8px)
+        scale(1.02);
+
+    filter:
+        drop-shadow(
+            0 0 35px
+            rgba(0,234,255,.35)
+        );
+}
+
+/* FACE */
 
 .face {
+
     position: absolute;
 
-    width: 120px;
-    height: 145px;
+    width: 140px;
+    height: 170px;
 
-    left: 62px;
-    top: 75px;
+    left: 70px;
+    top: 85px;
 
-    border-radius: 50% 50% 48% 48%;
+    border-radius:
+        50% 50% 48% 48%;
 
     background:
         radial-gradient(
             ellipse at 50% 40%,
-            #12252c,
-            #010507 70%
+            #142a32,
+            #010405 70%
         );
 }
 
-/* Eyes */
+/* EYES */
 
 .face::before,
 .face::after {
+
     content: "";
 
     position: absolute;
 
-    width: 25px;
+    width: 28px;
+
     height: 3px;
 
-    top: 68px;
+    top: 78px;
 
     background: var(--cyan);
 
     box-shadow:
         0 0 8px var(--cyan),
-        0 0 20px rgba(0, 234, 255, .8);
+        0 0 22px var(--cyan);
 }
 
 .face::before {
-    left: 18px;
+
+    left: 20px;
+
     transform: rotate(7deg);
 }
 
 .face::after {
-    right: 18px;
+
+    right: 20px;
+
     transform: rotate(-7deg);
 }
 
-/* Laptop */
+/* =========================================================
+   LAPTOP
+========================================================= */
 
 .laptop {
+
     position: absolute;
 
-    bottom: 25px;
+    bottom: 20px;
 
-    width: 330px;
-    height: 195px;
+    width: 360px;
 
-    background: #03090c;
+    height: 220px;
 
-    border: 2px solid rgba(0, 234, 255, .55);
+    background: #02080b;
 
-    transform: perspective(500px) rotateX(4deg);
+    border:
+        2px solid
+        rgba(0,234,255,.55);
 
     box-shadow:
-        0 0 30px rgba(0, 234, 255, .15);
+        0 0 35px
+        rgba(0,234,255,.13);
+
+    z-index: 5;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.laptop:hover {
+
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 0 45px
+        rgba(0,234,255,.25);
 }
 
 .screen {
+
     position: absolute;
 
-    inset: 12px;
+    inset: 13px;
 
     padding: 15px;
+
+    border:
+        1px solid
+        var(--line);
 
     background:
         radial-gradient(
             circle at 70% 20%,
-            rgba(0, 255, 157, .08),
+            rgba(0,255,157,.09),
             transparent 35%
         ),
         #02080b;
-
-    border: 1px solid var(--line);
 
     color: var(--green);
 
@@ -390,91 +649,113 @@ nav {
 }
 
 .laptop-base {
+
     position: absolute;
 
-    width: 390px;
-    height: 12px;
+    width: 425px;
 
-    bottom: -13px;
-    left: -32px;
+    height: 13px;
+
+    bottom: -14px;
+
+    left: -34px;
 
     background: #071419;
 
-    border: 1px solid var(--line);
+    border:
+        1px solid
+        var(--line);
 
-    transform: skewX(-25deg);
+    transform:
+        skewX(-25deg);
 }
 
 /* =========================================================
-   SECTIONS
+   SECTION
 ========================================================= */
 
 section {
-    width: min(1200px, 88%);
 
-    margin: 0 auto;
+    width:
+        min(1200px, 88%);
+
+    margin: auto;
 
     padding: 110px 0;
 }
 
 .section-label {
+
     color: var(--cyan);
 
-    font-size: 12px;
-
     letter-spacing: 4px;
+
+    font-size: 11px;
 
     margin-bottom: 12px;
 }
 
 .section-title {
+
     font-family: Arial, sans-serif;
 
-    font-size: clamp(35px, 5vw, 65px);
+    font-size:
+        clamp(38px, 5vw, 68px);
 
-    margin-bottom: 50px;
+    margin-bottom: 45px;
 }
 
 /* =========================================================
-   TERMINAL
+   MISSION CONSOLE
 ========================================================= */
 
-.terminal {
-    background: rgba(4, 13, 17, .9);
+.console {
 
-    border: 1px solid var(--line);
+    border:
+        1px solid
+        var(--line);
+
+    background:
+        rgba(4,13,17,.85);
 
     box-shadow:
-        0 0 40px rgba(0, 234, 255, .04);
+        0 0 45px
+        rgba(0,234,255,.04);
 }
 
-.terminal-top {
+.console-top {
+
+    padding: 15px 20px;
+
     display: flex;
 
     justify-content: space-between;
 
-    padding: 15px 20px;
-
-    border-bottom: 1px solid var(--line);
+    border-bottom:
+        1px solid
+        var(--line);
 
     color: var(--muted);
 
-    font-size: 12px;
+    font-size: 11px;
 }
 
-.terminal-body {
-    padding: 30px;
+.console-body {
+
+    padding: 28px;
 
     color: var(--green);
 
     line-height: 2;
 }
 
-.prompt {
+.console-command {
+
     color: var(--cyan);
 }
 
-.terminal-body .value {
+.console-value {
+
     color: var(--white);
 }
 
@@ -483,88 +764,279 @@ section {
 ========================================================= */
 
 .operations {
+
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(3,1fr);
 
-    gap: 18px;
+    gap: 16px;
 }
 
 .card {
+
     position: relative;
 
-    padding: 25px;
-
     min-height: 220px;
+
+    padding: 25px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(0, 234, 255, .045),
-            rgba(0, 0, 0, .1)
+            rgba(0,234,255,.045),
+            rgba(0,0,0,.1)
         );
 
-    border: 1px solid var(--line);
-
-    transition: .3s;
+    border:
+        1px solid
+        var(--line);
 
     cursor: pointer;
+
+    transition: .3s;
 }
 
 .card:hover {
-    transform: translateY(-6px);
 
-    border-color: var(--cyan);
+    transform:
+        translateY(-7px);
+
+    border-color:
+        var(--cyan);
 
     box-shadow:
-        0 15px 35px rgba(0, 234, 255, .08);
+        0 15px 35px
+        rgba(0,234,255,.09);
 }
 
 .card-number {
+
     color: var(--cyan);
 
-    font-size: 11px;
+    font-size: 10px;
 
-    letter-spacing: 2px;
+    letter-spacing: 3px;
 }
 
 .card h3 {
-    margin: 25px 0 15px;
 
     font-family: Arial, sans-serif;
 
     font-size: 20px;
+
+    margin:
+        25px 0 15px;
 }
 
 .card p {
+
     color: var(--muted);
 
-    font-size: 13px;
+    font-size: 12px;
 
-    line-height: 1.7;
+    line-height: 1.8;
 }
 
 .progress {
+
     position: absolute;
 
     bottom: 25px;
+
     left: 25px;
     right: 25px;
 
     height: 3px;
 
-    background: #102329;
+    background:
+        #102329;
 }
 
 .progress span {
+
     display: block;
 
     height: 100%;
 
-    background: var(--green);
+    background:
+        var(--green);
 
-    box-shadow: 0 0 10px var(--green);
+    box-shadow:
+        0 0 10px
+        var(--green);
+}
+
+/* =========================================================
+   NETWORK RADAR
+========================================================= */
+
+.radar-box {
+
+    margin-top: 35px;
+
+    height: 430px;
+
+    position: relative;
+
+    border:
+        1px solid
+        var(--line);
+
+    background:
+        #030a0e;
+
+    overflow: hidden;
+
+    cursor: pointer;
+}
+
+.radar {
+
+    position: absolute;
+
+    width: 310px;
+    height: 310px;
+
+    border:
+        1px solid
+        rgba(0,234,255,.35);
+
+    border-radius: 50%;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%,-50%);
+}
+
+.radar::before,
+.radar::after {
+
+    content: "";
+
+    position: absolute;
+
+    border:
+        1px solid
+        rgba(0,234,255,.2);
+
+    border-radius: 50%;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%,-50%);
+}
+
+.radar::before {
+
+    width: 200px;
+    height: 200px;
+}
+
+.radar::after {
+
+    width: 100px;
+    height: 100px;
+}
+
+.radar-sweep {
+
+    position: absolute;
+
+    width: 50%;
+
+    height: 1px;
+
+    left: 50%;
+    top: 50%;
+
+    transform-origin:
+        left center;
+
+    background:
+        var(--cyan);
+
+    box-shadow:
+        0 0 12px
+        var(--cyan);
+
+    animation:
+        sweep 3s linear infinite;
+}
+
+@keyframes sweep {
+
+    to {
+        transform:
+            rotate(360deg);
+    }
+}
+
+.target {
+
+    position: absolute;
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background:
+        var(--green);
+
+    box-shadow:
+        0 0 15px
+        var(--green);
+
+    animation:
+        targetPulse 1.4s infinite alternate;
+}
+
+@keyframes targetPulse {
+
+    to {
+        transform: scale(1.7);
+
+        opacity: .5;
+    }
+}
+
+.target1 {
+    top: 25%;
+    left: 38%;
+}
+
+.target2 {
+    top: 42%;
+    left: 68%;
+}
+
+.target3 {
+    top: 70%;
+    left: 36%;
+}
+
+.target4 {
+    top: 65%;
+    left: 64%;
+}
+
+.radar-info {
+
+    position: absolute;
+
+    top: 20px;
+    left: 20px;
+
+    color: var(--green);
+
+    font-size: 11px;
+
+    line-height: 1.8;
 }
 
 /* =========================================================
@@ -572,19 +1044,24 @@ section {
 ========================================================= */
 
 .case {
-    margin-bottom: 15px;
 
-    border: 1px solid var(--line);
+    border:
+        1px solid
+        var(--line);
 
-    background: rgba(4, 12, 16, .7);
+    margin-bottom: 12px;
 
-    overflow: hidden;
+    background:
+        rgba(4,12,16,.7);
 }
 
 .case-header {
+
     display: flex;
 
     justify-content: space-between;
+
+    align-items: center;
 
     padding: 22px;
 
@@ -592,35 +1069,46 @@ section {
 }
 
 .case-header strong {
+
     font-family: Arial, sans-serif;
+
+    font-size: 15px;
 }
 
 .case-status {
+
     color: var(--green);
 
-    font-size: 11px;
+    font-size: 10px;
+
+    letter-spacing: 1px;
 }
 
 .case-content {
+
     max-height: 0;
 
     overflow: hidden;
 
-    transition: max-height .4s ease;
-
-    color: var(--muted);
-
-    font-size: 13px;
-
-    line-height: 1.8;
-}
-
-.case-content-inner {
-    padding: 0 22px 25px;
+    transition:
+        max-height .45s ease;
 }
 
 .case.open .case-content {
+
     max-height: 300px;
+}
+
+.case-content-inner {
+
+    padding:
+        0 22px 25px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    line-height: 1.9;
 }
 
 /* =========================================================
@@ -628,135 +1116,139 @@ section {
 ========================================================= */
 
 .path {
-    position: relative;
 
     display: grid;
 
-    gap: 14px;
-}
+    gap: 12px;
 
-.path::before {
-    content: "";
-
-    position: absolute;
-
-    left: 24px;
-    top: 20px;
-    bottom: 20px;
-
-    width: 1px;
-
-    background:
-        linear-gradient(
-            var(--cyan),
-            var(--green),
-            transparent
-        );
+    position: relative;
 }
 
 .path-step {
-    position: relative;
 
     display: grid;
 
-    grid-template-columns: 50px 1fr;
+    grid-template-columns:
+        55px 1fr;
 
     align-items: center;
 
-    min-height: 80px;
+    min-height: 78px;
 
     padding: 10px;
 
-    background: rgba(5, 16, 21, .75);
+    border:
+        1px solid
+        var(--line);
 
-    border: 1px solid var(--line);
+    background:
+        rgba(5,16,21,.7);
 
     cursor: pointer;
 
     transition: .25s;
 }
 
-.path-step:hover {
-    border-color: var(--green);
+.path-step:hover,
+.path-step.active {
 
-    transform: translateX(7px);
+    border-color:
+        var(--green);
+
+    background:
+        rgba(0,255,157,.055);
+
+    transform:
+        translateX(7px);
 }
 
 .step-number {
+
     width: 30px;
     height: 30px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
-    background: #041014;
-
-    border: 1px solid var(--cyan);
+    border:
+        1px solid
+        var(--cyan);
 
     border-radius: 50%;
 
     color: var(--cyan);
 
-    font-size: 10px;
-
-    z-index: 2;
+    font-size: 9px;
 }
 
 .step-info h3 {
-    font-size: 15px;
+
+    font-size: 14px;
 
     margin-bottom: 4px;
 }
 
 .step-info p {
+
     color: var(--muted);
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
 /* =========================================================
-   CONNECT
+   SOCIALS
 ========================================================= */
 
 .connect-grid {
+
     display: grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
+        repeat(4,1fr);
 
     gap: 12px;
 }
 
 .social {
-    padding: 25px 15px;
+
+    padding: 28px 15px;
 
     text-align: center;
 
-    border: 1px solid var(--line);
+    text-decoration: none;
 
     color: var(--white);
 
-    text-decoration: none;
+    border:
+        1px solid
+        var(--line);
 
-    background: rgba(0, 234, 255, .025);
+    background:
+        rgba(0,234,255,.025);
 
     transition: .25s;
 }
 
 .social:hover {
+
     color: var(--cyan);
 
-    border-color: var(--cyan);
+    border-color:
+        var(--cyan);
 
     box-shadow:
-        0 0 25px rgba(0, 234, 255, .08);
+        0 0 25px
+        rgba(0,234,255,.1);
 }
 
 .social small {
+
     display: block;
 
-    margin-top: 8px;
+    margin-top: 9px;
 
     color: var(--muted);
 
@@ -766,24 +1258,164 @@ section {
 }
 
 /* =========================================================
+   TERMINAL MODAL
+========================================================= */
+
+.modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,.82);
+
+    backdrop-filter:
+        blur(8px);
+
+    z-index: 200;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition: .3s;
+}
+
+.modal.show {
+
+    opacity: 1;
+
+    visibility: visible;
+}
+
+.modal-window {
+
+    width:
+        min(700px,100%);
+
+    max-height:
+        80vh;
+
+    overflow: auto;
+
+    background:
+        #03090c;
+
+    border:
+        1px solid
+        var(--cyan);
+
+    box-shadow:
+        0 0 50px
+        rgba(0,234,255,.18);
+}
+
+.modal-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 15px 20px;
+
+    border-bottom:
+        1px solid
+        var(--line);
+
+    color: var(--cyan);
+
+    font-size: 11px;
+}
+
+.close {
+
+    cursor: pointer;
+
+    color: var(--danger);
+
+    font-size: 18px;
+}
+
+.modal-body {
+
+    padding: 25px;
+
+    color: var(--green);
+
+    font-size: 12px;
+
+    line-height: 2;
+}
+
+.command-button {
+
+    display: block;
+
+    width: 100%;
+
+    padding: 12px;
+
+    margin-top: 8px;
+
+    text-align: left;
+
+    background:
+        rgba(0,234,255,.025);
+
+    border:
+        1px solid
+        var(--line);
+
+    color: var(--cyan);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    cursor: pointer;
+}
+
+.command-button:hover {
+
+    background:
+        rgba(0,234,255,.08);
+
+    border-color:
+        var(--cyan);
+}
+
+/* =========================================================
    FOOTER
 ========================================================= */
 
 footer {
-    padding: 60px 7%;
 
-    border-top: 1px solid var(--line);
+    padding: 60px 7%;
 
     text-align: center;
 
+    border-top:
+        1px solid
+        var(--line);
+
     color: var(--muted);
 
-    font-size: 11px;
+    font-size: 10px;
 
     letter-spacing: 2px;
 }
 
 footer span {
+
     color: var(--green);
 }
 
@@ -791,55 +1423,65 @@ footer span {
    RESPONSIVE
 ========================================================= */
 
-@media (max-width: 850px) {
+@media(max-width:850px) {
 
     .hero {
+
         grid-template-columns: 1fr;
 
-        padding-top: 130px;
-
-        text-align: left;
+        padding-top: 120px;
     }
 
-    .hacker-container {
+    .workstation {
+
         order: -1;
 
-        min-height: 390px;
+        min-height: 430px;
     }
 
-    .hood {
-        transform: scale(.82);
+    .hacker {
+
+        transform: scale(.78);
     }
 
     .laptop {
+
         transform: scale(.78);
     }
 
     .operations {
+
         grid-template-columns: 1fr;
     }
 
     .connect-grid {
-        grid-template-columns: 1fr 1fr;
+
+        grid-template-columns:
+            1fr 1fr;
     }
 
 }
 
-@media (max-width: 500px) {
+@media(max-width:500px) {
 
     nav {
-        padding: 20px;
+
+        padding:
+            20px;
     }
 
     .logo {
-        font-size: 15px;
+
+        font-size: 13px;
     }
 
     .status {
-        font-size: 9px;
+
+        font-size: 8px;
     }
 
     .hero {
+
         width: 92%;
 
         padding-left: 4%;
@@ -847,55 +1489,117 @@ footer span {
     }
 
     .hero h1 {
-        font-size: 72px;
+
+        font-size: 75px;
 
         letter-spacing: -5px;
     }
 
     .roles {
-        font-size: 17px;
+
+        font-size: 16px;
     }
 
-    .hero-description {
-        font-size: 13px;
+    .workstation {
+
+        min-height: 350px;
     }
 
-    .hacker-container {
-        min-height: 340px;
-    }
+    .hacker {
 
-    .hood {
-        transform: scale(.67);
+        transform: scale(.64);
     }
 
     .laptop {
-        transform: scale(.58);
+
+        transform: scale(.61);
+    }
+
+    .radar-box {
+
+        height: 350px;
+    }
+
+    .radar {
+
+        width: 250px;
+        height: 250px;
     }
 
     section {
+
         width: 92%;
     }
 
-    .terminal-body {
-        padding: 20px;
+    .connect-grid {
 
-        font-size: 12px;
+        grid-template-columns: 1fr;
     }
 
-    .connect-grid {
-        grid-template-columns: 1fr;
+    .console-body {
+
+        padding: 20px;
+
+        font-size: 11px;
     }
 }
 
 </style>
+
 </head>
 
 
 <body>
 
-<!-- ======================================================
+
+<!-- =====================================================
+     BOOT SCREEN
+===================================================== -->
+
+<div class="boot-screen" id="bootScreen">
+
+    <div class="boot-content">
+
+        <div class="boot-title">
+            BRYAN // SEC // SECURE TERMINAL
+        </div>
+
+        <div class="boot-line" style="animation-delay:.2s">
+            > initializing secure environment...
+        </div>
+
+        <div class="boot-line" style="animation-delay:.6s">
+            > loading security modules...
+        </div>
+
+        <div class="boot-line" style="animation-delay:1s">
+            > establishing encrypted interface...
+        </div>
+
+        <div class="boot-line" style="animation-delay:1.4s">
+            > loading investigation database...
+        </div>
+
+        <div class="boot-line" style="animation-delay:1.8s">
+            > activating network monitor...
+        </div>
+
+        <div class="boot-line" style="animation-delay:2.2s">
+            > operator authentication accepted.
+        </div>
+
+        <div class="boot-progress">
+            <span></span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
      NAV
-====================================================== -->
+===================================================== -->
 
 <nav>
 
@@ -904,23 +1608,26 @@ footer span {
     </div>
 
     <div class="status">
+
         <span class="status-dot"></span>
+
         SYSTEM ONLINE
+
     </div>
 
 </nav>
 
 
-<!-- ======================================================
+<!-- =====================================================
      HERO
-====================================================== -->
+===================================================== -->
 
 <header class="hero">
 
     <div>
 
         <div class="hero-small">
-            [ ACCESS TERMINAL ]
+            [ SECURE TERMINAL // ONLINE ]
         </div>
 
         <h1>
@@ -945,53 +1652,77 @@ footer span {
 
             <br><br>
 
-            Exploring web application security,
-            reconnaissance, offensive security
-            and penetration testing.
+            Web application security,
+            reconnaissance, offensive security,
+            Linux and penetration testing.
 
         </p>
 
-        <a href="#terminal" class="enter-btn">
+        <a
+            class="enter-btn"
+            id="enterSystem"
+        >
             [ ENTER SYSTEM ]
         </a>
 
     </div>
 
 
-    <!-- HACKER -->
+    <!-- WORKSTATION -->
 
-    <div class="hacker-container">
+    <div class="workstation">
 
-        <div class="hacker-glow"></div>
+        <div class="workstation-glow"></div>
 
-        <div class="hood">
+        <div
+            class="hacker"
+            id="hacker"
+        >
 
             <div class="face"></div>
 
         </div>
 
-        <div class="laptop">
+
+        <div
+            class="laptop"
+            id="laptop"
+        >
 
             <div class="screen">
 
-                > connection_established<br>
-                > user: BRYAN<br>
-                > security_mode: ACTIVE<br><br>
+                > SECURE CONNECTION<br>
+
+                > OPERATOR: BRYAN<br>
+
+                > STATUS: ACTIVE<br><br>
 
                 <span style="color:#00eaff;">
                     $ whoami
-                </span><br>
+                </span>
 
-                ethical_hacker<br><br>
+                <br>
+
+                ethical_hacker
+
+                <br><br>
 
                 <span style="color:#00eaff;">
-                    $ scan --target web
-                </span><br>
+                    $ system.status
+                </span>
 
-                [+] reconnaissance<br>
-                [+] enumeration<br>
-                [+] vulnerability analysis<br>
-                [+] exploitation labs
+                <br>
+
+                WEB_SECURITY ........ ACTIVE<br>
+                RECON ............... ACTIVE<br>
+                BURP_SUITE .......... ACTIVE<br>
+                LINUX ................ ACTIVE
+
+                <br><br>
+
+                <span style="color:#00eaff;">
+                    [ CLICK TERMINAL ]
+                </span>
 
             </div>
 
@@ -1004,78 +1735,84 @@ footer span {
 </header>
 
 
-<!-- ======================================================
-     TERMINAL
-====================================================== -->
+<!-- =====================================================
+     SYSTEM CONSOLE
+===================================================== -->
 
-<section id="terminal">
+<section id="console">
 
     <div class="section-label">
-        01 // TERMINAL
+        01 // SYSTEM
     </div>
 
     <h2 class="section-title">
-        SYSTEM PROFILE
+        MISSION CONSOLE
     </h2>
 
-    <div class="terminal">
+    <div class="console">
 
-        <div class="terminal-top">
+        <div class="console-top">
 
             <span>
                 BRYAN@SECURITY:~
             </span>
 
             <span>
-                SESSION ACTIVE
+                SESSION: ACTIVE
             </span>
 
         </div>
 
-        <div class="terminal-body">
+        <div class="console-body">
 
             <div>
-                <span class="prompt">$</span>
+                <span class="console-command">
+                    $
+                </span>
                 identity.load()
             </div>
 
             <div>
-                NAME:
-                <span class="value">BRYAN</span>
+                OPERATOR:
+                <span class="console-value">
+                    BRYAN
+                </span>
             </div>
 
             <div>
                 ROLE:
-                <span class="value">
+                <span class="console-value">
                     ETHICAL HACKER / PENTESTER APPRENTICE
                 </span>
             </div>
 
             <div>
-                FOCUS:
-                <span class="value">
+                PRIMARY TARGET:
+                <span class="console-value">
                     WEB APPLICATION SECURITY
                 </span>
             </div>
 
             <div>
-                INTERESTS:
-                <span class="value">
-                    RECON / BURP SUITE / LINUX / OWASP
+                CURRENT OBJECTIVE:
+                <span class="console-value">
+                    BUILD // LEARN // INVESTIGATE
                 </span>
             </div>
 
             <br>
 
             <div>
-                <span class="prompt">$</span>
-                status
+                <span class="console-command">
+                    $
+                </span>
+                authorization.status()
             </div>
 
             <div>
                 STATUS:
                 <span style="color:#00ff9d;">
-                    ONLINE // LEARNING // BUILDING
+                    AUTHORIZED LAB ENVIRONMENTS ONLY
                 </span>
             </div>
 
@@ -1086,9 +1823,9 @@ footer span {
 </section>
 
 
-<!-- ======================================================
+<!-- =====================================================
      OPERATIONS
-====================================================== -->
+===================================================== -->
 
 <section>
 
@@ -1099,6 +1836,7 @@ footer span {
     <h2 class="section-title">
         CURRENT OPERATIONS
     </h2>
+
 
     <div class="operations">
 
@@ -1115,12 +1853,12 @@ footer span {
 
             <p>
                 Investigating vulnerabilities in
-                modern web applications and learning
-                how attackers discover them.
+                modern web applications and
+                understanding how they work.
             </p>
 
             <div class="progress">
-                <span style="width:82%;"></span>
+                <span style="width:82%"></span>
             </div>
 
         </div>
@@ -1137,13 +1875,13 @@ footer span {
             </h3>
 
             <p>
-                Information gathering, enumeration,
-                attack-surface discovery and
-                understanding the target before testing.
+                Information gathering,
+                enumeration and attack-surface
+                discovery.
             </p>
 
             <div class="progress">
-                <span style="width:76%;"></span>
+                <span style="width:76%"></span>
             </div>
 
         </div>
@@ -1160,13 +1898,13 @@ footer span {
             </h3>
 
             <p>
-                Practicing authorized offensive security
-                techniques through labs, CTFs and
-                controlled environments.
+                Practicing authorized offensive
+                security techniques through
+                labs and controlled environments.
             </p>
 
             <div class="progress">
-                <span style="width:68%;"></span>
+                <span style="width:68%"></span>
             </div>
 
         </div>
@@ -1183,13 +1921,13 @@ footer span {
             </h3>
 
             <p>
-                Request manipulation, Repeater,
-                Intruder, authentication testing and
-                web vulnerability investigation.
+                Request manipulation,
+                Repeater, Intruder and
+                web vulnerability analysis.
             </p>
 
             <div class="progress">
-                <span style="width:72%;"></span>
+                <span style="width:72%"></span>
             </div>
 
         </div>
@@ -1206,13 +1944,13 @@ footer span {
             </h3>
 
             <p>
-                Building practical Linux command-line
-                skills for security testing,
-                automation and system investigation.
+                Command-line fundamentals,
+                system investigation and
+                security tooling.
             </p>
 
             <div class="progress">
-                <span style="width:74%;"></span>
+                <span style="width:74%"></span>
             </div>
 
         </div>
@@ -1230,12 +1968,12 @@ footer span {
 
             <p>
                 Studying common web application
-                vulnerabilities and learning to
-                document findings professionally.
+                vulnerabilities and learning
+                professional documentation.
             </p>
 
             <div class="progress">
-                <span style="width:70%;"></span>
+                <span style="width:70%"></span>
             </div>
 
         </div>
@@ -1245,14 +1983,78 @@ footer span {
 </section>
 
 
-<!-- ======================================================
-     CASE FILES
-====================================================== -->
+<!-- =====================================================
+     NETWORK MONITOR
+===================================================== -->
 
 <section>
 
     <div class="section-label">
-        03 // INVESTIGATIONS
+        03 // NETWORK
+    </div>
+
+    <h2 class="section-title">
+        NETWORK MONITOR
+    </h2>
+
+    <div
+        class="radar-box"
+        id="radarBox"
+    >
+
+        <div class="radar-info">
+
+            NETWORK // MONITOR<br>
+
+            STATUS:
+            <span style="color:#00ff9d;">
+                LIVE
+            </span>
+
+            <br>
+
+            TARGETS:
+            <span id="targetCount">
+                04
+            </span>
+
+            <br>
+
+            SCAN:
+            <span id="scanStatus">
+                ACTIVE
+            </span>
+
+        </div>
+
+
+        <div class="radar">
+
+            <div class="radar-sweep"></div>
+
+            <div class="target target1"></div>
+
+            <div class="target target2"></div>
+
+            <div class="target target3"></div>
+
+            <div class="target target4"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CASE FILES
+===================================================== -->
+
+<section>
+
+    <div class="section-label">
+        04 // INVESTIGATIONS
     </div>
 
     <h2 class="section-title">
@@ -1278,16 +2080,23 @@ footer span {
 
             <div class="case-content-inner">
 
-                <b>VECTOR:</b> Web Application<br>
+                VECTOR:
+                Web Application
 
-                <b>OBJECTIVE:</b>
-                Identify and understand SQL injection
-                behavior in a controlled lab.<br>
+                <br>
 
-                <b>TOOLS:</b>
-                Burp Suite / Browser<br>
+                OBJECTIVE:
+                Understand SQL injection behavior
+                inside a controlled lab.
 
-                <b>RESULT:</b>
+                <br>
+
+                TOOLS:
+                Burp Suite / Browser
+
+                <br>
+
+                RESULT:
                 Vulnerability identified and documented.
 
             </div>
@@ -1315,16 +2124,23 @@ footer span {
 
             <div class="case-content-inner">
 
-                <b>VECTOR:</b> Authentication<br>
+                VECTOR:
+                Authentication
 
-                <b>OBJECTIVE:</b>
+                <br>
+
+                OBJECTIVE:
                 Investigate weaknesses in login
-                functionality and authentication logic.<br>
+                functionality and authentication logic.
 
-                <b>TOOLS:</b>
-                Burp Suite / Intruder / Repeater<br>
+                <br>
 
-                <b>RESULT:</b>
+                TOOLS:
+                Burp Suite / Intruder / Repeater
+
+                <br>
+
+                RESULT:
                 Authentication behavior analyzed.
 
             </div>
@@ -1352,16 +2168,23 @@ footer span {
 
             <div class="case-content-inner">
 
-                <b>VECTOR:</b> Attack Surface Discovery<br>
+                VECTOR:
+                Attack Surface Discovery
 
-                <b>OBJECTIVE:</b>
+                <br>
+
+                OBJECTIVE:
                 Identify exposed endpoints,
-                technologies and potential attack surfaces.<br>
+                technologies and potential attack surfaces.
 
-                <b>TOOLS:</b>
-                Nmap / Gobuster / Browser<br>
+                <br>
 
-                <b>STATUS:</b>
+                TOOLS:
+                Nmap / Gobuster / Browser
+
+                <br>
+
+                STATUS:
                 Investigation ongoing.
 
             </div>
@@ -1373,14 +2196,14 @@ footer span {
 </section>
 
 
-<!-- ======================================================
+<!-- =====================================================
      LEARNING PATH
-====================================================== -->
+===================================================== -->
 
 <section>
 
     <div class="section-label">
-        04 // TRAINING
+        05 // TRAINING
     </div>
 
     <h2 class="section-title">
@@ -1388,15 +2211,14 @@ footer span {
     </h2>
 
     <p style="
-        color:#63818c;
-        max-width:700px;
+        color:#66838d;
         line-height:1.8;
         margin-bottom:35px;
+        max-width:700px;
     ">
 
         Want to learn cybersecurity or ethical hacking?
-        Start here. The path below represents a practical
-        progression from fundamentals toward penetration testing.
+        Start with the fundamentals and build upward.
 
     </p>
 
@@ -1406,14 +2228,18 @@ footer span {
 
         <div class="path-step">
 
-            <div class="step-number">01</div>
+            <div class="step-number">
+                01
+            </div>
 
             <div class="step-info">
 
-                <h3>LINUX FUNDAMENTALS</h3>
+                <h3>
+                    LINUX FUNDAMENTALS
+                </h3>
 
                 <p>
-                    Terminal navigation, permissions,
+                    Terminal, permissions,
                     processes and filesystem basics.
                 </p>
 
@@ -1424,15 +2250,19 @@ footer span {
 
         <div class="path-step">
 
-            <div class="step-number">02</div>
+            <div class="step-number">
+                02
+            </div>
 
             <div class="step-info">
 
-                <h3>NETWORKING</h3>
+                <h3>
+                    NETWORKING
+                </h3>
 
                 <p>
-                    TCP/IP, ports, protocols,
-                    DNS and network traffic.
+                    TCP/IP, ports, DNS,
+                    protocols and traffic.
                 </p>
 
             </div>
@@ -1442,15 +2272,19 @@ footer span {
 
         <div class="path-step">
 
-            <div class="step-number">03</div>
+            <div class="step-number">
+                03
+            </div>
 
             <div class="step-info">
 
-                <h3>RECONNAISSANCE</h3>
+                <h3>
+                    RECONNAISSANCE
+                </h3>
 
                 <p>
-                    Nmap, enumeration,
-                    discovery and attack surfaces.
+                    Enumeration, discovery
+                    and attack surfaces.
                 </p>
 
             </div>
@@ -1460,15 +2294,19 @@ footer span {
 
         <div class="path-step">
 
-            <div class="step-number">04</div>
+            <div class="step-number">
+                04
+            </div>
 
             <div class="step-info">
 
-                <h3>WEB APPLICATION SECURITY</h3>
+                <h3>
+                    WEB APPLICATION SECURITY
+                </h3>
 
                 <p>
-                    HTTP, authentication,
-                    sessions and common vulnerabilities.
+                    HTTP, sessions,
+                    authentication and vulnerabilities.
                 </p>
 
             </div>
@@ -1478,15 +2316,19 @@ footer span {
 
         <div class="path-step">
 
-            <div class="step-number">05</div>
+            <div class="step-number">
+                05
+            </div>
 
             <div class="step-info">
 
-                <h3>BURP SUITE</h3>
+                <h3>
+                    BURP SUITE
+                </h3>
 
                 <p>
-                    Proxy, Repeater, Intruder
-                    and request manipulation.
+                    Proxy, Repeater,
+                    Intruder and request analysis.
                 </p>
 
             </div>
@@ -1496,14 +2338,18 @@ footer span {
 
         <div class="path-step">
 
-            <div class="step-number">06</div>
+            <div class="step-number">
+                06
+            </div>
 
             <div class="step-info">
 
-                <h3>OWASP</h3>
+                <h3>
+                    OWASP
+                </h3>
 
                 <p>
-                    Study real-world web
+                    Study common web
                     application vulnerabilities.
                 </p>
 
@@ -1514,11 +2360,15 @@ footer span {
 
         <div class="path-step">
 
-            <div class="step-number">07</div>
+            <div class="step-number">
+                07
+            </div>
 
             <div class="step-info">
 
-                <h3>CTFs & LABS</h3>
+                <h3>
+                    CTFs & LABS
+                </h3>
 
                 <p>
                     Turn knowledge into
@@ -1532,36 +2382,38 @@ footer span {
 
         <div class="path-step">
 
-            <div class="step-number">08</div>
+            <div class="step-number">
+                08
+            </div>
 
             <div class="step-info">
 
-                <h3>PENETRATION TESTING</h3>
+                <h3>
+                    PENETRATION TESTING
+                </h3>
 
                 <p>
-                    Combine reconnaissance,
-                    exploitation, documentation
-                    and remediation.
+                    Combine recon, testing,
+                    documentation and remediation.
                 </p>
 
             </div>
 
         </div>
 
-
     </div>
 
 </section>
 
 
-<!-- ======================================================
-     CONNECT
-====================================================== -->
+<!-- =====================================================
+     CONNECTIONS
+===================================================== -->
 
 <section>
 
     <div class="section-label">
-        05 // CONNECTIONS
+        06 // CONNECTIONS
     </div>
 
     <h2 class="section-title">
@@ -1576,6 +2428,7 @@ footer span {
             class="social"
             href="https://github.com/kingbryan13"
             target="_blank"
+            rel="noopener"
         >
 
             GITHUB
@@ -1589,13 +2442,15 @@ footer span {
 
         <a
             class="social"
-            href="#"
+            href="https://instagram.com/oj_the_menace"
+            target="_blank"
+            rel="noopener"
         >
 
-            LINKEDIN
+            INSTAGRAM
 
             <small>
-                PROFESSIONAL
+                @OJ_THE_MENACE
             </small>
 
         </a>
@@ -1603,13 +2458,15 @@ footer span {
 
         <a
             class="social"
-            href="#"
+            href="https://x.com/BryanITPentest"
+            target="_blank"
+            rel="noopener"
         >
 
-            TRYHACKME
+            X / TWITTER
 
             <small>
-                LABS // TRAINING
+                @BryanITPentest
             </small>
 
         </a>
@@ -1617,13 +2474,13 @@ footer span {
 
         <a
             class="social"
-            href="#"
+            href="#console"
         >
 
-            CONTACT
+            TERMINAL
 
             <small>
-                SEND MESSAGE
+                SYSTEM PROFILE
             </small>
 
         </a>
@@ -1634,9 +2491,95 @@ footer span {
 </section>
 
 
-<!-- ======================================================
+<!-- =====================================================
+     TERMINAL MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="terminalModal"
+>
+
+    <div class="modal-window">
+
+        <div class="modal-header">
+
+            <span>
+                BRYAN@SECURITY // TERMINAL
+            </span>
+
+            <span
+                class="close"
+                id="closeModal"
+            >
+                ×
+            </span>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div id="terminalOutput">
+
+                > secure terminal initialized.<br>
+
+                > awaiting command...
+
+                <br><br>
+
+            </div>
+
+
+            <button
+                class="command-button"
+                data-command="whoami"
+            >
+                $ whoami
+            </button>
+
+
+            <button
+                class="command-button"
+                data-command="status"
+            >
+                $ status
+            </button>
+
+
+            <button
+                class="command-button"
+                data-command="scan"
+            >
+                $ scan --network
+            </button>
+
+
+            <button
+                class="command-button"
+                data-command="skills"
+            >
+                $ skills
+            </button>
+
+
+            <button
+                class="command-button"
+                data-command="clear"
+            >
+                $ clear
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
      FOOTER
-====================================================== -->
+===================================================== -->
 
 <footer>
 
@@ -1655,98 +2598,370 @@ footer span {
 </footer>
 
 
-<!-- ======================================================
+<!-- =====================================================
      JAVASCRIPT
-====================================================== -->
+===================================================== -->
 
 <script>
 
 /* =========================================================
-   CASE FILE ACCORDION
+   BOOT SEQUENCE
 ========================================================= */
 
-const cases = document.querySelectorAll(".case");
+const bootScreen =
+    document.getElementById("bootScreen");
 
-cases.forEach(caseFile => {
+const enterSystem =
+    document.getElementById("enterSystem");
 
-    const header = caseFile.querySelector(".case-header");
+function enterSystemSequence() {
 
-    header.addEventListener("click", () => {
-
-        caseFile.classList.toggle("open");
-
-    });
-
-});
-
-
-/* =========================================================
-   TERMINAL TYPING EFFECT
-========================================================= */
-
-const terminal = document.querySelector(".terminal-body");
-
-let cursor = document.createElement("span");
-
-cursor.textContent = " █";
-
-cursor.style.color = "#00ff9d";
-
-terminal.appendChild(cursor);
-
-setInterval(() => {
-
-    cursor.style.opacity =
-        cursor.style.opacity === "0" ? "1" : "0";
-
-}, 500);
-
-
-/* =========================================================
-   LEARNING PATH INTERACTION
-========================================================= */
-
-const steps = document.querySelectorAll(".path-step");
-
-steps.forEach(step => {
-
-    step.addEventListener("click", () => {
-
-        steps.forEach(item => {
-
-            item.style.background =
-                "rgba(5, 16, 21, .75)";
-
-        });
-
-        step.style.background =
-            "rgba(0, 255, 157, .07)";
-
-    });
-
-});
-
-
-/* =========================================================
-   RANDOM NETWORK ACTIVITY
-========================================================= */
-
-setInterval(() => {
-
-    const status = document.querySelector(".status");
-
-    if (!status) return;
-
-    status.style.textShadow =
-        "0 0 12px rgba(0,255,157,.8)";
+    bootScreen.classList.remove("hidden");
 
     setTimeout(() => {
 
-        status.style.textShadow = "none";
+        bootScreen.classList.add("hidden");
 
-    }, 300);
+        document
+            .getElementById("console")
+            .scrollIntoView({
+                behavior: "smooth"
+            });
 
-}, 2800);
+    }, 3700);
+
+}
+
+enterSystem.addEventListener(
+    "click",
+    enterSystemSequence
+);
+
+
+/* =========================================================
+   LAPTOP TERMINAL
+========================================================= */
+
+const laptop =
+    document.getElementById("laptop");
+
+const hacker =
+    document.getElementById("hacker");
+
+const modal =
+    document.getElementById("terminalModal");
+
+const closeModal =
+    document.getElementById("closeModal");
+
+
+function openTerminal() {
+
+    modal.classList.add("show");
+
+}
+
+laptop.addEventListener(
+    "click",
+    openTerminal
+);
+
+hacker.addEventListener(
+    "click",
+    openTerminal
+);
+
+closeModal.addEventListener(
+    "click",
+    () => {
+        modal.classList.remove("show");
+    }
+);
+
+
+/* CLOSE BY CLICKING OUTSIDE */
+
+modal.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target === modal
+        ) {
+
+            modal.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TERMINAL COMMANDS
+========================================================= */
+
+const output =
+    document.getElementById("terminalOutput");
+
+const buttons =
+    document.querySelectorAll(
+        ".command-button"
+    );
+
+
+buttons.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            const command =
+                button.dataset.command;
+
+            if (command === "clear") {
+
+                output.innerHTML = "";
+
+                return;
+
+            }
+
+            let response = "";
+
+            if (command === "whoami") {
+
+                response =
+                    `
+                    <br>
+                    > executing whoami...
+                    <br>
+                    operator: BRYAN
+                    <br>
+                    role: ETHICAL HACKER
+                    <br>
+                    focus: WEB SECURITY
+                    <br>
+                    status: ACTIVE
+                    <br>
+                    `;
+
+            }
+
+            if (command === "status") {
+
+                response =
+                    `
+                    <br>
+                    > system.status()
+                    <br>
+                    WEB SECURITY ........ ONLINE
+                    <br>
+                    RECON ............... ONLINE
+                    <br>
+                    BURP SUITE .......... ONLINE
+                    <br>
+                    LINUX ................ ONLINE
+                    <br>
+                    TRAINING ............ ACTIVE
+                    <br>
+                    `;
+
+            }
+
+            if (command === "scan") {
+
+                response =
+                    `
+                    <br>
+                    > initiating simulated network scan...
+                    <br>
+                    > discovering nodes...
+                    <br>
+                    > node-01 ........ FOUND
+                    <br>
+                    > node-02 ........ FOUND
+                    <br>
+                    > node-03 ........ FOUND
+                    <br>
+                    > node-04 ........ FOUND
+                    <br>
+                    > scan complete.
+                    <br>
+                    `;
+
+            }
+
+            if (command === "skills") {
+
+                response =
+                    `
+                    <br>
+                    > loading operator skillset...
+                    <br>
+                    SQL INJECTION
+                    <br>
+                    AUTHENTICATION
+                    <br>
+                    ACCESS CONTROL
+                    <br>
+                    XSS
+                    <br>
+                    SSRF
+                    <br>
+                    PATH TRAVERSAL
+                    <br>
+                    RECONNAISSANCE
+                    <br>
+                    `;
+
+            }
+
+            output.innerHTML +=
+                response;
+
+            output.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   CASE FILES
+========================================================= */
+
+const cases =
+    document.querySelectorAll(
+        ".case"
+    );
+
+cases.forEach(caseFile => {
+
+    const header =
+        caseFile.querySelector(
+            ".case-header"
+        );
+
+    header.addEventListener(
+        "click",
+        () => {
+
+            caseFile.classList.toggle(
+                "open"
+            );
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   LEARNING PATH
+========================================================= */
+
+const steps =
+    document.querySelectorAll(
+        ".path-step"
+    );
+
+steps.forEach(step => {
+
+    step.addEventListener(
+        "click",
+        () => {
+
+            steps.forEach(
+                item =>
+                    item.classList.remove(
+                        "active"
+                    )
+            );
+
+            step.classList.add(
+                "active"
+            );
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   RADAR INTERACTION
+========================================================= */
+
+const radarBox =
+    document.getElementById(
+        "radarBox"
+    );
+
+const scanStatus =
+    document.getElementById(
+        "scanStatus"
+    );
+
+const targetCount =
+    document.getElementById(
+        "targetCount"
+    );
+
+
+radarBox.addEventListener(
+    "click",
+    () => {
+
+        scanStatus.textContent =
+            "SCANNING";
+
+        scanStatus.style.color =
+            "#00eaff";
+
+        targetCount.textContent =
+            "04";
+
+        setTimeout(() => {
+
+            scanStatus.textContent =
+                "COMPLETE";
+
+            scanStatus.style.color =
+                "#00ff9d";
+
+        }, 2200);
+
+    }
+);
+
+
+/* =========================================================
+   KEYBOARD TERMINAL
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            modal.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+);
 
 </script>
 
