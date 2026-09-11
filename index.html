@@ -4,25 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BRYAN // CYBER OPERATIONS</title>
+<title>BRYAN // SEC</title>
 
 <style>
+
+/* =========================================================
+   CORE
+========================================================= */
+
 :root {
-    --bg: #05070b;
-    --panel: rgba(10, 15, 23, 0.82);
-    --panel2: rgba(7, 11, 18, 0.94);
-    --text: #e8f7ff;
-    --muted: #7690a3;
-    --cyan: #00e5ff;
+    --bg: #02070a;
+    --panel: #061116;
+    --panel2: #08171d;
+    --cyan: #00eaff;
     --green: #00ff9d;
-    --line: rgba(0, 229, 255, 0.16);
-    --glow: 0 0 25px rgba(0, 229, 255, 0.18);
+    --white: #e9fbff;
+    --muted: #63818c;
+    --line: rgba(0, 234, 255, .16);
+    --danger: #ff3864;
 }
 
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 html {
@@ -30,714 +35,1048 @@ html {
 }
 
 body {
-    min-height: 100vh;
     background:
-        radial-gradient(circle at 20% 10%, rgba(0,229,255,.08), transparent 28%),
-        radial-gradient(circle at 85% 35%, rgba(0,255,157,.05), transparent 25%),
+        radial-gradient(circle at 50% 10%, rgba(0, 234, 255, .08), transparent 35%),
+        radial-gradient(circle at 80% 70%, rgba(0, 255, 157, .035), transparent 30%),
         var(--bg);
-    color: var(--text);
+    color: var(--white);
     font-family: "Courier New", monospace;
     overflow-x: hidden;
 }
 
-/* CYBER GRID */
+/* Grid */
 
 body::before {
     content: "";
     position: fixed;
     inset: 0;
-    pointer-events: none;
+
     background-image:
-        linear-gradient(rgba(0,229,255,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,255,.035) 1px, transparent 1px);
+        linear-gradient(rgba(0, 234, 255, .025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 234, 255, .025) 1px, transparent 1px);
+
     background-size: 45px 45px;
-    mask-image: linear-gradient(to bottom, black, transparent 90%);
-    z-index: -2;
+
+    pointer-events: none;
+    z-index: -3;
 }
+
+/* Scanlines */
 
 body::after {
     content: "";
     position: fixed;
     inset: 0;
-    pointer-events: none;
+
     background: repeating-linear-gradient(
         to bottom,
         transparent 0px,
         transparent 3px,
-        rgba(0,229,255,.015) 4px
+        rgba(0, 255, 157, .018) 4px
     );
-    z-index: 20;
+
+    pointer-events: none;
+    z-index: 100;
 }
 
-/* NAV */
+/* =========================================================
+   NAV
+========================================================= */
 
 nav {
-    position: fixed;
+    width: 100%;
+    padding: 24px 6%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 6%;
-    background: rgba(3,6,10,.78);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--line);
-    z-index: 100;
+
+    z-index: 20;
 }
 
 .logo {
     color: var(--cyan);
     font-size: 18px;
     font-weight: bold;
-    letter-spacing: 3px;
-    text-shadow: 0 0 12px rgba(0,229,255,.7);
-}
+    letter-spacing: 4px;
 
-.nav-links {
-    display: flex;
-    gap: 28px;
-}
-
-.nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 12px;
-    letter-spacing: 1px;
-    transition: .25s;
-}
-
-.nav-links a:hover {
-    color: var(--cyan);
-    text-shadow: 0 0 10px rgba(0,229,255,.7);
-}
-
-/* MAIN */
-
-main {
-    width: min(1250px, 90%);
-    margin: auto;
-}
-
-section {
-    padding: 110px 0 40px;
-}
-
-/* HERO */
-
-.hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1.15fr .85fr;
-    gap: 50px;
-    align-items: center;
+    text-shadow:
+        0 0 8px rgba(0, 234, 255, .7);
 }
 
 .status {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid rgba(0,255,157,.25);
-    background: rgba(0,255,157,.04);
-    padding: 9px 14px;
     color: var(--green);
-    font-size: 11px;
-    letter-spacing: 1px;
-    margin-bottom: 28px;
+    font-size: 12px;
+    letter-spacing: 2px;
 }
 
 .status-dot {
+    display: inline-block;
     width: 7px;
     height: 7px;
-    background: var(--green);
+
+    margin-right: 8px;
+
     border-radius: 50%;
+    background: var(--green);
+
     box-shadow: 0 0 12px var(--green);
+
     animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    50% {
+        opacity: .35;
+    }
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    min-height: 100vh;
+
+    padding: 130px 7% 70px;
+
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+
+    align-items: center;
+    gap: 60px;
+}
+
+/* Left */
+
+.hero-small {
+    color: var(--cyan);
+    letter-spacing: 5px;
+    font-size: 13px;
+    margin-bottom: 20px;
 }
 
 .hero h1 {
     font-family: Arial, sans-serif;
-    font-size: clamp(70px, 11vw, 155px);
+    font-size: clamp(65px, 10vw, 145px);
     line-height: .8;
     letter-spacing: -8px;
-    margin-bottom: 28px;
+
     text-shadow:
-        0 0 35px rgba(0,229,255,.12);
+        0 0 15px rgba(0, 234, 255, .18);
 }
 
 .hero h1 span {
     color: transparent;
+
     -webkit-text-stroke: 1px var(--cyan);
+
+    text-shadow:
+        0 0 15px rgba(0, 234, 255, .3);
 }
 
-.typing {
+.roles {
+    margin-top: 35px;
+
+    font-family: Arial, sans-serif;
+    font-size: clamp(18px, 2.2vw, 28px);
+    font-weight: bold;
+
+    line-height: 1.5;
+}
+
+.roles div:nth-child(1) {
+    color: var(--white);
+}
+
+.roles div:nth-child(2) {
     color: var(--cyan);
-    font-size: 17px;
-    min-height: 25px;
 }
 
-.cursor {
-    animation: blink .7s infinite;
+.roles div:nth-child(3) {
+    color: var(--green);
 }
 
 .hero-description {
     max-width: 650px;
+
+    margin-top: 28px;
+
     color: var(--muted);
-    line-height: 1.8;
-    margin-top: 22px;
-    font-size: 14px;
+
+    font-size: 15px;
+    line-height: 1.9;
 }
 
-/* NETWORK PANEL */
+.enter-btn {
+    display: inline-flex;
 
-.network-panel {
-    height: 440px;
-    position: relative;
-    border: 1px solid var(--line);
-    background: var(--panel);
-    box-shadow: var(--glow);
-    overflow: hidden;
+    margin-top: 35px;
+
+    padding: 16px 25px;
+
+    border: 1px solid var(--cyan);
+
+    background: rgba(0, 234, 255, .04);
+
+    color: var(--cyan);
+
+    text-decoration: none;
+
+    letter-spacing: 3px;
+
+    transition: .25s;
 }
 
-.panel-header {
-    height: 45px;
-    border-bottom: 1px solid var(--line);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 15px;
-    color: var(--muted);
-    font-size: 10px;
-    letter-spacing: 1px;
-}
-
-.panel-header span:last-child {
-    color: var(--green);
-}
-
-.radar {
-    position: absolute;
-    width: 270px;
-    height: 270px;
-    border: 1px solid rgba(0,229,255,.25);
-    border-radius: 50%;
-    left: 50%;
-    top: 55%;
-    transform: translate(-50%, -50%);
-}
-
-.radar::before,
-.radar::after {
-    content: "";
-    position: absolute;
-    inset: 15%;
-    border: 1px solid rgba(0,229,255,.15);
-    border-radius: 50%;
-}
-
-.radar::after {
-    inset: 32%;
-}
-
-.radar-line {
-    position: absolute;
-    width: 50%;
-    height: 1px;
-    background: linear-gradient(90deg, var(--cyan), transparent);
-    top: 50%;
-    left: 50%;
-    transform-origin: left;
-    animation: scan 3s linear infinite;
-}
-
-.radar-center {
-    position: absolute;
-    width: 9px;
-    height: 9px;
+.enter-btn:hover {
     background: var(--cyan);
-    border-radius: 50%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0 20px var(--cyan);
+    color: #001015;
+
+    box-shadow:
+        0 0 25px rgba(0, 234, 255, .4);
 }
 
-.node {
-    position: absolute;
-    width: 7px;
-    height: 7px;
-    background: var(--green);
-    border-radius: 50%;
-    box-shadow: 0 0 14px var(--green);
-    animation: pulse 2s infinite;
-}
+/* =========================================================
+   HACKER VISUAL
+========================================================= */
 
-.node.one { top: 24%; left: 25%; }
-.node.two { top: 35%; right: 22%; }
-.node.three { bottom: 25%; left: 30%; }
-.node.four { bottom: 20%; right: 27%; }
+.hacker-container {
+    min-height: 500px;
 
-/* SECTION TITLE */
+    position: relative;
 
-.section-title {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 28px;
+    justify-content: center;
 }
 
-.section-title h2 {
-    font-family: Arial, sans-serif;
-    font-size: 25px;
-    letter-spacing: 2px;
-}
-
-.section-title span {
-    color: var(--cyan);
-    font-size: 11px;
-}
-
-/* DASHBOARD */
-
-.dashboard {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-}
-
-.metric {
-    position: relative;
-    padding: 25px;
-    min-height: 140px;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    overflow: hidden;
-}
-
-.metric::before {
-    content: "";
+.hacker-glow {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 35%;
-    height: 2px;
-    background: var(--cyan);
-    box-shadow: 0 0 12px var(--cyan);
-}
 
-.metric-number {
-    font-family: Arial, sans-serif;
-    font-size: 42px;
-    color: var(--cyan);
-    font-weight: bold;
-}
+    width: 350px;
+    height: 350px;
 
-.metric-label {
-    color: var(--muted);
-    font-size: 10px;
-    letter-spacing: 1px;
-    margin-top: 10px;
-}
-
-/* TERMINAL */
-
-.terminal {
-    margin-top: 20px;
-    border: 1px solid var(--line);
-    background: #020407;
-    box-shadow: var(--glow);
-}
-
-.terminal-bar {
-    height: 38px;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    padding: 0 13px;
-    border-bottom: 1px solid var(--line);
-}
-
-.terminal-bar i {
-    width: 8px;
-    height: 8px;
     border-radius: 50%;
-    background: var(--muted);
+
+    background: rgba(0, 234, 255, .07);
+
+    filter: blur(50px);
 }
 
-.terminal-content {
-    padding: 22px;
-    color: #9fc2d3;
-    font-size: 12px;
-    line-height: 2;
-    min-height: 170px;
-}
+/* Hood */
 
-.green {
-    color: var(--green);
-}
-
-.cyan {
-    color: var(--cyan);
-}
-
-/* PROJECTS */
-
-.projects {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-}
-
-.project {
+.hood {
     position: relative;
-    min-height: 230px;
-    padding: 25px;
-    border: 1px solid var(--line);
-    background: linear-gradient(
-        145deg,
-        rgba(0,229,255,.055),
-        rgba(10,15,23,.9)
+
+    width: 245px;
+    height: 300px;
+
+    background:
+        linear-gradient(140deg, #17272d, #020609 65%);
+
+    clip-path: polygon(
+        50% 0%,
+        76% 13%,
+        94% 39%,
+        85% 80%,
+        65% 100%,
+        35% 100%,
+        15% 80%,
+        6% 39%,
+        24% 13%
     );
-    transition: .3s;
-    overflow: hidden;
+
+    filter:
+        drop-shadow(0 0 20px rgba(0, 234, 255, .2));
 }
 
-.project:hover {
-    transform: translateY(-5px);
-    border-color: rgba(0,229,255,.5);
-    box-shadow: 0 0 30px rgba(0,229,255,.1);
+/* Face */
+
+.face {
+    position: absolute;
+
+    width: 120px;
+    height: 145px;
+
+    left: 62px;
+    top: 75px;
+
+    border-radius: 50% 50% 48% 48%;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 40%,
+            #12252c,
+            #010507 70%
+        );
 }
 
-.project-number {
-    color: rgba(0,229,255,.4);
-    font-size: 11px;
+/* Eyes */
+
+.face::before,
+.face::after {
+    content: "";
+
+    position: absolute;
+
+    width: 25px;
+    height: 3px;
+
+    top: 68px;
+
+    background: var(--cyan);
+
+    box-shadow:
+        0 0 8px var(--cyan),
+        0 0 20px rgba(0, 234, 255, .8);
 }
 
-.project h3 {
-    margin: 18px 0 10px;
-    font-family: Arial, sans-serif;
+.face::before {
+    left: 18px;
+    transform: rotate(7deg);
 }
 
-.project p {
-    color: var(--muted);
-    font-size: 12px;
+.face::after {
+    right: 18px;
+    transform: rotate(-7deg);
+}
+
+/* Laptop */
+
+.laptop {
+    position: absolute;
+
+    bottom: 25px;
+
+    width: 330px;
+    height: 195px;
+
+    background: #03090c;
+
+    border: 2px solid rgba(0, 234, 255, .55);
+
+    transform: perspective(500px) rotateX(4deg);
+
+    box-shadow:
+        0 0 30px rgba(0, 234, 255, .15);
+}
+
+.screen {
+    position: absolute;
+
+    inset: 12px;
+
+    padding: 15px;
+
+    background:
+        radial-gradient(
+            circle at 70% 20%,
+            rgba(0, 255, 157, .08),
+            transparent 35%
+        ),
+        #02080b;
+
+    border: 1px solid var(--line);
+
+    color: var(--green);
+
+    font-size: 10px;
+
     line-height: 1.7;
 }
 
-.tags {
+.laptop-base {
     position: absolute;
-    bottom: 20px;
-    display: flex;
-    gap: 7px;
-    flex-wrap: wrap;
-}
 
-.tag {
+    width: 390px;
+    height: 12px;
+
+    bottom: -13px;
+    left: -32px;
+
+    background: #071419;
+
     border: 1px solid var(--line);
-    padding: 5px 8px;
-    color: var(--cyan);
-    font-size: 9px;
+
+    transform: skewX(-25deg);
 }
 
-/* CERTIFICATIONS */
+/* =========================================================
+   SECTIONS
+========================================================= */
 
-.cert-grid {
+section {
+    width: min(1200px, 88%);
+
+    margin: 0 auto;
+
+    padding: 110px 0;
+}
+
+.section-label {
+    color: var(--cyan);
+
+    font-size: 12px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 12px;
+}
+
+.section-title {
+    font-family: Arial, sans-serif;
+
+    font-size: clamp(35px, 5vw, 65px);
+
+    margin-bottom: 50px;
+}
+
+/* =========================================================
+   TERMINAL
+========================================================= */
+
+.terminal {
+    background: rgba(4, 13, 17, .9);
+
+    border: 1px solid var(--line);
+
+    box-shadow:
+        0 0 40px rgba(0, 234, 255, .04);
+}
+
+.terminal-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 15px 20px;
+
+    border-bottom: 1px solid var(--line);
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.terminal-body {
+    padding: 30px;
+
+    color: var(--green);
+
+    line-height: 2;
+}
+
+.prompt {
+    color: var(--cyan);
+}
+
+.terminal-body .value {
+    color: var(--white);
+}
+
+/* =========================================================
+   OPERATIONS
+========================================================= */
+
+.operations {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
     gap: 18px;
 }
 
-.cert {
-    border: 1px solid var(--line);
-    background: var(--panel);
+.card {
+    position: relative;
+
     padding: 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+    min-height: 220px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0, 234, 255, .045),
+            rgba(0, 0, 0, .1)
+        );
+
+    border: 1px solid var(--line);
+
+    transition: .3s;
+
+    cursor: pointer;
 }
 
-.cert h3 {
-    margin-bottom: 8px;
+.card:hover {
+    transform: translateY(-6px);
+
+    border-color: var(--cyan);
+
+    box-shadow:
+        0 15px 35px rgba(0, 234, 255, .08);
 }
 
-.cert p {
+.card-number {
+    color: var(--cyan);
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+}
+
+.card h3 {
+    margin: 25px 0 15px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 20px;
+}
+
+.card p {
     color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+.progress {
+    position: absolute;
+
+    bottom: 25px;
+    left: 25px;
+    right: 25px;
+
+    height: 3px;
+
+    background: #102329;
+}
+
+.progress span {
+    display: block;
+
+    height: 100%;
+
+    background: var(--green);
+
+    box-shadow: 0 0 10px var(--green);
+}
+
+/* =========================================================
+   CASE FILES
+========================================================= */
+
+.case {
+    margin-bottom: 15px;
+
+    border: 1px solid var(--line);
+
+    background: rgba(4, 12, 16, .7);
+
+    overflow: hidden;
+}
+
+.case-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 22px;
+
+    cursor: pointer;
+}
+
+.case-header strong {
+    font-family: Arial, sans-serif;
+}
+
+.case-status {
+    color: var(--green);
+
     font-size: 11px;
 }
 
-.cert-badge {
-    width: 65px;
-    height: 65px;
-    border: 1px solid var(--cyan);
-    display: grid;
-    place-items: center;
-    color: var(--cyan);
-    font-weight: bold;
-    box-shadow: 0 0 20px rgba(0,229,255,.1);
+.case-content {
+    max-height: 0;
+
+    overflow: hidden;
+
+    transition: max-height .4s ease;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.8;
 }
 
-/* FOOTER */
+.case-content-inner {
+    padding: 0 22px 25px;
+}
+
+.case.open .case-content {
+    max-height: 300px;
+}
+
+/* =========================================================
+   LEARNING PATH
+========================================================= */
+
+.path {
+    position: relative;
+
+    display: grid;
+
+    gap: 14px;
+}
+
+.path::before {
+    content: "";
+
+    position: absolute;
+
+    left: 24px;
+    top: 20px;
+    bottom: 20px;
+
+    width: 1px;
+
+    background:
+        linear-gradient(
+            var(--cyan),
+            var(--green),
+            transparent
+        );
+}
+
+.path-step {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns: 50px 1fr;
+
+    align-items: center;
+
+    min-height: 80px;
+
+    padding: 10px;
+
+    background: rgba(5, 16, 21, .75);
+
+    border: 1px solid var(--line);
+
+    cursor: pointer;
+
+    transition: .25s;
+}
+
+.path-step:hover {
+    border-color: var(--green);
+
+    transform: translateX(7px);
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #041014;
+
+    border: 1px solid var(--cyan);
+
+    border-radius: 50%;
+
+    color: var(--cyan);
+
+    font-size: 10px;
+
+    z-index: 2;
+}
+
+.step-info h3 {
+    font-size: 15px;
+
+    margin-bottom: 4px;
+}
+
+.step-info p {
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+/* =========================================================
+   CONNECT
+========================================================= */
+
+.connect-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+}
+
+.social {
+    padding: 25px 15px;
+
+    text-align: center;
+
+    border: 1px solid var(--line);
+
+    color: var(--white);
+
+    text-decoration: none;
+
+    background: rgba(0, 234, 255, .025);
+
+    transition: .25s;
+}
+
+.social:hover {
+    color: var(--cyan);
+
+    border-color: var(--cyan);
+
+    box-shadow:
+        0 0 25px rgba(0, 234, 255, .08);
+}
+
+.social small {
+    display: block;
+
+    margin-top: 8px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
 
 footer {
-    padding: 80px 0 35px;
+    padding: 60px 7%;
+
+    border-top: 1px solid var(--line);
+
     text-align: center;
+
     color: var(--muted);
-    font-size: 10px;
-    letter-spacing: 1px;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
 }
 
-/* ANIMATIONS */
-
-@keyframes pulse {
-    0%,100% { opacity: .5; transform: scale(.9); }
-    50% { opacity: 1; transform: scale(1.15); }
+footer span {
+    color: var(--green);
 }
 
-@keyframes blink {
-    50% { opacity: 0; }
-}
-
-@keyframes scan {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-/* MOBILE */
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media (max-width: 850px) {
 
+    .hero {
+        grid-template-columns: 1fr;
+
+        padding-top: 130px;
+
+        text-align: left;
+    }
+
+    .hacker-container {
+        order: -1;
+
+        min-height: 390px;
+    }
+
+    .hood {
+        transform: scale(.82);
+    }
+
+    .laptop {
+        transform: scale(.78);
+    }
+
+    .operations {
+        grid-template-columns: 1fr;
+    }
+
+    .connect-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+@media (max-width: 500px) {
+
     nav {
-        padding: 0 20px;
+        padding: 20px;
     }
 
-    .nav-links {
-        display: none;
+    .logo {
+        font-size: 15px;
     }
 
-    main {
-        width: 92%;
-    }
-
-    section {
-        padding-top: 90px;
+    .status {
+        font-size: 9px;
     }
 
     .hero {
-        grid-template-columns: 1fr;
-        padding-top: 100px;
+        width: 92%;
+
+        padding-left: 4%;
+        padding-right: 4%;
     }
 
     .hero h1 {
-        font-size: 75px;
+        font-size: 72px;
+
         letter-spacing: -5px;
     }
 
-    .network-panel {
-        height: 350px;
+    .roles {
+        font-size: 17px;
     }
 
-    .dashboard {
-        grid-template-columns: repeat(2, 1fr);
+    .hero-description {
+        font-size: 13px;
     }
 
-    .projects {
-        grid-template-columns: 1fr;
+    .hacker-container {
+        min-height: 340px;
     }
 
-    .cert-grid {
+    .hood {
+        transform: scale(.67);
+    }
+
+    .laptop {
+        transform: scale(.58);
+    }
+
+    section {
+        width: 92%;
+    }
+
+    .terminal-body {
+        padding: 20px;
+
+        font-size: 12px;
+    }
+
+    .connect-grid {
         grid-template-columns: 1fr;
     }
 }
 
-@media (max-width: 480px) {
-
-    .hero h1 {
-        font-size: 60px;
-    }
-
-    .dashboard {
-        grid-template-columns: 1fr;
-    }
-
-    .metric {
-        min-height: 120px;
-    }
-
-    .terminal-content {
-        font-size: 10px;
-    }
-}
 </style>
 </head>
 
+
 <body>
 
-<nav>
-    <div class="logo">BRYAN//SEC</div>
+<!-- ======================================================
+     NAV
+====================================================== -->
 
-    <div class="nav-links">
-        <a href="#dashboard">DASHBOARD</a>
-        <a href="#projects">PROJECTS</a>
-        <a href="#certifications">CERTIFICATIONS</a>
+<nav>
+
+    <div class="logo">
+        BRYAN // SEC
     </div>
+
+    <div class="status">
+        <span class="status-dot"></span>
+        SYSTEM ONLINE
+    </div>
+
 </nav>
 
-<main>
 
-<!-- HERO -->
+<!-- ======================================================
+     HERO
+====================================================== -->
 
-<section class="hero">
+<header class="hero">
 
     <div>
 
-        <div class="status">
-            <span class="status-dot"></span>
-            AUTHORIZED SECURITY RESEARCH // ONLINE
+        <div class="hero-small">
+            [ ACCESS TERMINAL ]
         </div>
 
         <h1>
             BRYAN<span>.</span>
         </h1>
 
-        <div class="typing">
-            <span id="typing"></span><span class="cursor">_</span>
+        <div class="roles">
+
+            <div>ETHICAL HACKER</div>
+
+            <div>WEB SECURITY INVESTIGATOR</div>
+
+            <div>PENTESTER // APPRENTICE</div>
+
         </div>
 
         <p class="hero-description">
-            Cybersecurity learner focused on ethical hacking,
-            penetration testing, web application security,
-            reconnaissance and offensive security fundamentals.
+
+            Breaking things.
+            Understanding why they broke.
+            Learning how to secure them.
+
+            <br><br>
+
+            Exploring web application security,
+            reconnaissance, offensive security
+            and penetration testing.
+
         </p>
 
-    </div>
-
-    <div class="network-panel">
-
-        <div class="panel-header">
-            <span>NETWORK // MONITOR</span>
-            <span>● LIVE</span>
-        </div>
-
-        <div class="radar">
-            <div class="radar-line"></div>
-            <div class="radar-center"></div>
-
-            <div class="node one"></div>
-            <div class="node two"></div>
-            <div class="node three"></div>
-            <div class="node four"></div>
-        </div>
+        <a href="#terminal" class="enter-btn">
+            [ ENTER SYSTEM ]
+        </a>
 
     </div>
 
-</section>
 
+    <!-- HACKER -->
 
-<!-- DASHBOARD -->
+    <div class="hacker-container">
 
-<section id="dashboard">
+        <div class="hacker-glow"></div>
 
-    <div class="section-title">
-        <h2>OPERATIONS</h2>
-        <span>// CURRENT STATUS</span>
+        <div class="hood">
+
+            <div class="face"></div>
+
+        </div>
+
+        <div class="laptop">
+
+            <div class="screen">
+
+                > connection_established<br>
+                > user: BRYAN<br>
+                > security_mode: ACTIVE<br><br>
+
+                <span style="color:#00eaff;">
+                    $ whoami
+                </span><br>
+
+                ethical_hacker<br><br>
+
+                <span style="color:#00eaff;">
+                    $ scan --target web
+                </span><br>
+
+                [+] reconnaissance<br>
+                [+] enumeration<br>
+                [+] vulnerability analysis<br>
+                [+] exploitation labs
+
+            </div>
+
+            <div class="laptop-base"></div>
+
+        </div>
+
     </div>
 
-    <div class="dashboard">
+</header>
 
-        <div class="metric">
-            <div class="metric-number" data-target="2">0</div>
-            <div class="metric-label">CERTIFICATIONS</div>
-        </div>
 
-        <div class="metric">
-            <div class="metric-number" data-target="30">0</div>
-            <div class="metric-label">LABS / EXERCISES</div>
-        </div>
+<!-- ======================================================
+     TERMINAL
+====================================================== -->
 
-        <div class="metric">
-            <div class="metric-number" data-target="6">0</div>
-            <div class="metric-label">WEB SECURITY TOPICS</div>
-        </div>
+<section id="terminal">
 
-        <div class="metric">
-            <div class="metric-number green">ON</div>
-            <div class="metric-label">LEARNING STATUS</div>
-        </div>
-
+    <div class="section-label">
+        01 // TERMINAL
     </div>
+
+    <h2 class="section-title">
+        SYSTEM PROFILE
+    </h2>
 
     <div class="terminal">
 
-        <div class="terminal-bar">
-            <i></i>
-            <i></i>
-            <i></i>
+        <div class="terminal-top">
+
+            <span>
+                BRYAN@SECURITY:~
+            </span>
+
+            <span>
+                SESSION ACTIVE
+            </span>
+
         </div>
 
-        <div class="terminal-content">
-            <div><span class="green">root@bryan</span>:~$ whoami</div>
-            <div class="cyan">ethical-hacker-in-training</div>
-
-            <div><span class="green">root@bryan</span>:~$ mission --status</div>
-            <div>[+] Building offensive security skills...</div>
-            <div>[+] Practicing web application security...</div>
-            <div>[+] Documenting technical findings...</div>
-            <div class="green">[+] STATUS: ACTIVE</div>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- PROJECTS -->
-
-<section id="projects">
-
-    <div class="section-title">
-        <h2>PROJECTS</h2>
-        <span>// FIELD WORK</span>
-    </div>
-
-    <div class="projects" id="projectContainer"></div>
-
-</section>
-
-
-<!-- CERTIFICATIONS -->
-
-<section id="certifications">
-
-    <div class="section-title">
-        <h2>CERTIFICATIONS</h2>
-        <span>// VERIFIED TRAINING</span>
-    </div>
-
-    <div class="cert-grid">
-
-        <div class="cert">
+        <div class="terminal-body">
 
             <div>
-                <h3>Junior Penetration Tester</h3>
-                <p>TryHackMe</p>
+                <span class="prompt">$</span>
+                identity.load()
             </div>
-
-            <div class="cert-badge">
-                JPT
-            </div>
-
-        </div>
-
-        <div class="cert">
 
             <div>
-                <h3>Cyber Security 101</h3>
-                <p>TryHackMe</p>
+                NAME:
+                <span class="value">BRYAN</span>
             </div>
 
-            <div class="cert-badge">
-                SEC
+            <div>
+                ROLE:
+                <span class="value">
+                    ETHICAL HACKER / PENTESTER APPRENTICE
+                </span>
+            </div>
+
+            <div>
+                FOCUS:
+                <span class="value">
+                    WEB APPLICATION SECURITY
+                </span>
+            </div>
+
+            <div>
+                INTERESTS:
+                <span class="value">
+                    RECON / BURP SUITE / LINUX / OWASP
+                </span>
+            </div>
+
+            <br>
+
+            <div>
+                <span class="prompt">$</span>
+                status
+            </div>
+
+            <div>
+                STATUS:
+                <span style="color:#00ff9d;">
+                    ONLINE // LEARNING // BUILDING
+                </span>
             </div>
 
         </div>
@@ -745,153 +1084,669 @@ footer {
     </div>
 
 </section>
+
+
+<!-- ======================================================
+     OPERATIONS
+====================================================== -->
+
+<section>
+
+    <div class="section-label">
+        02 // OPERATIONS
+    </div>
+
+    <h2 class="section-title">
+        CURRENT OPERATIONS
+    </h2>
+
+    <div class="operations">
+
+
+        <div class="card">
+
+            <div class="card-number">
+                OP-01
+            </div>
+
+            <h3>
+                WEB SECURITY
+            </h3>
+
+            <p>
+                Investigating vulnerabilities in
+                modern web applications and learning
+                how attackers discover them.
+            </p>
+
+            <div class="progress">
+                <span style="width:82%;"></span>
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-number">
+                OP-02
+            </div>
+
+            <h3>
+                RECON
+            </h3>
+
+            <p>
+                Information gathering, enumeration,
+                attack-surface discovery and
+                understanding the target before testing.
+            </p>
+
+            <div class="progress">
+                <span style="width:76%;"></span>
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-number">
+                OP-03
+            </div>
+
+            <h3>
+                PENTESTING
+            </h3>
+
+            <p>
+                Practicing authorized offensive security
+                techniques through labs, CTFs and
+                controlled environments.
+            </p>
+
+            <div class="progress">
+                <span style="width:68%;"></span>
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-number">
+                OP-04
+            </div>
+
+            <h3>
+                BURP SUITE
+            </h3>
+
+            <p>
+                Request manipulation, Repeater,
+                Intruder, authentication testing and
+                web vulnerability investigation.
+            </p>
+
+            <div class="progress">
+                <span style="width:72%;"></span>
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-number">
+                OP-05
+            </div>
+
+            <h3>
+                LINUX
+            </h3>
+
+            <p>
+                Building practical Linux command-line
+                skills for security testing,
+                automation and system investigation.
+            </p>
+
+            <div class="progress">
+                <span style="width:74%;"></span>
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-number">
+                OP-06
+            </div>
+
+            <h3>
+                OWASP
+            </h3>
+
+            <p>
+                Studying common web application
+                vulnerabilities and learning to
+                document findings professionally.
+            </p>
+
+            <div class="progress">
+                <span style="width:70%;"></span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     CASE FILES
+====================================================== -->
+
+<section>
+
+    <div class="section-label">
+        03 // INVESTIGATIONS
+    </div>
+
+    <h2 class="section-title">
+        CASE FILES
+    </h2>
+
+
+    <div class="case">
+
+        <div class="case-header">
+
+            <strong>
+                CASE #001 // SQL INJECTION
+            </strong>
+
+            <span class="case-status">
+                SOLVED
+            </span>
+
+        </div>
+
+        <div class="case-content">
+
+            <div class="case-content-inner">
+
+                <b>VECTOR:</b> Web Application<br>
+
+                <b>OBJECTIVE:</b>
+                Identify and understand SQL injection
+                behavior in a controlled lab.<br>
+
+                <b>TOOLS:</b>
+                Burp Suite / Browser<br>
+
+                <b>RESULT:</b>
+                Vulnerability identified and documented.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="case">
+
+        <div class="case-header">
+
+            <strong>
+                CASE #002 // AUTHENTICATION
+            </strong>
+
+            <span class="case-status">
+                SOLVED
+            </span>
+
+        </div>
+
+        <div class="case-content">
+
+            <div class="case-content-inner">
+
+                <b>VECTOR:</b> Authentication<br>
+
+                <b>OBJECTIVE:</b>
+                Investigate weaknesses in login
+                functionality and authentication logic.<br>
+
+                <b>TOOLS:</b>
+                Burp Suite / Intruder / Repeater<br>
+
+                <b>RESULT:</b>
+                Authentication behavior analyzed.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="case">
+
+        <div class="case-header">
+
+            <strong>
+                CASE #003 // WEB RECON
+            </strong>
+
+            <span class="case-status">
+                ACTIVE
+            </span>
+
+        </div>
+
+        <div class="case-content">
+
+            <div class="case-content-inner">
+
+                <b>VECTOR:</b> Attack Surface Discovery<br>
+
+                <b>OBJECTIVE:</b>
+                Identify exposed endpoints,
+                technologies and potential attack surfaces.<br>
+
+                <b>TOOLS:</b>
+                Nmap / Gobuster / Browser<br>
+
+                <b>STATUS:</b>
+                Investigation ongoing.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     LEARNING PATH
+====================================================== -->
+
+<section>
+
+    <div class="section-label">
+        04 // TRAINING
+    </div>
+
+    <h2 class="section-title">
+        BUILD YOUR PATH
+    </h2>
+
+    <p style="
+        color:#63818c;
+        max-width:700px;
+        line-height:1.8;
+        margin-bottom:35px;
+    ">
+
+        Want to learn cybersecurity or ethical hacking?
+        Start here. The path below represents a practical
+        progression from fundamentals toward penetration testing.
+
+    </p>
+
+
+    <div class="path">
+
+
+        <div class="path-step">
+
+            <div class="step-number">01</div>
+
+            <div class="step-info">
+
+                <h3>LINUX FUNDAMENTALS</h3>
+
+                <p>
+                    Terminal navigation, permissions,
+                    processes and filesystem basics.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="path-step">
+
+            <div class="step-number">02</div>
+
+            <div class="step-info">
+
+                <h3>NETWORKING</h3>
+
+                <p>
+                    TCP/IP, ports, protocols,
+                    DNS and network traffic.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="path-step">
+
+            <div class="step-number">03</div>
+
+            <div class="step-info">
+
+                <h3>RECONNAISSANCE</h3>
+
+                <p>
+                    Nmap, enumeration,
+                    discovery and attack surfaces.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="path-step">
+
+            <div class="step-number">04</div>
+
+            <div class="step-info">
+
+                <h3>WEB APPLICATION SECURITY</h3>
+
+                <p>
+                    HTTP, authentication,
+                    sessions and common vulnerabilities.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="path-step">
+
+            <div class="step-number">05</div>
+
+            <div class="step-info">
+
+                <h3>BURP SUITE</h3>
+
+                <p>
+                    Proxy, Repeater, Intruder
+                    and request manipulation.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="path-step">
+
+            <div class="step-number">06</div>
+
+            <div class="step-info">
+
+                <h3>OWASP</h3>
+
+                <p>
+                    Study real-world web
+                    application vulnerabilities.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="path-step">
+
+            <div class="step-number">07</div>
+
+            <div class="step-info">
+
+                <h3>CTFs & LABS</h3>
+
+                <p>
+                    Turn knowledge into
+                    practical problem solving.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="path-step">
+
+            <div class="step-number">08</div>
+
+            <div class="step-info">
+
+                <h3>PENETRATION TESTING</h3>
+
+                <p>
+                    Combine reconnaissance,
+                    exploitation, documentation
+                    and remediation.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     CONNECT
+====================================================== -->
+
+<section>
+
+    <div class="section-label">
+        05 // CONNECTIONS
+    </div>
+
+    <h2 class="section-title">
+        ESTABLISH CONNECTION
+    </h2>
+
+
+    <div class="connect-grid">
+
+
+        <a
+            class="social"
+            href="https://github.com/kingbryan13"
+            target="_blank"
+        >
+
+            GITHUB
+
+            <small>
+                CODE // PROJECTS
+            </small>
+
+        </a>
+
+
+        <a
+            class="social"
+            href="#"
+        >
+
+            LINKEDIN
+
+            <small>
+                PROFESSIONAL
+            </small>
+
+        </a>
+
+
+        <a
+            class="social"
+            href="#"
+        >
+
+            TRYHACKME
+
+            <small>
+                LABS // TRAINING
+            </small>
+
+        </a>
+
+
+        <a
+            class="social"
+            href="#"
+        >
+
+            CONTACT
+
+            <small>
+                SEND MESSAGE
+            </small>
+
+        </a>
+
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
 
 <footer>
-    BRYAN // CYBER OPERATIONS
+
+    BRYAN // SEC
+
     <br><br>
-    AUTHORIZED SECURITY RESEARCH ONLY
+
+    <span>
+        AUTHORIZED ACCESS ONLY
+    </span>
+
+    <br><br>
+
+    © 2026 // BUILDING THE SKILLSET
+
 </footer>
 
-</main>
 
+<!-- ======================================================
+     JAVASCRIPT
+====================================================== -->
 
 <script>
 
-/* TYPING EFFECT */
+/* =========================================================
+   CASE FILE ACCORDION
+========================================================= */
 
-const phrases = [
-    "Ethical hacker in training.",
-    "Offensive security learner.",
-    "Web application security.",
-    "Penetration testing.",
-    "Always learning. Always testing."
-];
+const cases = document.querySelectorAll(".case");
 
-let phraseIndex = 0;
-let characterIndex = 0;
-let deleting = false;
+cases.forEach(caseFile => {
 
-function typeEffect() {
+    const header = caseFile.querySelector(".case-header");
 
-    const element = document.getElementById("typing");
-    const phrase = phrases[phraseIndex];
+    header.addEventListener("click", () => {
 
-    if (!deleting) {
+        caseFile.classList.toggle("open");
 
-        element.textContent = phrase.substring(
-            0,
-            characterIndex + 1
-        );
-
-        characterIndex++;
-
-        if (characterIndex === phrase.length) {
-            deleting = true;
-            setTimeout(typeEffect, 1800);
-            return;
-        }
-
-    } else {
-
-        element.textContent = phrase.substring(
-            0,
-            characterIndex - 1
-        );
-
-        characterIndex--;
-
-        if (characterIndex === 0) {
-            deleting = false;
-            phraseIndex = (phraseIndex + 1) % phrases.length;
-        }
-
-    }
-
-    setTimeout(typeEffect, deleting ? 35 : 70);
-}
-
-typeEffect();
-
-
-/* COUNTER ANIMATION */
-
-const counters = document.querySelectorAll(".metric-number[data-target]");
-
-counters.forEach(counter => {
-
-    const target = Number(counter.dataset.target);
-    let current = 0;
-
-    const interval = setInterval(() => {
-
-        current++;
-
-        counter.textContent = current;
-
-        if (current >= target) {
-            clearInterval(interval);
-        }
-
-    }, 80);
+    });
 
 });
 
 
-/* PROJECT DATA */
-/* Add new projects here later */
+/* =========================================================
+   TERMINAL TYPING EFFECT
+========================================================= */
 
-const projects = [
+const terminal = document.querySelector(".terminal-body");
 
-    {
-        title: "PortSwigger Web Security",
-        description:
-        "Hands-on web application security testing using Burp Suite and controlled training labs.",
-        tags: ["BURP", "WEB", "OWASP"]
-    },
+let cursor = document.createElement("span");
 
-    {
-        title: "TryHackMe Pentesting",
-        description:
-        "Practical penetration-testing exercises covering reconnaissance, exploitation and privilege escalation.",
-        tags: ["LINUX", "NMAP", "PENTEST"]
-    },
+cursor.textContent = " █";
 
-    {
-        title: "Cybersecurity Lab",
-        description:
-        "Personal security research environment for practicing offensive security techniques in authorized labs.",
-        tags: ["KALI", "LAB", "SECURITY"]
-    }
+cursor.style.color = "#00ff9d";
 
-];
+terminal.appendChild(cursor);
 
-const container = document.getElementById("projectContainer");
+setInterval(() => {
 
-projects.forEach((project, index) => {
+    cursor.style.opacity =
+        cursor.style.opacity === "0" ? "1" : "0";
 
-    const card = document.createElement("div");
+}, 500);
 
-    card.className = "project";
 
-    card.innerHTML = `
-        <div class="project-number">
-            PROJECT_${String(index + 1).padStart(2, "0")}
-        </div>
+/* =========================================================
+   LEARNING PATH INTERACTION
+========================================================= */
 
-        <h3>${project.title}</h3>
+const steps = document.querySelectorAll(".path-step");
 
-        <p>${project.description}</p>
+steps.forEach(step => {
 
-        <div class="tags">
-            ${project.tags.map(tag =>
-                `<span class="tag">${tag}</span>`
-            ).join("")}
-        </div>
-    `;
+    step.addEventListener("click", () => {
 
-    container.appendChild(card);
+        steps.forEach(item => {
+
+            item.style.background =
+                "rgba(5, 16, 21, .75)";
+
+        });
+
+        step.style.background =
+            "rgba(0, 255, 157, .07)";
+
+    });
 
 });
+
+
+/* =========================================================
+   RANDOM NETWORK ACTIVITY
+========================================================= */
+
+setInterval(() => {
+
+    const status = document.querySelector(".status");
+
+    if (!status) return;
+
+    status.style.textShadow =
+        "0 0 12px rgba(0,255,157,.8)";
+
+    setTimeout(() => {
+
+        status.style.textShadow = "none";
+
+    }, 300);
+
+}, 2800);
 
 </script>
 
