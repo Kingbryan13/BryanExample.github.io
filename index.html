@@ -7,19 +7,16 @@
 <title>BRYAN // SEC</title>
 
 <style>
-
-/* ================================
-   CORE
-================================ */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;500;600;700;800&display=swap');
 
 :root {
-    --bg: #020608;
-    --panel: #061015;
+    --green: #00ff9c;
     --cyan: #00eaff;
-    --green: #00ff9d;
-    --white: #ecfbff;
-    --muted: #66838d;
-    --line: rgba(0,234,255,.18);
+    --dark: #020708;
+    --panel: rgba(0, 20, 22, 0.78);
+    --line: rgba(0, 255, 156, 0.25);
+    --text: #b8fff0;
+    --muted: #548c82;
 }
 
 * {
@@ -34,1459 +31,1386 @@ html {
 
 body {
     background:
-        radial-gradient(circle at 50% 0%, rgba(0,234,255,.08), transparent 35%),
-        #020608;
+        radial-gradient(
+            circle at 50% 25%,
+            rgba(0,255,156,.08),
+            transparent 35%
+        ),
+        #010506;
 
-    color: var(--white);
-
-    font-family: "Courier New", monospace;
-
+    color: var(--text);
+    font-family: "Share Tech Mono", monospace;
     overflow-x: hidden;
-}
-
-/* CYBER GRID */
-
-body::before {
-    content: "";
-
-    position: fixed;
-
-    inset: 0;
-
-    background-image:
-        linear-gradient(rgba(0,234,255,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,234,255,.025) 1px, transparent 1px);
-
-    background-size: 40px 40px;
-
-    pointer-events: none;
-
-    z-index: -2;
 }
 
 /* SCANLINES */
 
-body::after {
+body::before {
     content: "";
-
     position: fixed;
-
     inset: 0;
+
+    pointer-events: none;
+    z-index: 100;
+
+    opacity: .055;
 
     background:
         repeating-linear-gradient(
-            to bottom,
+            0deg,
             transparent 0px,
-            transparent 4px,
-            rgba(0,255,157,.012) 5px
+            transparent 3px,
+            #00ff9c 4px
         );
-
-    pointer-events: none;
-
-    z-index: 100;
 }
 
+/* MOVING GRID */
 
-/* ================================
-   BOOT SCREEN
-================================ */
-
-.boot-screen {
-
+body::after {
+    content: "";
     position: fixed;
-
     inset: 0;
 
-    background: #010406;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    z-index: 1000;
-
-    opacity: 0;
-
-    visibility: hidden;
-
     pointer-events: none;
+    z-index: -1;
 
-    transition: opacity .5s ease;
+    background-image:
+        linear-gradient(
+            rgba(0,255,156,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0,255,156,.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+
+    animation: gridMove 15s linear infinite;
 }
 
-/* ONLY SHOW WHEN ACTIVE */
-
-.boot-screen.active {
-
-    opacity: 1;
-
-    visibility: visible;
-
-    pointer-events: auto;
-}
-
-.boot-content {
-
-    width: min(650px, 88%);
-
-    color: var(--green);
-
-    font-size: 13px;
-
-    line-height: 1.9;
-}
-
-.boot-title {
-
-    color: var(--cyan);
-
-    letter-spacing: 4px;
-
-    margin-bottom: 25px;
-}
-
-.boot-line {
-
-    opacity: 0;
-
-    animation: bootLine .4s forwards;
-}
-
-@keyframes bootLine {
+@keyframes gridMove {
 
     from {
-        opacity: 0;
-        transform: translateX(-10px);
+        background-position: 0 0;
     }
 
     to {
-        opacity: 1;
-        transform: translateX(0);
+        background-position: 45px 45px;
     }
+
 }
 
-.boot-progress {
-
-    width: 100%;
-
-    height: 3px;
-
-    margin-top: 25px;
-
-    background: #0b1b20;
-}
-
-.boot-progress span {
-
-    display: block;
-
-    height: 100%;
-
-    width: 0%;
-
-    background: var(--green);
-
-    box-shadow: 0 0 15px var(--green);
-
-    animation: progress 3.4s linear forwards;
-}
-
-@keyframes progress {
-
-    to {
-        width: 100%;
-    }
-}
-
-
-/* ================================
+/* =========================
    NAV
-================================ */
+========================= */
 
 nav {
-
-    position: absolute;
-
-    top: 0;
-
-    left: 0;
-
-    width: 100%;
-
-    padding: 25px 6%;
+    height: 72px;
 
     display: flex;
-
+    align-items: center;
     justify-content: space-between;
 
-    align-items: center;
+    padding: 0 6vw;
 
-    z-index: 20;
+    border-bottom: 1px solid var(--line);
+
+    background: rgba(0,8,10,.72);
+
+    backdrop-filter: blur(15px);
+
+    position: sticky;
+    top: 0;
+
+    z-index: 50;
 }
 
 .logo {
-
-    color: var(--cyan);
-
-    font-weight: bold;
-
-    letter-spacing: 4px;
-
-    text-shadow: 0 0 12px rgba(0,234,255,.6);
-}
-
-.status {
+    font-family: Orbitron, sans-serif;
+    font-weight: 700;
 
     color: var(--green);
 
-    font-size: 10px;
+    letter-spacing: 3px;
 
-    letter-spacing: 2px;
+    text-shadow:
+        0 0 15px rgba(0,255,156,.6);
+}
+
+.status {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    font-size: 12px;
+
+    color: var(--green);
 }
 
 .status-dot {
-
-    display: inline-block;
-
-    width: 7px;
-
-    height: 7px;
-
-    border-radius: 50%;
+    width: 8px;
+    height: 8px;
 
     background: var(--green);
 
-    margin-right: 7px;
+    border-radius: 50%;
 
-    box-shadow: 0 0 12px var(--green);
+    box-shadow:
+        0 0 15px var(--green);
 
-    animation: pulse 1.5s infinite;
+    animation: pulse 1.4s infinite;
 }
 
 @keyframes pulse {
 
     50% {
-        opacity: .3;
+        opacity: .25;
+        transform: scale(.6);
     }
+
 }
 
-
-/* ================================
+/* =========================
    HERO
-================================ */
+========================= */
 
 .hero {
+    min-height: calc(100vh - 72px);
 
-    min-height: 100vh;
+    position: relative;
 
-    padding: 130px 7% 80px;
-
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
+    display: flex;
     align-items: center;
 
-    gap: 40px;
+    overflow: hidden;
+
+    padding: 50px 6vw;
 }
 
-.hero-small {
+.hero-content {
+    width: 42%;
 
-    color: var(--cyan);
+    position: relative;
 
-    font-size: 11px;
+    z-index: 12;
+}
 
-    letter-spacing: 5px;
+.pretitle {
+    color: var(--green);
 
-    margin-bottom: 20px;
+    letter-spacing: 3px;
+
+    font-size: 13px;
+
+    margin-bottom: 18px;
+}
+
+.pretitle::before {
+    content: "> ";
 }
 
 .hero h1 {
+    font-family: Orbitron, sans-serif;
 
-    font-family: Arial, sans-serif;
+    font-size: clamp(48px,7vw,105px);
 
-    font-size: clamp(70px, 10vw, 150px);
+    line-height: .9;
 
-    line-height: .8;
+    letter-spacing: -3px;
 
-    letter-spacing: -8px;
+    color: white;
+
+    text-shadow:
+        0 0 10px rgba(0,255,156,.4),
+        0 0 35px rgba(0,255,156,.2);
 }
 
-.hero h1 span {
+.identity {
+    margin-top: 30px;
 
-    color: transparent;
+    border-left: 2px solid var(--green);
 
-    -webkit-text-stroke: 1px var(--cyan);
+    padding-left: 17px;
 }
 
-.roles {
+.identity div {
+    margin: 7px 0;
 
-    margin-top: 35px;
-
-    font-family: Arial, sans-serif;
-
-    font-size: clamp(16px, 2vw, 25px);
-
-    font-weight: bold;
-
-    line-height: 1.6;
-}
-
-.roles div:nth-child(1) {
-    color: var(--white);
-}
-
-.roles div:nth-child(2) {
     color: var(--cyan);
+
+    font-size: 14px;
 }
 
-.roles div:nth-child(3) {
+.identity div::before {
+    content: "> ";
+
     color: var(--green);
 }
 
 .hero-description {
-
-    max-width: 650px;
-
-    margin-top: 25px;
-
-    color: var(--muted);
-
-    font-size: 13px;
-
-    line-height: 1.9;
-}
-
-
-/* ENTER SYSTEM */
-
-.enter-btn {
-
-    display: inline-block;
-
     margin-top: 30px;
 
-    padding: 15px 22px;
+    max-width: 480px;
 
-    border: 1px solid var(--cyan);
+    color: #7fb8ae;
 
-    background: rgba(0,234,255,.03);
+    line-height: 1.8;
 
-    color: var(--cyan);
+    font-size: 14px;
+}
 
-    text-decoration: none;
+.enter-btn {
+    margin-top: 35px;
 
-    letter-spacing: 3px;
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 17px 28px;
+
+    color: var(--green);
+
+    background: rgba(0,255,156,.04);
+
+    border: 1px solid var(--green);
+
+    font-family: "Share Tech Mono";
+
+    font-size: 15px;
+
+    letter-spacing: 2px;
 
     cursor: pointer;
+
+    box-shadow:
+        0 0 20px rgba(0,255,156,.12),
+        inset 0 0 20px rgba(0,255,156,.04);
 
     transition: .3s;
 }
 
 .enter-btn:hover {
+    background: rgba(0,255,156,.12);
 
-    background: var(--cyan);
+    box-shadow:
+        0 0 30px rgba(0,255,156,.3),
+        inset 0 0 25px rgba(0,255,156,.08);
 
-    color: #001014;
-
-    box-shadow: 0 0 30px rgba(0,234,255,.35);
+    transform: translateY(-2px);
 }
 
-
-/* ================================
-   HACKER WORKSTATION
-================================ */
-
-.workstation {
-
-    position: relative;
-
-    min-height: 550px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-}
-
-.workstation-glow {
-
-    position: absolute;
-
-    width: 380px;
-
-    height: 380px;
-
-    border-radius: 50%;
-
-    background: rgba(0,234,255,.06);
-
-    filter: blur(55px);
-
-    animation: glow 4s infinite alternate;
-}
-
-@keyframes glow {
-
-    from {
-        transform: scale(.9);
-    }
-
-    to {
-        transform: scale(1.1);
-    }
-}
-
-
-/* HOODED FIGURE */
-
-.hacker {
-
-    position: relative;
-
-    width: 280px;
-
-    height: 350px;
-
-    background:
-        linear-gradient(145deg, #17272d, #020608 65%);
-
-    clip-path:
-        polygon(
-            50% 0%,
-            76% 12%,
-            94% 39%,
-            85% 82%,
-            65% 100%,
-            35% 100%,
-            15% 82%,
-            6% 39%,
-            24% 12%
-        );
-
-    filter:
-        drop-shadow(0 0 25px rgba(0,234,255,.2));
-
-    cursor: pointer;
-
-    transition: .4s;
-
-    z-index: 2;
-}
-
-.hacker:hover {
-
-    transform: translateY(-8px);
-
-    filter:
-        drop-shadow(0 0 35px rgba(0,234,255,.4));
-}
-
-
-/* FACE */
-
-.face {
-
-    position: absolute;
-
-    width: 140px;
-
-    height: 170px;
-
-    left: 70px;
-
-    top: 85px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            ellipse at 50% 40%,
-            #142a32,
-            #010405 70%
-        );
-}
-
-
-/* EYES */
-
-.face::before,
-.face::after {
-
+.enter-btn::after {
     content: "";
 
     position: absolute;
 
-    width: 28px;
+    width: 10px;
+    height: 10px;
 
-    height: 3px;
+    right: -5px;
+    top: -5px;
 
-    top: 78px;
-
-    background: var(--cyan);
-
-    box-shadow:
-        0 0 8px var(--cyan),
-        0 0 22px var(--cyan);
+    border-top: 2px solid var(--cyan);
+    border-right: 2px solid var(--cyan);
 }
 
-.face::before {
+/* =========================
+   OPERATOR ENVIRONMENT
+========================= */
 
-    left: 20px;
-
-    transform: rotate(7deg);
-}
-
-.face::after {
-
-    right: 20px;
-
-    transform: rotate(-7deg);
-}
-
-
-/* ================================
-   LAPTOP
-================================ */
-
-.laptop {
-
+.operator-zone {
     position: absolute;
 
-    bottom: 20px;
+    right: -4%;
+    top: 0;
 
-    width: 360px;
-
-    height: 220px;
-
-    background: #02080b;
-
-    border: 2px solid rgba(0,234,255,.55);
-
-    box-shadow: 0 0 35px rgba(0,234,255,.13);
-
-    cursor: pointer;
-
-    transition: .3s;
-
-    z-index: 5;
-}
-
-.laptop:hover {
-
-    transform: translateY(-6px);
-
-    box-shadow:
-        0 0 45px rgba(0,234,255,.25);
-}
-
-.screen {
-
-    position: absolute;
-
-    inset: 13px;
-
-    padding: 15px;
-
-    border: 1px solid var(--line);
-
-    background: #02080b;
-
-    color: var(--green);
-
-    font-size: 10px;
-
-    line-height: 1.7;
-}
-
-.laptop-base {
-
-    position: absolute;
-
-    width: 425px;
-
-    height: 13px;
-
-    bottom: -14px;
-
-    left: -34px;
-
-    background: #071419;
-
-    border: 1px solid var(--line);
-
-    transform: skewX(-25deg);
-}
-
-
-/* ================================
-   SECTIONS
-================================ */
-
-section {
-
-    width: min(1200px, 88%);
-
-    margin: auto;
-
-    padding: 110px 0;
-}
-
-.section-label {
-
-    color: var(--cyan);
-
-    letter-spacing: 4px;
-
-    font-size: 11px;
-
-    margin-bottom: 12px;
-}
-
-.section-title {
-
-    font-family: Arial, sans-serif;
-
-    font-size: clamp(38px, 5vw, 68px);
-
-    margin-bottom: 45px;
-}
-
-
-/* ================================
-   CONSOLE
-================================ */
-
-.console {
-
-    border: 1px solid var(--line);
-
-    background: rgba(4,13,17,.85);
-
-    box-shadow: 0 0 45px rgba(0,234,255,.04);
-}
-
-.console-top {
-
-    padding: 15px 20px;
+    width: 67%;
+    height: 100%;
 
     display: flex;
 
-    justify-content: space-between;
-
-    border-bottom: 1px solid var(--line);
-
-    color: var(--muted);
-
-    font-size: 10px;
+    align-items: center;
+    justify-content: center;
 }
 
-.console-body {
+/* GLOW */
 
-    padding: 28px;
+.operator-zone::before {
+    content: "";
+
+    position: absolute;
+
+    width: 600px;
+    height: 600px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,255,156,.20),
+            rgba(0,234,255,.07) 35%,
+            transparent 70%
+        );
+
+    filter: blur(20px);
+
+    animation: coreGlow 4s ease-in-out infinite;
+}
+
+@keyframes coreGlow {
+
+    50% {
+        transform: scale(1.15);
+        opacity: .65;
+    }
+
+}
+
+/* =========================
+   NETWORK
+========================= */
+
+.network {
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+}
+
+.network-line {
+    position: absolute;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(0,255,156,.65),
+            transparent
+        );
+
+    transform-origin: left center;
+
+    animation: dataFlow 3s linear infinite;
+}
+
+.line1 {
+    width: 600px;
+    left: 5%;
+    top: 30%;
+    transform: rotate(20deg);
+}
+
+.line2 {
+    width: 700px;
+    left: 30%;
+    top: 65%;
+    transform: rotate(-20deg);
+    animation-delay: 1s;
+}
+
+.line3 {
+    width: 500px;
+    left: 40%;
+    top: 25%;
+    transform: rotate(55deg);
+    animation-delay: 1.7s;
+}
+
+.line4 {
+    width: 550px;
+    left: 10%;
+    top: 70%;
+    transform: rotate(-45deg);
+    animation-delay: 2.2s;
+}
+
+@keyframes dataFlow {
+
+    0% {
+        opacity: .1;
+        filter: brightness(.5);
+    }
+
+    50% {
+        opacity: 1;
+        filter: brightness(2);
+    }
+
+    100% {
+        opacity: .1;
+        filter: brightness(.5);
+    }
+
+}
+
+/* =========================
+   NODES
+========================= */
+
+.node {
+    position: absolute;
+
+    width: 13px;
+    height: 13px;
+
+    border: 2px solid var(--green);
+
+    border-radius: 50%;
+
+    background: #001512;
+
+    box-shadow:
+        0 0 8px var(--green),
+        0 0 25px rgba(0,255,156,.7);
+
+    cursor: pointer;
+
+    z-index: 9;
+
+    animation: nodePulse 2s infinite;
+}
+
+.node::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -8px;
+
+    border: 1px solid rgba(0,255,156,.18);
+
+    border-radius: 50%;
+
+    animation: radar 2s infinite;
+}
+
+.node:hover {
+    transform: scale(1.5);
+
+    background: var(--green);
+}
+
+@keyframes nodePulse {
+
+    50% {
+        box-shadow:
+            0 0 15px var(--green),
+            0 0 40px rgba(0,255,156,.8);
+    }
+
+}
+
+@keyframes radar {
+
+    from {
+        transform: scale(.5);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(2.4);
+        opacity: 0;
+    }
+
+}
+
+.node-label {
+    position: absolute;
+
+    left: 20px;
+    top: -5px;
+
+    white-space: nowrap;
 
     color: var(--green);
 
-    font-size: 12px;
+    font-size: 10px;
 
-    line-height: 2;
+    pointer-events: none;
 }
 
-.console-command {
+.n1 {
+    left: 15%;
+    top: 27%;
+}
+
+.n2 {
+    left: 79%;
+    top: 22%;
+}
+
+.n3 {
+    left: 86%;
+    top: 65%;
+}
+
+.n4 {
+    left: 16%;
+    top: 72%;
+}
+
+.n5 {
+    left: 72%;
+    top: 80%;
+}
+
+.n6 {
+    left: 48%;
+    top: 17%;
+}
+
+/* =========================
+   OPERATOR
+========================= */
+
+.operator {
+    position: relative;
+
+    width: min(650px,75%);
+
+    z-index: 7;
+
+    filter:
+        drop-shadow(0 0 25px rgba(0,255,156,.25))
+        drop-shadow(0 0 80px rgba(0,255,156,.12));
+
+    transition:
+        transform .15s ease-out,
+        filter .4s;
+}
+
+.operator img {
+    width: 100%;
+
+    display: block;
+
+    mix-blend-mode: screen;
+
+    filter:
+        contrast(1.15)
+        brightness(.85)
+        saturate(1.25);
+}
+
+.operator::after {
+    content: "";
+
+    position: absolute;
+
+    left: 10%;
+    right: 10%;
+
+    height: 2px;
+
+    background: var(--green);
+
+    box-shadow:
+        0 0 10px var(--green),
+        0 0 25px var(--green);
+
+    opacity: .55;
+
+    animation: scan 4s linear infinite;
+}
+
+@keyframes scan {
+
+    from {
+        top: 10%;
+    }
+
+    to {
+        top: 88%;
+    }
+
+}
+
+/* =========================
+   HUD
+========================= */
+
+.hud {
+    position: absolute;
+
+    border: 1px solid rgba(0,255,156,.35);
+
+    background: rgba(0,12,14,.75);
+
+    backdrop-filter: blur(8px);
+
+    padding: 15px;
+
+    color: var(--green);
+
+    font-size: 11px;
+
+    box-shadow:
+        0 0 25px rgba(0,255,156,.07),
+        inset 0 0 20px rgba(0,255,156,.025);
+
+    z-index: 15;
+}
+
+.hud::before {
+    content: "";
+
+    position: absolute;
+
+    width: 8px;
+    height: 8px;
+
+    top: -1px;
+    left: -1px;
+
+    border-top: 2px solid var(--cyan);
+    border-left: 2px solid var(--cyan);
+}
+
+.hud-title {
     color: var(--cyan);
+
+    margin-bottom: 10px;
+
+    letter-spacing: 1px;
 }
 
-.console-value {
-    color: var(--white);
+.hud-data {
+    color: #62b9a9;
+
+    line-height: 1.8;
 }
 
+.hud-left {
+    left: 5%;
+    top: 25%;
+}
 
-/* ================================
+.hud-right {
+    right: 3%;
+    top: 30%;
+}
+
+.hud-bottom {
+    right: 8%;
+    bottom: 12%;
+}
+
+.bar {
+    height: 4px;
+
+    width: 120px;
+
+    background: rgba(0,255,156,.1);
+
+    margin-top: 5px;
+
+    overflow: hidden;
+}
+
+.bar span {
+    display: block;
+
+    height: 100%;
+
+    width: 72%;
+
+    background: var(--green);
+
+    box-shadow: 0 0 12px var(--green);
+
+    animation: barMove 3s infinite alternate;
+}
+
+@keyframes barMove {
+
+    to {
+        width: 94%;
+    }
+
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+section {
+    padding: 110px 6vw;
+
+    position: relative;
+}
+
+.section-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 35px;
+
+    border-bottom: 1px solid var(--line);
+
+    padding-bottom: 15px;
+}
+
+.section-title {
+    font-family: Orbitron;
+
+    font-size: clamp(20px,3vw,30px);
+
+    color: white;
+
+    letter-spacing: 2px;
+}
+
+.section-title::before {
+    content: "> ";
+
+    color: var(--green);
+}
+
+.section-command {
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+/* =========================
    OPERATIONS
-================================ */
+========================= */
 
 .operations {
-
     display: grid;
 
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns:
+        repeat(4,1fr);
 
-    gap: 15px;
+    gap: 18px;
 }
 
 .card {
+    border: 1px solid var(--line);
 
-    position: relative;
+    background: var(--panel);
 
     min-height: 220px;
 
     padding: 25px;
 
+    cursor: pointer;
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 30px rgba(0,255,156,.12),
+        inset 0 0 30px rgba(0,255,156,.03);
+}
+
+.card::after {
+    content: "ACCESS →";
+
+    position: absolute;
+
+    bottom: 18px;
+    left: 25px;
+
+    color: var(--green);
+
+    font-size: 10px;
+}
+
+.card-icon {
+    font-size: 30px;
+
+    color: var(--green);
+
+    margin-bottom: 20px;
+}
+
+.card h3 {
+    font-family: Orbitron;
+
+    color: white;
+
+    font-size: 16px;
+
+    margin-bottom: 15px;
+}
+
+.card p {
+    color: #6ca69b;
+
+    line-height: 1.7;
+
+    font-size: 12px;
+}
+
+/* =========================
+   CASE FILES
+========================= */
+
+.case-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 20px;
+}
+
+.case {
     border: 1px solid var(--line);
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(0,234,255,.045),
-            rgba(0,0,0,.1)
-        );
+    background: rgba(0,12,14,.7);
+
+    padding: 25px;
 
     cursor: pointer;
 
     transition: .3s;
 }
 
-.card:hover {
-
-    transform: translateY(-7px);
-
+.case:hover {
     border-color: var(--cyan);
-
-    box-shadow:
-        0 15px 35px rgba(0,234,255,.09);
 }
 
-.card-number {
-
-    color: var(--cyan);
-
-    font-size: 10px;
-
-    letter-spacing: 3px;
-}
-
-.card h3 {
-
-    font-family: Arial, sans-serif;
-
-    font-size: 20px;
-
-    margin: 25px 0 15px;
-}
-
-.card p {
-
-    color: var(--muted);
-
-    font-size: 12px;
-
-    line-height: 1.8;
-}
-
-.progress {
-
-    position: absolute;
-
-    bottom: 25px;
-
-    left: 25px;
-
-    right: 25px;
-
-    height: 3px;
-
-    background: #102329;
-}
-
-.progress span {
-
-    display: block;
-
-    height: 100%;
-
-    background: var(--green);
-
-    box-shadow: 0 0 10px var(--green);
-}
-
-
-/* ================================
-   RADAR
-================================ */
-
-.radar-box {
-
-    position: relative;
-
-    height: 430px;
-
-    border: 1px solid var(--line);
-
-    background: #030a0e;
-
-    overflow: hidden;
-
-    cursor: pointer;
-}
-
-.radar {
-
-    position: absolute;
-
-    width: 310px;
-
-    height: 310px;
-
-    left: 50%;
-
-    top: 50%;
-
-    transform: translate(-50%,-50%);
-
-    border: 1px solid rgba(0,234,255,.35);
-
-    border-radius: 50%;
-}
-
-.radar::before,
-.radar::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: 50%;
-
-    top: 50%;
-
-    transform: translate(-50%,-50%);
-
-    border: 1px solid rgba(0,234,255,.2);
-
-    border-radius: 50%;
-}
-
-.radar::before {
-
-    width: 200px;
-
-    height: 200px;
-}
-
-.radar::after {
-
-    width: 100px;
-
-    height: 100px;
-}
-
-.radar-sweep {
-
-    position: absolute;
-
-    width: 50%;
-
-    height: 1px;
-
-    left: 50%;
-
-    top: 50%;
-
-    transform-origin: left center;
-
-    background: var(--cyan);
-
-    box-shadow: 0 0 12px var(--cyan);
-
-    animation: sweep 3s linear infinite;
-}
-
-@keyframes sweep {
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.target {
-
-    position: absolute;
-
-    width: 9px;
-
-    height: 9px;
-
-    border-radius: 50%;
-
-    background: var(--green);
-
-    box-shadow: 0 0 15px var(--green);
-
-    animation: targetPulse 1.4s infinite alternate;
-}
-
-@keyframes targetPulse {
-
-    to {
-        transform: scale(1.7);
-
-        opacity: .5;
-    }
-}
-
-.target1 {
-    top: 25%;
-    left: 38%;
-}
-
-.target2 {
-    top: 42%;
-    left: 68%;
-}
-
-.target3 {
-    top: 70%;
-    left: 36%;
-}
-
-.target4 {
-    top: 65%;
-    left: 64%;
-}
-
-.radar-info {
-
-    position: absolute;
-
-    top: 20px;
-
-    left: 20px;
-
-    color: var(--green);
-
-    font-size: 10px;
-
-    line-height: 1.8;
-
-    z-index: 3;
-}
-
-
-/* ================================
-   CASE FILES
-================================ */
-
-.case {
-
-    border: 1px solid var(--line);
-
-    margin-bottom: 12px;
-
-    background: rgba(4,12,16,.7);
-}
-
-.case-header {
-
+.case-top {
     display: flex;
 
     justify-content: space-between;
 
-    align-items: center;
-
-    padding: 22px;
-
-    cursor: pointer;
+    gap: 20px;
 }
 
-.case-header strong {
+.case-number {
+    color: var(--green);
 
-    font-family: Arial, sans-serif;
-
-    font-size: 15px;
+    font-size: 11px;
 }
 
-.case-status {
+.case h3 {
+    margin-top: 10px;
+
+    color: white;
+
+    font-family: Orbitron;
+}
+
+.badge {
+    height: fit-content;
+
+    border: 1px solid var(--green);
+
+    padding: 5px 9px;
 
     color: var(--green);
 
-    font-size: 10px;
-
-    letter-spacing: 1px;
+    font-size: 9px;
 }
 
-.case-content {
-
+.case-details {
     max-height: 0;
 
     overflow: hidden;
 
-    transition: max-height .45s ease;
-}
+    transition: .4s;
 
-.case.open .case-content {
-
-    max-height: 300px;
-}
-
-.case-content-inner {
-
-    padding: 0 22px 25px;
-
-    color: var(--muted);
+    color: #72aaa0;
 
     font-size: 12px;
 
-    line-height: 1.9;
+    line-height: 1.8;
 }
 
+.case.open .case-details {
+    max-height: 180px;
 
-/* ================================
+    margin-top: 20px;
+}
+
+/* =========================
    LEARNING PATH
-================================ */
+========================= */
 
-.path {
-
+.learning-path {
     display: grid;
 
-    gap: 12px;
+    grid-template-columns:
+        repeat(8,1fr);
+
+    gap: 8px;
 }
 
-.path-step {
-
-    display: grid;
-
-    grid-template-columns: 55px 1fr;
-
-    align-items: center;
-
-    min-height: 78px;
-
-    padding: 10px;
+.step {
+    min-height: 150px;
 
     border: 1px solid var(--line);
 
-    background: rgba(5,16,21,.7);
+    background: rgba(0,12,14,.65);
+
+    padding: 18px 10px;
+
+    text-align: center;
 
     cursor: pointer;
 
-    transition: .25s;
+    transition: .3s;
 }
 
-.path-step:hover,
-.path-step.active {
-
+.step:hover,
+.step.active {
     border-color: var(--green);
 
-    background: rgba(0,255,157,.055);
+    background: rgba(0,255,156,.07);
 
-    transform: translateX(7px);
+    box-shadow:
+        0 0 20px rgba(0,255,156,.1);
 }
 
-.step-number {
-
-    width: 30px;
-
-    height: 30px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    border: 1px solid var(--cyan);
-
-    border-radius: 50%;
-
-    color: var(--cyan);
-
-    font-size: 9px;
-}
-
-.step-info h3 {
-
-    font-size: 14px;
-
-    margin-bottom: 4px;
-}
-
-.step-info p {
-
-    color: var(--muted);
+.step-num {
+    color: var(--green);
 
     font-size: 10px;
 }
 
+.step-icon {
+    font-size: 23px;
 
-/* ================================
-   SOCIALS
-================================ */
-
-.connect-grid {
-
-    display: grid;
-
-    grid-template-columns: repeat(4,1fr);
-
-    gap: 12px;
+    margin: 20px 0 12px;
 }
 
-.social {
+.step h4 {
+    color: white;
 
-    padding: 28px 15px;
+    font-family: Orbitron;
 
-    text-align: center;
-
-    text-decoration: none;
-
-    color: var(--white);
-
-    border: 1px solid var(--line);
-
-    background: rgba(0,234,255,.025);
-
-    transition: .25s;
+    font-size: 10px;
 }
 
-.social:hover {
-
-    color: var(--cyan);
-
-    border-color: var(--cyan);
-
-    box-shadow: 0 0 25px rgba(0,234,255,.1);
-}
-
-.social small {
-
-    display: block;
-
-    margin-top: 9px;
-
+.step p {
     color: var(--muted);
 
     font-size: 9px;
 
-    letter-spacing: 2px;
+    margin-top: 8px;
 }
 
+/* =========================
+   COMMUNICATIONS
+========================= */
 
-/* ================================
-   TERMINAL MODAL
-================================ */
+.comms {
+    display: grid;
 
-.modal {
+    grid-template-columns:
+        repeat(3,1fr);
 
+    gap: 18px;
+}
+
+.comm {
+    border: 1px solid var(--line);
+
+    padding: 25px;
+
+    background: var(--panel);
+
+    color: var(--green);
+
+    text-decoration: none;
+
+    transition: .3s;
+}
+
+.comm:hover {
+    border-color: var(--cyan);
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 0 25px rgba(0,234,255,.1);
+}
+
+.comm-label {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    margin-bottom: 10px;
+}
+
+.comm-name {
+    color: white;
+
+    font-family: Orbitron;
+}
+
+/* =========================
+   TERMINAL
+========================= */
+
+.terminal-btn {
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+
+    background: #00100d;
+
+    border: 1px solid var(--green);
+
+    color: var(--green);
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 20px rgba(0,255,156,.2);
+
+    z-index: 80;
+}
+
+.terminal-modal {
     position: fixed;
 
     inset: 0;
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 20px;
-
-    background: rgba(0,0,0,.82);
+    background: rgba(0,4,5,.85);
 
     backdrop-filter: blur(8px);
 
-    z-index: 200;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
 
     opacity: 0;
 
     visibility: hidden;
 
     transition: .3s;
+
+    z-index: 90;
 }
 
-.modal.show {
-
+.terminal-modal.show {
     opacity: 1;
 
     visibility: visible;
 }
 
-.modal-window {
+.terminal {
+    width: min(750px,90%);
 
-    width: min(700px,100%);
+    background: #02090a;
 
-    max-height: 80vh;
+    border: 1px solid var(--green);
 
-    overflow: auto;
+    box-shadow:
+        0 0 50px rgba(0,255,156,.15);
 
-    background: #03090c;
-
-    border: 1px solid var(--cyan);
-
-    box-shadow: 0 0 50px rgba(0,234,255,.18);
+    padding: 20px;
 }
 
-.modal-header {
+.terminal-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    border-bottom: 1px solid var(--line);
+
+    padding-bottom: 12px;
+
+    margin-bottom: 20px;
+
+    color: var(--green);
+}
+
+.terminal-output {
+    min-height: 250px;
+
+    color: #73cdb8;
+
+    font-size: 13px;
+
+    line-height: 1.8;
+}
+
+.terminal-input {
+    display: flex;
+
+    gap: 10px;
+}
+
+.terminal-input span {
+    color: var(--green);
+}
+
+.terminal-input input {
+    flex: 1;
+
+    background: transparent;
+
+    border: none;
+
+    outline: none;
+
+    color: white;
+
+    font-family: inherit;
+}
+
+/* =========================
+   BOOT SCREEN
+========================= */
+
+.boot {
+    position: fixed;
+
+    inset: 0;
+
+    background: #010606;
+
+    z-index: 200;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition: opacity .5s;
+}
+
+.boot.active {
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: all;
+}
+
+.boot-box {
+    width: min(700px,85%);
+}
+
+.boot-title {
+    color: var(--green);
+
+    font-family: Orbitron;
+
+    font-size: 20px;
+
+    margin-bottom: 25px;
+}
+
+.boot-lines {
+    color: #6dc4b2;
+
+    font-size: 13px;
+
+    line-height: 2;
+
+    min-height: 170px;
+}
+
+.progress {
+    height: 5px;
+
+    background: rgba(0,255,156,.1);
+
+    margin-top: 25px;
+
+    overflow: hidden;
+}
+
+.progress span {
+    display: block;
+
+    height: 100%;
+
+    width: 0;
+
+    background: var(--green);
+
+    box-shadow:
+        0 0 15px var(--green);
+
+    transition: width 3s linear;
+}
+
+.boot.active .progress span {
+    width: 100%;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 35px 6vw;
+
+    border-top: 1px solid var(--line);
 
     display: flex;
 
     justify-content: space-between;
 
-    padding: 15px 20px;
-
-    border-bottom: 1px solid var(--line);
-
-    color: var(--cyan);
+    color: var(--muted);
 
     font-size: 11px;
 }
 
-.close {
-
-    cursor: pointer;
-
-    color: #ff3c6e;
-
-    font-size: 18px;
-}
-
-.modal-body {
-
-    padding: 25px;
-
-    color: var(--green);
-
-    font-size: 12px;
-
-    line-height: 2;
-}
-
-.command-button {
-
-    display: block;
-
-    width: 100%;
-
-    padding: 12px;
-
-    margin-top: 8px;
-
-    text-align: left;
-
-    background: rgba(0,234,255,.025);
-
-    border: 1px solid var(--line);
-
-    color: var(--cyan);
-
-    font-family: "Courier New", monospace;
-
-    cursor: pointer;
-}
-
-.command-button:hover {
-
-    background: rgba(0,234,255,.08);
-
-    border-color: var(--cyan);
-}
-
-
-/* ================================
-   FOOTER
-================================ */
-
-footer {
-
-    padding: 60px 7%;
-
-    text-align: center;
-
-    border-top: 1px solid var(--line);
-
-    color: var(--muted);
-
-    font-size: 10px;
-
-    letter-spacing: 2px;
-}
-
-footer span {
-
+footer strong {
     color: var(--green);
 }
 
+/* =========================
+   RESPONSIVE
+========================= */
 
-/* ================================
-   MOBILE
-================================ */
-
-@media(max-width:850px) {
+@media (max-width:1000px) {
 
     .hero {
+        min-height: auto;
 
-        grid-template-columns: 1fr;
+        padding-top: 80px;
+        padding-bottom: 80px;
 
-        padding-top: 120px;
+        display: block;
     }
 
-    .workstation {
+    .hero-content {
+        width: 100%;
 
-        order: -1;
+        position: relative;
 
-        min-height: 430px;
+        z-index: 20;
     }
 
-    .hacker {
+    .operator-zone {
+        position: relative;
 
-        transform: scale(.78);
-    }
+        right: auto;
 
-    .laptop {
+        width: 100%;
 
-        transform: scale(.78);
+        height: 650px;
+
+        margin-top: -40px;
     }
 
     .operations {
-
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
-    .connect-grid {
-
-        grid-template-columns: 1fr 1fr;
+    .learning-path {
+        grid-template-columns:
+            repeat(4,1fr);
     }
+
 }
 
-@media(max-width:500px) {
+@media (max-width:650px) {
 
     nav {
-
-        padding: 20px;
-    }
-
-    .logo {
-
-        font-size: 12px;
-    }
-
-    .status {
-
-        font-size: 8px;
+        padding: 0 20px;
     }
 
     .hero {
-
-        width: 92%;
-
-        padding-left: 4%;
-
-        padding-right: 4%;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
     .hero h1 {
-
-        font-size: 75px;
-
-        letter-spacing: -5px;
+        font-size: 50px;
     }
 
-    .roles {
-
-        font-size: 15px;
+    .operator-zone {
+        height: 480px;
     }
 
-    .workstation {
-
-        min-height: 350px;
+    .operator {
+        width: 110%;
     }
 
-    .hacker {
-
-        transform: scale(.64);
+    .hud {
+        transform: scale(.75);
     }
 
-    .laptop {
-
-        transform: scale(.61);
+    .hud-left {
+        left: -15%;
     }
 
-    .radar-box {
-
-        height: 350px;
+    .hud-right {
+        right: -15%;
     }
 
-    .radar {
-
-        width: 250px;
-
-        height: 250px;
+    .hud-bottom {
+        display: none;
     }
 
-    section {
-
-        width: 92%;
-    }
-
-    .connect-grid {
-
+    .operations,
+    .case-grid,
+    .comms {
         grid-template-columns: 1fr;
     }
 
-    .console-body {
-
-        padding: 20px;
-
-        font-size: 11px;
+    .learning-path {
+        grid-template-columns:
+            repeat(2,1fr);
     }
+
+    section {
+        padding: 80px 20px;
+    }
+
+    footer {
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
 }
 
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =========================================
-     BOOT SCREEN
-========================================= -->
-
-<div class="boot-screen" id="bootScreen">
-
-    <div class="boot-content">
-
-        <div class="boot-title">
-            BRYAN // SEC // SECURE TERMINAL
-        </div>
-
-        <div class="boot-line" style="animation-delay:.2s">
-            > initializing secure environment...
-        </div>
-
-        <div class="boot-line" style="animation-delay:.6s">
-            > loading security modules...
-        </div>
-
-        <div class="boot-line" style="animation-delay:1s">
-            > establishing encrypted interface...
-        </div>
-
-        <div class="boot-line" style="animation-delay:1.4s">
-            > loading investigation database...
-        </div>
-
-        <div class="boot-line" style="animation-delay:1.8s">
-            > activating network monitor...
-        </div>
-
-        <div class="boot-line" style="animation-delay:2.2s">
-            > operator authentication accepted.
-        </div>
-
-        <div class="boot-progress">
-            <span></span>
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================================
+<!-- =========================
      NAVIGATION
-========================================= -->
+========================= -->
 
 <nav>
 
@@ -1495,200 +1419,231 @@ footer span {
     </div>
 
     <div class="status">
+
         <span class="status-dot"></span>
+
         SYSTEM ONLINE
+
     </div>
 
 </nav>
 
 
-<!-- =========================================
+<!-- =========================
      HERO
-========================================= -->
+========================= -->
 
-<header class="hero">
+<main>
 
-    <div>
+<section class="hero">
 
-        <div class="hero-small">
-            [ SECURE TERMINAL // ONLINE ]
+    <div class="hero-content">
+
+        <div class="pretitle">
+            CYBERSECURITY OPERATIONS
         </div>
 
         <h1>
-            BRYAN<span>.</span>
+            BRYAN<br>
+            // SEC
         </h1>
 
-        <div class="roles">
+        <div class="identity">
 
             <div>ETHICAL HACKER</div>
 
-            <div>WEB SECURITY INVESTIGATOR</div>
+            <div>
+                WEB SECURITY INVESTIGATOR
+            </div>
 
-            <div>PENTESTER // APPRENTICE</div>
+            <div>
+                PENTESTER // APPRENTICE
+            </div>
 
         </div>
 
         <p class="hero-description">
 
-            Breaking things.
-            Understanding why they broke.
-            Learning how to secure them.
-
-            <br><br>
-
-            Web application security,
-            reconnaissance, offensive security,
-            Linux and penetration testing.
+            I don't just find vulnerabilities.
+            I investigate how systems break,
+            understand why they break,
+            and document what I discover.
 
         </p>
 
-        <a class="enter-btn" id="enterSystem">
-            [ ENTER SYSTEM ]
-        </a>
+        <button
+            class="enter-btn"
+            id="enterSystem"
+        >
+            ENTER SYSTEM →
+
+        </button>
 
     </div>
 
 
-    <!-- HACKER -->
+    <!-- OPERATOR ENVIRONMENT -->
 
-    <div class="workstation">
+    <div
+        class="operator-zone"
+        id="operatorZone"
+    >
 
-        <div class="workstation-glow"></div>
+        <div class="network">
 
-        <div class="hacker" id="hacker">
+            <div class="network-line line1"></div>
 
-            <div class="face"></div>
+            <div class="network-line line2"></div>
+
+            <div class="network-line line3"></div>
+
+            <div class="network-line line4"></div>
+
+
+            <div class="node n1">
+
+                <span class="node-label">
+                    RECON
+                </span>
+
+            </div>
+
+
+            <div class="node n2">
+
+                <span class="node-label">
+                    WEB-SRV
+                </span>
+
+            </div>
+
+
+            <div class="node n3">
+
+                <span class="node-label">
+                    AUTH
+                </span>
+
+            </div>
+
+
+            <div class="node n4">
+
+                <span class="node-label">
+                    DNS
+                </span>
+
+            </div>
+
+
+            <div class="node n5">
+
+                <span class="node-label">
+                    LAB
+                </span>
+
+            </div>
+
+
+            <div class="node n6">
+
+                <span class="node-label">
+                    CORE
+                </span>
+
+            </div>
 
         </div>
 
 
-        <div class="laptop" id="laptop">
+        <!-- LEFT HUD -->
 
-            <div class="screen">
+        <div class="hud hud-left">
 
-                > SECURE CONNECTION<br>
+            <div class="hud-title">
+                NETWORK MONITOR
+            </div>
 
-                > OPERATOR: BRYAN<br>
+            <div class="hud-data">
 
-                > STATUS: ACTIVE<br><br>
-
-                <span style="color:#00eaff;">
-                    $ whoami
+                packets:
+                <span id="packets">
+                    04821
                 </span>
 
                 <br>
 
-                ethical_hacker
-
-                <br><br>
-
-                <span style="color:#00eaff;">
-                    $ system.status
-                </span>
+                nodes: 06
 
                 <br>
 
-                WEB_SECURITY ..... ACTIVE<br>
+                encryption: AES-256
 
-                RECON ............ ACTIVE<br>
+                <br>
 
-                BURP_SUITE ....... ACTIVE<br>
+                status: ACTIVE
 
-                LINUX ............ ACTIVE
-
-                <br><br>
-
-                <span style="color:#00eaff;">
-                    [ CLICK TERMINAL ]
-                </span>
+                <div class="bar">
+                    <span></span>
+                </div>
 
             </div>
-
-            <div class="laptop-base"></div>
 
         </div>
 
-    </div>
 
-</header>
+        <!-- RIGHT HUD -->
 
+        <div class="hud hud-right">
 
-<!-- =========================================
-     MISSION CONSOLE
-========================================= -->
+            <div class="hud-title">
+                ACTIVE MODULE
+            </div>
 
-<section id="console">
+            <div
+                class="hud-data"
+                id="moduleText"
+            >
 
-    <div class="section-label">
-        01 // SYSTEM
-    </div>
+                WEB SECURITY<br>
+                reconnaissance<br>
+                authentication<br>
+                analysis
 
-    <h2 class="section-title">
-        MISSION CONSOLE
-    </h2>
-
-    <div class="console">
-
-        <div class="console-top">
-
-            <span>
-                BRYAN@SECURITY:~
-            </span>
-
-            <span>
-                SESSION: ACTIVE
-            </span>
+            </div>
 
         </div>
 
-        <div class="console-body">
 
-            <div>
-                <span class="console-command">$</span>
-                identity.load()
+        <!-- BOTTOM HUD -->
+
+        <div class="hud hud-bottom">
+
+            <div class="hud-title">
+                SYSTEM TIME
             </div>
 
-            <div>
-                OPERATOR:
-                <span class="console-value">
-                    BRYAN
-                </span>
+            <div
+                class="hud-data"
+                id="clock"
+            >
+                --:--:--
             </div>
 
-            <div>
-                ROLE:
-                <span class="console-value">
-                    ETHICAL HACKER / PENTESTER APPRENTICE
-                </span>
-            </div>
+        </div>
 
-            <div>
-                PRIMARY TARGET:
-                <span class="console-value">
-                    WEB APPLICATION SECURITY
-                </span>
-            </div>
 
-            <div>
-                CURRENT OBJECTIVE:
-                <span class="console-value">
-                    BUILD // LEARN // INVESTIGATE
-                </span>
-            </div>
+        <!-- HOODED OPERATOR -->
 
-            <br>
+        <div
+            class="operator"
+            id="operator"
+        >
 
-            <div>
-                <span class="console-command">$</span>
-                authorization.status()
-            </div>
-
-            <div>
-                STATUS:
-                <span style="color:#00ff9d;">
-                    AUTHORIZED LAB ENVIRONMENTS ONLY
-                </span>
-            </div>
+            <img
+                src="operator.png"
+                alt="Cybersecurity operator"
+            >
 
         </div>
 
@@ -1697,27 +1652,32 @@ footer span {
 </section>
 
 
-<!-- =========================================
+<!-- =========================
      OPERATIONS
-========================================= -->
+========================= -->
 
-<section>
+<section id="operations">
 
-    <div class="section-label">
-        02 // OPERATIONS
+    <div class="section-header">
+
+        <h2 class="section-title">
+            OPERATIONS
+        </h2>
+
+        <div class="section-command">
+            CLICK MODULE TO EXPLORE
+        </div>
+
     </div>
 
-    <h2 class="section-title">
-        CURRENT OPERATIONS
-    </h2>
 
     <div class="operations">
 
 
         <div class="card">
 
-            <div class="card-number">
-                OP-01
+            <div class="card-icon">
+                ◎
             </div>
 
             <h3>
@@ -1725,22 +1685,20 @@ footer span {
             </h3>
 
             <p>
-                Investigating vulnerabilities in
-                modern web applications and
-                understanding how they work.
-            </p>
 
-            <div class="progress">
-                <span style="width:82%"></span>
-            </div>
+                Investigate web applications,
+                identify vulnerabilities and
+                understand attack surfaces.
+
+            </p>
 
         </div>
 
 
         <div class="card">
 
-            <div class="card-number">
-                OP-02
+            <div class="card-icon">
+                ◉
             </div>
 
             <h3>
@@ -1748,22 +1706,20 @@ footer span {
             </h3>
 
             <p>
-                Information gathering,
-                enumeration and attack-surface
-                discovery.
-            </p>
 
-            <div class="progress">
-                <span style="width:76%"></span>
-            </div>
+                Map targets, gather intelligence,
+                enumerate services and identify
+                potential entry points.
+
+            </p>
 
         </div>
 
 
         <div class="card">
 
-            <div class="card-number">
-                OP-03
+            <div class="card-icon">
+                ◇
             </div>
 
             <h3>
@@ -1771,22 +1727,21 @@ footer span {
             </h3>
 
             <p>
-                Practicing authorized offensive
-                security techniques through
-                labs and controlled environments.
-            </p>
 
-            <div class="progress">
-                <span style="width:68%"></span>
-            </div>
+                Think like an attacker.
+                Test assumptions.
+                Validate weaknesses.
+                Document findings.
+
+            </p>
 
         </div>
 
 
         <div class="card">
 
-            <div class="card-number">
-                OP-04
+            <div class="card-icon">
+                ⌘
             </div>
 
             <h3>
@@ -1794,60 +1749,13 @@ footer span {
             </h3>
 
             <p>
-                Request manipulation,
-                Repeater, Intruder and
-                web vulnerability analysis.
+
+                Intercept.
+                Modify.
+                Analyze.
+                Investigate web traffic.
+
             </p>
-
-            <div class="progress">
-                <span style="width:72%"></span>
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-number">
-                OP-05
-            </div>
-
-            <h3>
-                LINUX
-            </h3>
-
-            <p>
-                Command-line fundamentals,
-                system investigation and
-                security tooling.
-            </p>
-
-            <div class="progress">
-                <span style="width:74%"></span>
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-number">
-                OP-06
-            </div>
-
-            <h3>
-                OWASP
-            </h3>
-
-            <p>
-                Studying common web application
-                vulnerabilities and learning
-                professional security analysis.
-            </p>
-
-            <div class="progress">
-                <span style="width:70%"></span>
-            </div>
 
         </div>
 
@@ -1856,202 +1764,178 @@ footer span {
 </section>
 
 
-<!-- =========================================
-     NETWORK
-========================================= -->
-
-<section>
-
-    <div class="section-label">
-        03 // NETWORK
-    </div>
-
-    <h2 class="section-title">
-        NETWORK MONITOR
-    </h2>
-
-    <div class="radar-box" id="radarBox">
-
-        <div class="radar-info">
-
-            NETWORK // MONITOR<br>
-
-            STATUS:
-            <span id="scanStatus" style="color:#00ff9d;">
-                LIVE
-            </span>
-
-            <br>
-
-            TARGETS:
-            <span id="targetCount">
-                04
-            </span>
-
-            <br>
-
-            CLICK RADAR TO SCAN
-
-        </div>
-
-        <div class="radar">
-
-            <div class="radar-sweep"></div>
-
-            <div class="target target1"></div>
-
-            <div class="target target2"></div>
-
-            <div class="target target3"></div>
-
-            <div class="target target4"></div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================
+<!-- =========================
      CASE FILES
-========================================= -->
+========================= -->
 
 <section>
 
-    <div class="section-label">
-        04 // INVESTIGATIONS
-    </div>
+    <div class="section-header">
 
-    <h2 class="section-title">
-        CASE FILES
-    </h2>
+        <h2 class="section-title">
+            CASE FILES
+        </h2>
 
-
-    <div class="case">
-
-        <div class="case-header">
-
-            <strong>
-                CASE #001 // SQL INJECTION
-            </strong>
-
-            <span class="case-status">
-                SOLVED
-            </span>
-
+        <div class="section-command">
+            INVESTIGATION DATABASE
         </div>
 
-        <div class="case-content">
+    </div>
 
-            <div class="case-content-inner">
 
-                VECTOR:
-                Web Application
+    <div class="case-grid">
 
-                <br>
 
-                OBJECTIVE:
-                Understand SQL injection behavior
-                inside a controlled lab.
+        <div class="case">
 
-                <br>
+            <div class="case-top">
 
-                TOOLS:
-                Burp Suite / Browser
+                <div>
 
-                <br>
+                    <div class="case-number">
+                        CASE #001
+                    </div>
 
-                RESULT:
-                Vulnerability identified and documented.
+                    <h3>
+                        SQL INJECTION
+                    </h3>
+
+                </div>
+
+                <div class="badge">
+                    SOLVED
+                </div>
+
+            </div>
+
+            <div class="case-details">
+
+                TARGET: Web Application<br>
+
+                VECTOR: SQL Injection<br>
+
+                TOOLS: Burp Suite<br><br>
+
+                Investigated database behavior,
+                parameter handling and response
+                differences in a controlled lab.
 
             </div>
 
         </div>
 
-    </div>
 
+        <div class="case">
 
-    <div class="case">
+            <div class="case-top">
 
-        <div class="case-header">
+                <div>
 
-            <strong>
-                CASE #002 // AUTHENTICATION
-            </strong>
+                    <div class="case-number">
+                        CASE #002
+                    </div>
 
-            <span class="case-status">
-                SOLVED
-            </span>
+                    <h3>
+                        AUTHENTICATION
+                    </h3>
 
-        </div>
+                </div>
 
-        <div class="case-content">
+                <div class="badge">
+                    SOLVED
+                </div>
 
-            <div class="case-content-inner">
+            </div>
 
-                VECTOR:
-                Authentication
+            <div class="case-details">
 
-                <br>
+                TARGET: Login System<br>
 
-                OBJECTIVE:
-                Investigate weaknesses in login
-                functionality and authentication logic.
+                VECTOR: Authentication Logic<br>
 
-                <br>
+                TOOLS: Burp Suite / Intruder<br><br>
 
-                TOOLS:
-                Burp Suite / Intruder / Repeater
-
-                <br>
-
-                RESULT:
-                Authentication behavior analyzed.
+                Investigated authentication behavior,
+                request manipulation and controlled
+                credential testing.
 
             </div>
 
         </div>
 
-    </div>
 
+        <div class="case">
 
-    <div class="case">
+            <div class="case-top">
 
-        <div class="case-header">
+                <div>
 
-            <strong>
-                CASE #003 // WEB RECON
-            </strong>
+                    <div class="case-number">
+                        CASE #003
+                    </div>
 
-            <span class="case-status">
-                ACTIVE
-            </span>
+                    <h3>
+                        RECON
+                    </h3>
+
+                </div>
+
+                <div class="badge">
+                    ACTIVE
+                </div>
+
+            </div>
+
+            <div class="case-details">
+
+                TARGET: Authorized Lab Environments<br>
+
+                VECTOR: Enumeration<br>
+
+                TOOLS: Nmap / Gobuster<br><br>
+
+                Mapping services, directories,
+                virtual hosts and potential attack
+                surfaces.
+
+            </div>
 
         </div>
 
-        <div class="case-content">
 
-            <div class="case-content-inner">
+        <div class="case">
 
-                VECTOR:
-                Attack Surface Discovery
+            <div class="case-top">
 
-                <br>
+                <div>
 
-                OBJECTIVE:
-                Identify exposed endpoints,
-                technologies and potential attack surfaces.
+                    <div class="case-number">
+                        CASE #004
+                    </div>
 
-                <br>
+                    <h3>
+                        ACCESS CONTROL
+                    </h3>
 
-                TOOLS:
-                Nmap / Gobuster / Browser
+                </div>
 
-                <br>
+                <div class="badge">
+                    ACTIVE
+                </div>
 
-                STATUS:
-                Investigation ongoing.
+            </div>
+
+            <div class="case-details">
+
+                TARGET: Web Application<br>
+
+                VECTOR: Authorization Logic<br>
+
+                TOOLS: Burp Suite<br><br>
+
+                Studying how applications separate
+                authentication from authorization
+                and where access controls fail.
 
             </div>
 
@@ -2062,208 +1946,192 @@ footer span {
 </section>
 
 
-<!-- =========================================
+<!-- =========================
      LEARNING PATH
-========================================= -->
+========================= -->
 
 <section>
 
-    <div class="section-label">
-        05 // TRAINING
+    <div class="section-header">
+
+        <h2 class="section-title">
+            LEARNING PATH
+        </h2>
+
+        <div class="section-command">
+            OPERATOR DEVELOPMENT
+        </div>
+
     </div>
 
-    <h2 class="section-title">
-        BUILD YOUR PATH
-    </h2>
 
-    <p style="
-        color:#66838d;
-        line-height:1.8;
-        margin-bottom:35px;
-        max-width:700px;
-    ">
-
-        Want to learn cybersecurity or ethical hacking?
-        Start with the fundamentals and build upward.
-
-    </p>
+    <div class="learning-path">
 
 
-    <div class="path">
+        <div class="step active">
 
-
-        <div class="path-step">
-
-            <div class="step-number">
+            <div class="step-num">
                 01
             </div>
 
-            <div class="step-info">
-
-                <h3>
-                    LINUX FUNDAMENTALS
-                </h3>
-
-                <p>
-                    Terminal, permissions,
-                    processes and filesystem basics.
-                </p>
-
+            <div class="step-icon">
+                ⌂
             </div>
+
+            <h4>
+                LINUX
+            </h4>
+
+            <p>
+                FOUNDATIONS
+            </p>
 
         </div>
 
 
-        <div class="path-step">
+        <div class="step">
 
-            <div class="step-number">
+            <div class="step-num">
                 02
             </div>
 
-            <div class="step-info">
-
-                <h3>
-                    NETWORKING
-                </h3>
-
-                <p>
-                    TCP/IP, ports, DNS,
-                    protocols and traffic.
-                </p>
-
+            <div class="step-icon">
+                ◌
             </div>
+
+            <h4>
+                NETWORKING
+            </h4>
+
+            <p>
+                TCP/IP
+            </p>
 
         </div>
 
 
-        <div class="path-step">
+        <div class="step">
 
-            <div class="step-number">
+            <div class="step-num">
                 03
             </div>
 
-            <div class="step-info">
-
-                <h3>
-                    RECONNAISSANCE
-                </h3>
-
-                <p>
-                    Enumeration, discovery
-                    and attack surfaces.
-                </p>
-
+            <div class="step-icon">
+                ⌕
             </div>
+
+            <h4>
+                RECON
+            </h4>
+
+            <p>
+                ENUMERATION
+            </p>
 
         </div>
 
 
-        <div class="path-step">
+        <div class="step">
 
-            <div class="step-number">
+            <div class="step-num">
                 04
             </div>
 
-            <div class="step-info">
-
-                <h3>
-                    WEB APPLICATION SECURITY
-                </h3>
-
-                <p>
-                    HTTP, sessions,
-                    authentication and vulnerabilities.
-                </p>
-
+            <div class="step-icon">
+                ◎
             </div>
+
+            <h4>
+                WEB SECURITY
+            </h4>
+
+            <p>
+                OWASP
+            </p>
 
         </div>
 
 
-        <div class="path-step">
+        <div class="step">
 
-            <div class="step-number">
+            <div class="step-num">
                 05
             </div>
 
-            <div class="step-info">
-
-                <h3>
-                    BURP SUITE
-                </h3>
-
-                <p>
-                    Proxy, Repeater,
-                    Intruder and request analysis.
-                </p>
-
+            <div class="step-icon">
+                ⌘
             </div>
+
+            <h4>
+                BURP SUITE
+            </h4>
+
+            <p>
+                PROXY / INTRUDER
+            </p>
 
         </div>
 
 
-        <div class="path-step">
+        <div class="step">
 
-            <div class="step-number">
+            <div class="step-num">
                 06
             </div>
 
-            <div class="step-info">
-
-                <h3>
-                    OWASP
-                </h3>
-
-                <p>
-                    Study common web
-                    application vulnerabilities.
-                </p>
-
+            <div class="step-icon">
+                ◇
             </div>
+
+            <h4>
+                OWASP
+            </h4>
+
+            <p>
+                TOP 10
+            </p>
 
         </div>
 
 
-        <div class="path-step">
+        <div class="step">
 
-            <div class="step-number">
+            <div class="step-num">
                 07
             </div>
 
-            <div class="step-info">
-
-                <h3>
-                    CTFs & LABS
-                </h3>
-
-                <p>
-                    Turn knowledge into
-                    practical problem solving.
-                </p>
-
+            <div class="step-icon">
+                ⚑
             </div>
+
+            <h4>
+                CTFs / LABS
+            </h4>
+
+            <p>
+                PRACTICE
+            </p>
 
         </div>
 
 
-        <div class="path-step">
+        <div class="step">
 
-            <div class="step-number">
+            <div class="step-num">
                 08
             </div>
 
-            <div class="step-info">
-
-                <h3>
-                    PENETRATION TESTING
-                </h3>
-
-                <p>
-                    Combine recon, testing,
-                    documentation and remediation.
-                </p>
-
+            <div class="step-icon">
+                ◈
             </div>
+
+            <h4>
+                PENTESTING
+            </h4>
+
+            <p>
+                FULL CYCLE
+            </p>
 
         </div>
 
@@ -2272,82 +2140,78 @@ footer span {
 </section>
 
 
-<!-- =========================================
-     SOCIALS
-========================================= -->
+<!-- =========================
+     COMMUNICATIONS
+========================= -->
 
 <section>
 
-    <div class="section-label">
-        06 // CONNECTIONS
+    <div class="section-header">
+
+        <h2 class="section-title">
+            COMMUNICATIONS
+        </h2>
+
+        <div class="section-command">
+            ESTABLISH CONNECTION
+        </div>
+
     </div>
 
-    <h2 class="section-title">
-        ESTABLISH CONNECTION
-    </h2>
 
-
-    <div class="connect-grid">
+    <div class="comms">
 
 
         <a
-            class="social"
-            href="https://github.com/kingbryan13"
-            target="_blank"
-            rel="noopener"
-        >
-
-            GITHUB
-
-            <small>
-                CODE // PROJECTS
-            </small>
-
-        </a>
-
-
-        <a
-            class="social"
+            class="comm"
             href="https://instagram.com/oj_the_menace"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
         >
 
-            INSTAGRAM
+            <div class="comm-label">
+                CHANNEL 01 // INSTAGRAM
+            </div>
 
-            <small>
-                @OJ_THE_MENACE
-            </small>
+            <div class="comm-name">
+                @oj_the_menace →
+            </div>
 
         </a>
 
 
         <a
-            class="social"
+            class="comm"
             href="https://x.com/BryanITPentest"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
         >
 
-            X / TWITTER
+            <div class="comm-label">
+                CHANNEL 02 // X
+            </div>
 
-            <small>
-                @BryanITPentest
-            </small>
+            <div class="comm-name">
+                @BryanITPentest →
+            </div>
 
         </a>
 
 
         <a
-            class="social"
-            href="#console"
+            class="comm"
+            href="https://github.com/kingbryan13"
+            target="_blank"
+            rel="noopener noreferrer"
         >
 
-            TERMINAL
+            <div class="comm-label">
+                CHANNEL 03 // GITHUB
+            </div>
 
-            <small>
-                SYSTEM PROFILE
-            </small>
+            <div class="comm-name">
+                kingbryan13 →
+            </div>
 
         </a>
 
@@ -2355,79 +2219,72 @@ footer span {
 
 </section>
 
+</main>
 
-<!-- =========================================
+
+<!-- =========================
+     TERMINAL BUTTON
+========================= -->
+
+<button
+    class="terminal-btn"
+    id="terminalButton"
+>
+    >
+</button>
+
+
+<!-- =========================
      TERMINAL
-========================================= -->
+========================= -->
 
-<div class="modal" id="terminalModal">
+<div
+    class="terminal-modal"
+    id="terminalModal"
+>
 
-    <div class="modal-window">
+    <div class="terminal">
 
-        <div class="modal-header">
+        <div class="terminal-header">
 
             <span>
-                BRYAN@SECURITY // TERMINAL
+                BRYAN // SEC TERMINAL
             </span>
 
-            <span class="close" id="closeModal">
-                ×
+            <span
+                id="terminalClose"
+                style="cursor:pointer;"
+            >
+                [ X ]
             </span>
 
         </div>
 
 
-        <div class="modal-body">
+        <div
+            class="terminal-output"
+            id="terminalOutput"
+        >
 
-            <div id="terminalOutput">
+            > Secure terminal initialized.<br>
 
-                > secure terminal initialized.<br>
+            > Type <strong>help</strong>
+            for available commands.
 
-                > awaiting command...
-
-                <br><br>
-
-            </div>
+        </div>
 
 
-            <button
-                class="command-button"
-                data-command="whoami"
+        <div class="terminal-input">
+
+            <span>
+                operator@bryan:~$
+            </span>
+
+            <input
+                id="terminalInput"
+                autocomplete="off"
+                spellcheck="false"
             >
-                $ whoami
-            </button>
-
-
-            <button
-                class="command-button"
-                data-command="status"
-            >
-                $ status
-            </button>
-
-
-            <button
-                class="command-button"
-                data-command="scan"
-            >
-                $ scan --network
-            </button>
-
-
-            <button
-                class="command-button"
-                data-command="skills"
-            >
-                $ skills
-            </button>
-
-
-            <button
-                class="command-button"
-                data-command="clear"
-            >
-                $ clear
-            </button>
 
         </div>
 
@@ -2436,362 +2293,549 @@ footer span {
 </div>
 
 
-<!-- =========================================
+<!-- =========================
+     BOOT SCREEN
+========================= -->
+
+<div
+    class="boot"
+    id="boot"
+>
+
+    <div class="boot-box">
+
+        <div class="boot-title">
+
+            INITIALIZING SECURE ENVIRONMENT...
+
+        </div>
+
+
+        <div class="boot-lines">
+
+            <div>
+                > Loading security modules...
+            </div>
+
+            <div>
+                > Establishing encrypted connection...
+            </div>
+
+            <div>
+                > Activating network monitor...
+            </div>
+
+            <div>
+                > Mounting investigation database...
+            </div>
+
+            <div>
+                > Authenticating operator...
+            </div>
+
+            <div id="bootFinal">
+                > Awaiting authorization...
+            </div>
+
+        </div>
+
+
+        <div class="progress">
+
+            <span></span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
      FOOTER
-========================================= -->
+========================= -->
 
 <footer>
 
-    BRYAN // SEC
-
-    <br><br>
+    <strong>
+        BRYAN // SEC
+    </strong>
 
     <span>
-        AUTHORIZED ACCESS ONLY
+        BUILDING A SAFER DIGITAL WORLD
     </span>
 
-    <br><br>
-
-    © 2026 // BUILDING THE SKILLSET
+    <span>
+        © 2026
+    </span>
 
 </footer>
 
 
-<!-- =========================================
-     JAVASCRIPT
-========================================= -->
-
 <script>
 
-/* =========================================
+/* =========================
    ENTER SYSTEM
-========================================= */
+========================= */
 
-const bootScreen =
-    document.getElementById("bootScreen");
-
-const enterSystem =
+const enterButton =
     document.getElementById("enterSystem");
 
-enterSystem.addEventListener("click", function() {
-
-    bootScreen.classList.add("active");
-
-    setTimeout(function() {
-
-        bootScreen.classList.remove("active");
-
-        document
-            .getElementById("console")
-            .scrollIntoView({
-                behavior: "smooth"
-            });
-
-    }, 3700);
-
-});
+const boot =
+    document.getElementById("boot");
 
 
-/* =========================================
-   TERMINAL
-========================================= */
+enterButton.addEventListener(
+    "click",
+    function() {
 
-const laptop =
-    document.getElementById("laptop");
+        boot.classList.add("active");
 
-const hacker =
-    document.getElementById("hacker");
+        document.getElementById("bootFinal")
+            .textContent =
+            "> Operator authorization accepted.";
 
-const modal =
-    document.getElementById("terminalModal");
+        setTimeout(
+            function() {
 
-const closeModal =
-    document.getElementById("closeModal");
+                boot.classList.remove("active");
+
+                document.body.classList
+                    .add("system-active");
+
+                document.getElementById(
+                    "operations"
+                ).scrollIntoView({
+                    behavior: "smooth"
+                });
+
+            },
+            3200
+        );
+
+    }
+);
 
 
-function openTerminal() {
+/* =========================
+   MOUSE PARALLAX
+========================= */
 
-    modal.classList.add("show");
+const operatorZone =
+    document.getElementById(
+        "operatorZone"
+    );
+
+const operator =
+    document.getElementById(
+        "operator"
+    );
+
+
+operatorZone.addEventListener(
+    "mousemove",
+    function(e) {
+
+        const rect =
+            operatorZone.getBoundingClientRect();
+
+        const x =
+            (e.clientX - rect.left)
+            / rect.width - .5;
+
+        const y =
+            (e.clientY - rect.top)
+            / rect.height - .5;
+
+        operator.style.transform =
+            `translate(${x * 18}px, ${y * 18}px)`;
+
+    }
+);
+
+
+operatorZone.addEventListener(
+    "mouseleave",
+    function() {
+
+        operator.style.transform =
+            "translate(0,0)";
+
+    }
+);
+
+
+/* =========================
+   NETWORK NODES
+========================= */
+
+const nodes =
+    document.querySelectorAll(".node");
+
+const moduleText =
+    document.getElementById(
+        "moduleText"
+    );
+
+
+const nodeMessages = {
+
+    n1:
+        "RECON<br>" +
+        "enumeration<br>" +
+        "attack surface<br>" +
+        "intelligence",
+
+    n2:
+        "WEB-SRV<br>" +
+        "HTTP<br>" +
+        "application layer<br>" +
+        "testing",
+
+    n3:
+        "AUTH<br>" +
+        "login logic<br>" +
+        "authorization<br>" +
+        "session testing",
+
+    n4:
+        "DNS<br>" +
+        "subdomains<br>" +
+        "virtual hosts<br>" +
+        "mapping",
+
+    n5:
+        "LAB<br>" +
+        "controlled environment<br>" +
+        "CTF<br>" +
+        "practice",
+
+    n6:
+        "CORE<br>" +
+        "operator system<br>" +
+        "all modules<br>" +
+        "ACTIVE"
+
+};
+
+
+nodes.forEach(
+    function(node) {
+
+        node.addEventListener(
+            "click",
+            function() {
+
+                const classes =
+                    [...node.classList];
+
+                const key =
+                    classes.find(
+                        c => nodeMessages[c]
+                    );
+
+                if (key) {
+
+                    moduleText.innerHTML =
+                        nodeMessages[key];
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================
+   CASE FILES
+========================= */
+
+document.querySelectorAll(".case")
+    .forEach(
+        function(caseFile) {
+
+            caseFile.addEventListener(
+                "click",
+                function() {
+
+                    this.classList.toggle(
+                        "open"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================
+   LEARNING PATH
+========================= */
+
+document.querySelectorAll(".step")
+    .forEach(
+        function(step) {
+
+            step.addEventListener(
+                "click",
+                function() {
+
+                    document
+                        .querySelectorAll(".step")
+                        .forEach(
+                            s =>
+                            s.classList
+                                .remove("active")
+                        );
+
+                    this.classList.add(
+                        "active"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================
+   CLOCK
+========================= */
+
+function updateClock() {
+
+    const now =
+        new Date();
+
+    document.getElementById("clock")
+        .textContent =
+        now.toLocaleTimeString();
 
 }
 
-laptop.addEventListener(
-    "click",
-    openTerminal
+updateClock();
+
+setInterval(
+    updateClock,
+    1000
 );
 
-hacker.addEventListener(
-    "click",
-    openTerminal
+
+/* =========================
+   VISUAL PACKET ACTIVITY
+========================= */
+
+function updatePackets() {
+
+    const number =
+        Math.floor(
+            4000 +
+            Math.random() * 2500
+        );
+
+    document.getElementById(
+        "packets"
+    ).textContent =
+        String(number)
+        .padStart(5,"0");
+
+}
+
+setInterval(
+    updatePackets,
+    1200
 );
 
-closeModal.addEventListener(
+
+/* =========================
+   TERMINAL
+========================= */
+
+const terminalButton =
+    document.getElementById(
+        "terminalButton"
+    );
+
+const terminalModal =
+    document.getElementById(
+        "terminalModal"
+    );
+
+const terminalClose =
+    document.getElementById(
+        "terminalClose"
+    );
+
+const terminalInput =
+    document.getElementById(
+        "terminalInput"
+    );
+
+const terminalOutput =
+    document.getElementById(
+        "terminalOutput"
+    );
+
+
+terminalButton.addEventListener(
     "click",
     function() {
 
-        modal.classList.remove("show");
+        terminalModal.classList
+            .add("show");
+
+        setTimeout(
+            function() {
+
+                terminalInput.focus();
+
+            },
+            200
+        );
 
     }
 );
 
 
-/* CLICK OUTSIDE TERMINAL */
-
-modal.addEventListener(
-    "click",
-    function(event) {
-
-        if (event.target === modal) {
-
-            modal.classList.remove("show");
-
-        }
-
-    }
-);
-
-
-/* =========================================
-   TERMINAL COMMANDS
-========================================= */
-
-const output =
-    document.getElementById("terminalOutput");
-
-const buttons =
-    document.querySelectorAll(".command-button");
-
-
-buttons.forEach(function(button) {
-
-    button.addEventListener(
-        "click",
-        function() {
-
-            const command =
-                button.dataset.command;
-
-
-            /* CLEAR */
-
-            if (command === "clear") {
-
-                output.innerHTML = "";
-
-                return;
-
-            }
-
-
-            let response = "";
-
-
-            /* WHOAMI */
-
-            if (command === "whoami") {
-
-                response = `
-                    <br>
-                    > executing whoami...
-                    <br>
-                    operator: BRYAN
-                    <br>
-                    role: ETHICAL HACKER
-                    <br>
-                    focus: WEB SECURITY
-                    <br>
-                    status: ACTIVE
-                    <br>
-                `;
-
-            }
-
-
-            /* STATUS */
-
-            if (command === "status") {
-
-                response = `
-                    <br>
-                    > system.status()
-                    <br>
-                    WEB SECURITY ........ ONLINE
-                    <br>
-                    RECON ............... ONLINE
-                    <br>
-                    BURP SUITE .......... ONLINE
-                    <br>
-                    LINUX ................ ONLINE
-                    <br>
-                    TRAINING ............ ACTIVE
-                    <br>
-                `;
-
-            }
-
-
-            /* SCAN */
-
-            if (command === "scan") {
-
-                response = `
-                    <br>
-                    > initiating simulated network scan...
-                    <br>
-                    > discovering nodes...
-                    <br>
-                    > node-01 ........ FOUND
-                    <br>
-                    > node-02 ........ FOUND
-                    <br>
-                    > node-03 ........ FOUND
-                    <br>
-                    > node-04 ........ FOUND
-                    <br>
-                    > scan complete.
-                    <br>
-                `;
-
-            }
-
-
-            /* SKILLS */
-
-            if (command === "skills") {
-
-                response = `
-                    <br>
-                    > loading operator skillset...
-                    <br>
-                    SQL INJECTION
-                    <br>
-                    AUTHENTICATION
-                    <br>
-                    ACCESS CONTROL
-                    <br>
-                    XSS
-                    <br>
-                    SSRF
-                    <br>
-                    PATH TRAVERSAL
-                    <br>
-                    RECONNAISSANCE
-                    <br>
-                `;
-
-            }
-
-
-            output.innerHTML += response;
-
-        }
-    );
-
-});
-
-
-/* =========================================
-   CASE FILES
-========================================= */
-
-const cases =
-    document.querySelectorAll(".case");
-
-
-cases.forEach(function(caseFile) {
-
-    const header =
-        caseFile.querySelector(".case-header");
-
-    header.addEventListener(
-        "click",
-        function() {
-
-            caseFile.classList.toggle("open");
-
-        }
-    );
-
-});
-
-
-/* =========================================
-   LEARNING PATH
-========================================= */
-
-const steps =
-    document.querySelectorAll(".path-step");
-
-
-steps.forEach(function(step) {
-
-    step.addEventListener(
-        "click",
-        function() {
-
-            steps.forEach(function(item) {
-
-                item.classList.remove("active");
-
-            });
-
-            step.classList.add("active");
-
-        }
-    );
-
-});
-
-
-/* =========================================
-   RADAR
-========================================= */
-
-const radarBox =
-    document.getElementById("radarBox");
-
-const scanStatus =
-    document.getElementById("scanStatus");
-
-
-radarBox.addEventListener(
+terminalClose.addEventListener(
     "click",
     function() {
 
-        scanStatus.textContent =
-            "SCANNING";
-
-        scanStatus.style.color =
-            "#00eaff";
-
-
-        setTimeout(function() {
-
-            scanStatus.textContent =
-                "COMPLETE";
-
-            scanStatus.style.color =
-                "#00ff9d";
-
-        }, 2200);
+        terminalModal.classList
+            .remove("show");
 
     }
 );
 
 
-/* =========================================
+terminalModal.addEventListener(
+    "click",
+    function(e) {
+
+        if (
+            e.target === terminalModal
+        ) {
+
+            terminalModal.classList
+                .remove("show");
+
+        }
+
+    }
+);
+
+
+terminalInput.addEventListener(
+    "keydown",
+    function(e) {
+
+        if (e.key !== "Enter")
+            return;
+
+        const command =
+            terminalInput.value
+            .trim()
+            .toLowerCase();
+
+        terminalInput.value = "";
+
+        let response = "";
+
+
+        if (command === "help") {
+
+            response =
+                "Available commands:<br>" +
+                "help — show commands<br>" +
+                "whoami — operator identity<br>" +
+                "status — system status<br>" +
+                "clear — clear terminal";
+
+        }
+
+        else if (
+            command === "whoami"
+        ) {
+
+            response =
+                "operator: BRYAN<br>" +
+                "role: ethical hacker<br>" +
+                "focus: web security / pentesting";
+
+        }
+
+        else if (
+            command === "status"
+        ) {
+
+            response =
+                "SYSTEM: ONLINE<br>" +
+                "NETWORK: MONITORED<br>" +
+                "SECURITY MODULES: ACTIVE<br>" +
+                "AUTHORIZATION: REQUIRED FOR TARGETED TESTING";
+
+        }
+
+        else if (
+            command === "clear"
+        ) {
+
+            terminalOutput.innerHTML = "";
+
+            return;
+
+        }
+
+        else if (
+            command === ""
+        ) {
+
+            return;
+
+        }
+
+        else {
+
+            response =
+                "command not recognized.<br>" +
+                "type <strong>help</strong>.";
+
+        }
+
+
+        terminalOutput.innerHTML +=
+            "<br>> " +
+            command +
+            "<br>" +
+            response +
+            "<br>";
+
+        terminalOutput.scrollTop =
+            terminalOutput.scrollHeight;
+
+    }
+);
+
+
+/* =========================
    ESCAPE KEY
-========================================= */
+========================= */
 
 document.addEventListener(
     "keydown",
-    function(event) {
+    function(e) {
 
-        if (event.key === "Escape") {
+        if (e.key === "Escape") {
 
-            modal.classList.remove("show");
+            terminalModal.classList
+                .remove("show");
 
-            bootScreen.classList.remove("active");
+            boot.classList
+                .remove("active");
 
         }
 
