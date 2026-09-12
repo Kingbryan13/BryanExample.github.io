@@ -2,2845 +2,1754 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#020706">
 <title>BRYAN // SEC</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;500;600;700;800&display=swap');
-
-:root {
-    --green: #00ff9c;
-    --cyan: #00eaff;
-    --dark: #020708;
-    --panel: rgba(0, 20, 22, 0.78);
-    --line: rgba(0, 255, 156, 0.25);
-    --text: #b8fff0;
-    --muted: #548c82;
+:root{
+    --green:#00ff9c;
+    --cyan:#00eaff;
+    --dark:#020706;
+    --panel:rgba(2,15,13,.86);
+    --line:rgba(0,255,156,.24);
+    --text:#d9fff2;
+    --muted:#65a899;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-html {
-    scroll-behavior: smooth;
+html{
+    scroll-behavior:smooth;
 }
 
-body {
+body{
     background:
-        radial-gradient(
-            circle at 50% 25%,
-            rgba(0,255,156,.08),
-            transparent 35%
-        ),
-        #010506;
-
-    color: var(--text);
-    font-family: "Share Tech Mono", monospace;
-    overflow-x: hidden;
+        radial-gradient(circle at 50% 10%,rgba(0,255,156,.08),transparent 30%),
+        #020706;
+    color:var(--text);
+    font-family:Rajdhani,sans-serif;
+    overflow-x:hidden;
 }
 
-/* SCANLINES */
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-
-    pointer-events: none;
-    z-index: 100;
-
-    opacity: .055;
-
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
     background:
-        repeating-linear-gradient(
-            0deg,
-            transparent 0px,
-            transparent 3px,
-            #00ff9c 4px
-        );
+        linear-gradient(rgba(0,255,156,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,255,156,.035) 1px,transparent 1px);
+    background-size:40px 40px;
+    pointer-events:none;
+    z-index:-5;
 }
 
-/* MOVING GRID */
-
-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-
-    pointer-events: none;
-    z-index: -1;
-
-    background-image:
-        linear-gradient(
-            rgba(0,255,156,.035) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(0,255,156,.035) 1px,
-            transparent 1px
-        );
-
-    background-size: 45px 45px;
-
-    animation: gridMove 15s linear infinite;
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0,255,156,.025) 4px
+    );
+    pointer-events:none;
+    z-index:999;
 }
 
-@keyframes gridMove {
+/* ================= NAV ================= */
 
-    from {
-        background-position: 0 0;
-    }
-
-    to {
-        background-position: 45px 45px;
-    }
-
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:76px;
+    padding:10px 3%;
+    padding-top:max(10px,env(safe-area-inset-top));
+    background:rgba(1,8,7,.88);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    z-index:1000;
 }
 
-/* =========================
-   NAV
-========================= */
-
-nav {
-    height: 72px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 6vw;
-
-    border-bottom: 1px solid var(--line);
-
-    background: rgba(0,8,10,.72);
-
-    backdrop-filter: blur(15px);
-
-    position: sticky;
-    top: 0;
-
-    z-index: 50;
+.logo{
+    font-family:Orbitron,sans-serif;
+    font-size:20px;
+    font-weight:800;
+    color:var(--green);
+    letter-spacing:2px;
 }
 
-.logo {
-    font-family: Orbitron, sans-serif;
-    font-weight: 700;
-
-    color: var(--green);
-
-    letter-spacing: 3px;
-
-    text-shadow:
-        0 0 15px rgba(0,255,156,.6);
+.logo small{
+    display:block;
+    color:var(--muted);
+    font-family:Rajdhani;
+    font-size:9px;
+    letter-spacing:2px;
 }
 
-.status {
-    display: flex;
-    align-items: center;
-
-    gap: 9px;
-
-    font-size: 12px;
-
-    color: var(--green);
+.nav-links{
+    display:flex;
+    gap:25px;
 }
 
-.status-dot {
-    width: 8px;
-    height: 8px;
-
-    background: var(--green);
-
-    border-radius: 50%;
-
-    box-shadow:
-        0 0 15px var(--green);
-
-    animation: pulse 1.4s infinite;
+.nav-links a{
+    color:#7fb9aa;
+    text-decoration:none;
+    font-size:12px;
+    letter-spacing:1.5px;
+    transition:.25s;
 }
 
-@keyframes pulse {
-
-    50% {
-        opacity: .25;
-        transform: scale(.6);
-    }
-
+.nav-links a:hover{
+    color:var(--green);
+    text-shadow:0 0 12px var(--green);
 }
 
-/* =========================
-   HERO
-========================= */
-
-.hero {
-    min-height: calc(100vh - 72px);
-
-    position: relative;
-
-    display: flex;
-    align-items: center;
-
-    overflow: hidden;
-
-    padding: 50px 6vw;
+.status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:10px;
+    color:var(--green);
 }
 
-.hero-content {
-    width: 42%;
-
-    position: relative;
-
-    z-index: 12;
+.status-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 15px var(--green);
+    animation:pulse 1.5s infinite;
 }
 
-.pretitle {
-    color: var(--green);
-
-    letter-spacing: 3px;
-
-    font-size: 13px;
-
-    margin-bottom: 18px;
+@keyframes pulse{
+    0%,100%{opacity:1;transform:scale(1)}
+    50%{opacity:.45;transform:scale(.65)}
 }
 
-.pretitle::before {
-    content: "> ";
+/* ================= HERO ================= */
+
+.hero{
+    min-height:100vh;
+    padding:120px 5% 50px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.hero h1 {
-    font-family: Orbitron, sans-serif;
-
-    font-size: clamp(48px,7vw,105px);
-
-    line-height: .9;
-
-    letter-spacing: -3px;
-
-    color: white;
-
-    text-shadow:
-        0 0 10px rgba(0,255,156,.4),
-        0 0 35px rgba(0,255,156,.2);
-}
-
-.identity {
-    margin-top: 30px;
-
-    border-left: 2px solid var(--green);
-
-    padding-left: 17px;
-}
-
-.identity div {
-    margin: 7px 0;
-
-    color: var(--cyan);
-
-    font-size: 14px;
-}
-
-.identity div::before {
-    content: "> ";
-
-    color: var(--green);
-}
-
-.hero-description {
-    margin-top: 30px;
-
-    max-width: 480px;
-
-    color: #7fb8ae;
-
-    line-height: 1.8;
-
-    font-size: 14px;
-}
-
-.enter-btn {
-    margin-top: 35px;
-
-    position: relative;
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 15px;
-
-    padding: 17px 28px;
-
-    color: var(--green);
-
-    background: rgba(0,255,156,.04);
-
-    border: 1px solid var(--green);
-
-    font-family: "Share Tech Mono";
-
-    font-size: 15px;
-
-    letter-spacing: 2px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 0 20px rgba(0,255,156,.12),
-        inset 0 0 20px rgba(0,255,156,.04);
-
-    transition: .3s;
-}
-
-.enter-btn:hover {
-    background: rgba(0,255,156,.12);
-
-    box-shadow:
-        0 0 30px rgba(0,255,156,.3),
-        inset 0 0 25px rgba(0,255,156,.08);
-
-    transform: translateY(-2px);
-}
-
-.enter-btn::after {
-    content: "";
-
-    position: absolute;
-
-    width: 10px;
-    height: 10px;
-
-    right: -5px;
-    top: -5px;
-
-    border-top: 2px solid var(--cyan);
-    border-right: 2px solid var(--cyan);
-}
-
-/* =========================
-   OPERATOR ENVIRONMENT
-========================= */
-
-.operator-zone {
-    position: absolute;
-
-    right: -4%;
-    top: 0;
-
-    width: 67%;
-    height: 100%;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-}
-
-/* GLOW */
-
-.operator-zone::before {
-    content: "";
-
-    position: absolute;
-
-    width: 600px;
-    height: 600px;
-
+.command-center{
+    width:min(1200px,100%);
+    min-height:650px;
+    position:relative;
+    border:1px solid rgba(0,255,156,.4);
     background:
-        radial-gradient(
-            circle,
-            rgba(0,255,156,.20),
-            rgba(0,234,255,.07) 35%,
-            transparent 70%
-        );
-
-    filter: blur(20px);
-
-    animation: coreGlow 4s ease-in-out infinite;
-}
-
-@keyframes coreGlow {
-
-    50% {
-        transform: scale(1.15);
-        opacity: .65;
-    }
-
-}
-
-/* =========================
-   NETWORK
-========================= */
-
-.network {
-    position: absolute;
-
-    inset: 0;
-
-    overflow: hidden;
-}
-
-.network-line {
-    position: absolute;
-
-    height: 1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(0,255,156,.65),
-            transparent
-        );
-
-    transform-origin: left center;
-
-    animation: dataFlow 3s linear infinite;
-}
-
-.line1 {
-    width: 600px;
-    left: 5%;
-    top: 30%;
-    transform: rotate(20deg);
-}
-
-.line2 {
-    width: 700px;
-    left: 30%;
-    top: 65%;
-    transform: rotate(-20deg);
-    animation-delay: 1s;
-}
-
-.line3 {
-    width: 500px;
-    left: 40%;
-    top: 25%;
-    transform: rotate(55deg);
-    animation-delay: 1.7s;
-}
-
-.line4 {
-    width: 550px;
-    left: 10%;
-    top: 70%;
-    transform: rotate(-45deg);
-    animation-delay: 2.2s;
-}
-
-@keyframes dataFlow {
-
-    0% {
-        opacity: .1;
-        filter: brightness(.5);
-    }
-
-    50% {
-        opacity: 1;
-        filter: brightness(2);
-    }
-
-    100% {
-        opacity: .1;
-        filter: brightness(.5);
-    }
-
-}
-
-/* =========================
-   NODES
-========================= */
-
-.node {
-    position: absolute;
-
-    width: 13px;
-    height: 13px;
-
-    border: 2px solid var(--green);
-
-    border-radius: 50%;
-
-    background: #001512;
-
+        radial-gradient(circle at center,rgba(0,255,156,.08),transparent 45%),
+        rgba(0,10,8,.72);
     box-shadow:
-        0 0 8px var(--green),
-        0 0 25px rgba(0,255,156,.7);
-
-    cursor: pointer;
-
-    z-index: 9;
-
-    animation: nodePulse 2s infinite;
+        0 0 50px rgba(0,255,156,.06),
+        inset 0 0 80px rgba(0,255,156,.025);
+    overflow:hidden;
 }
 
-.node::before {
-    content: "";
-
-    position: absolute;
-
-    inset: -8px;
-
-    border: 1px solid rgba(0,255,156,.18);
-
-    border-radius: 50%;
-
-    animation: radar 2s infinite;
+.command-center::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:35%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(0,255,156,.08),
+        transparent
+    );
+    animation:scan 7s linear infinite;
 }
 
-.node:hover {
-    transform: scale(1.5);
-
-    background: var(--green);
+@keyframes scan{
+    to{left:130%}
 }
 
-@keyframes nodePulse {
-
-    50% {
-        box-shadow:
-            0 0 15px var(--green),
-            0 0 40px rgba(0,255,156,.8);
-    }
-
+.corner{
+    position:absolute;
+    width:35px;
+    height:35px;
+    border-color:var(--green);
+    opacity:.8;
 }
 
-@keyframes radar {
-
-    from {
-        transform: scale(.5);
-        opacity: 1;
-    }
-
-    to {
-        transform: scale(2.4);
-        opacity: 0;
-    }
-
+.corner.tl{
+    top:10px;
+    left:10px;
+    border-top:2px solid;
+    border-left:2px solid;
 }
 
-.node-label {
-    position: absolute;
-
-    left: 20px;
-    top: -5px;
-
-    white-space: nowrap;
-
-    color: var(--green);
-
-    font-size: 10px;
-
-    pointer-events: none;
+.corner.tr{
+    top:10px;
+    right:10px;
+    border-top:2px solid;
+    border-right:2px solid;
 }
 
-.n1 {
-    left: 15%;
-    top: 27%;
+.corner.bl{
+    bottom:10px;
+    left:10px;
+    border-bottom:2px solid;
+    border-left:2px solid;
 }
 
-.n2 {
-    left: 79%;
-    top: 22%;
+.corner.br{
+    bottom:10px;
+    right:10px;
+    border-bottom:2px solid;
+    border-right:2px solid;
 }
 
-.n3 {
-    left: 86%;
-    top: 65%;
+.command-title{
+    position:absolute;
+    top:25px;
+    left:30px;
+    z-index:10;
 }
 
-.n4 {
-    left: 16%;
-    top: 72%;
+.command-title span{
+    color:var(--green);
+    font-family:Orbitron;
+    font-size:13px;
+    letter-spacing:2px;
 }
 
-.n5 {
-    left: 72%;
-    top: 80%;
+.command-title p{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:4px;
 }
 
-.n6 {
-    left: 48%;
-    top: 17%;
-}
-
-/* =========================
-   OPERATOR
-========================= */
-
-.operator {
-    position: relative;
-
-    width: min(650px,75%);
-
-    z-index: 7;
-
+.operator{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-43%);
+    width:min(470px,58%);
+    max-height:560px;
+    object-fit:contain;
     filter:
-        drop-shadow(0 0 25px rgba(0,255,156,.25))
-        drop-shadow(0 0 80px rgba(0,255,156,.12));
-
-    transition:
-        transform .15s ease-out,
-        filter .4s;
+        drop-shadow(0 0 25px rgba(0,255,156,.35))
+        drop-shadow(0 0 70px rgba(0,234,255,.12));
+    z-index:3;
 }
 
-.operator img {
-    width: 100%;
-
-    display: block;
-
-    mix-blend-mode: screen;
-
-    filter:
-        contrast(1.15)
-        brightness(.85)
-        saturate(1.25);
+.operator-fallback{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-45%);
+    width:280px;
+    height:320px;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:var(--green);
+    border:1px dashed rgba(0,255,156,.4);
+    background:rgba(0,255,156,.025);
+    font-family:Orbitron;
+    font-size:11px;
+    letter-spacing:2px;
 }
 
-.operator::after {
-    content: "";
+/* ================= HERO NETWORK ================= */
 
-    position: absolute;
-
-    left: 10%;
-    right: 10%;
-
-    height: 2px;
-
-    background: var(--green);
-
-    box-shadow:
-        0 0 10px var(--green),
-        0 0 25px var(--green);
-
-    opacity: .55;
-
-    animation: scan 4s linear infinite;
+.network{
+    position:absolute;
+    inset:0;
+    z-index:2;
 }
 
-@keyframes scan {
-
-    from {
-        top: 10%;
-    }
-
-    to {
-        top: 88%;
-    }
-
+.network svg{
+    width:100%;
+    height:100%;
 }
 
-/* =========================
-   HUD
-========================= */
-
-.hud {
-    position: absolute;
-
-    border: 1px solid rgba(0,255,156,.35);
-
-    background: rgba(0,12,14,.75);
-
-    backdrop-filter: blur(8px);
-
-    padding: 15px;
-
-    color: var(--green);
-
-    font-size: 11px;
-
-    box-shadow:
-        0 0 25px rgba(0,255,156,.07),
-        inset 0 0 20px rgba(0,255,156,.025);
-
-    z-index: 15;
+.net-line{
+    stroke:var(--green);
+    stroke-width:1;
+    opacity:.25;
+    stroke-dasharray:5 8;
+    animation:flow 4s linear infinite;
 }
 
-.hud::before {
-    content: "";
-
-    position: absolute;
-
-    width: 8px;
-    height: 8px;
-
-    top: -1px;
-    left: -1px;
-
-    border-top: 2px solid var(--cyan);
-    border-left: 2px solid var(--cyan);
+@keyframes flow{
+    to{stroke-dashoffset:-100}
 }
 
-.hud-title {
-    color: var(--cyan);
-
-    margin-bottom: 10px;
-
-    letter-spacing: 1px;
+.net-node{
+    cursor:pointer;
 }
 
-.hud-data {
-    color: #62b9a9;
-
-    line-height: 1.8;
+.net-node circle{
+    fill:#03130f;
+    stroke:var(--green);
+    stroke-width:2;
+    filter:drop-shadow(0 0 8px rgba(0,255,156,.65));
+    transition:.25s;
 }
 
-.hud-left {
-    left: 5%;
-    top: 25%;
+.net-node:hover circle{
+    fill:rgba(0,255,156,.16);
+    stroke:var(--cyan);
+    filter:drop-shadow(0 0 20px var(--green));
 }
 
-.hud-right {
-    right: 3%;
-    top: 30%;
+.net-node text{
+    fill:var(--green);
+    font-family:Orbitron;
+    font-size:11px;
+    letter-spacing:1px;
+    pointer-events:none;
 }
 
-.hud-bottom {
-    right: 8%;
-    bottom: 12%;
+.node-ring{
+    fill:none;
+    stroke:var(--cyan);
+    opacity:.3;
+    animation:ring 2s infinite;
 }
 
-.bar {
-    height: 4px;
-
-    width: 120px;
-
-    background: rgba(0,255,156,.1);
-
-    margin-top: 5px;
-
-    overflow: hidden;
+@keyframes ring{
+    0%{r:25;opacity:.5}
+    100%{r:45;opacity:0}
 }
 
-.bar span {
-    display: block;
+/* ================= HERO BUTTON ================= */
 
-    height: 100%;
-
-    width: 72%;
-
-    background: var(--green);
-
-    box-shadow: 0 0 12px var(--green);
-
-    animation: barMove 3s infinite alternate;
+.enter-btn{
+    position:absolute;
+    left:35px;
+    bottom:35px;
+    padding:15px 25px;
+    background:rgba(0,255,156,.04);
+    color:var(--green);
+    border:1px solid var(--green);
+    font-family:Orbitron;
+    letter-spacing:2px;
+    cursor:pointer;
+    box-shadow:0 0 20px rgba(0,255,156,.08);
+    transition:.3s;
+    z-index:20;
 }
 
-@keyframes barMove {
-
-    to {
-        width: 94%;
-    }
-
+.enter-btn:hover{
+    background:rgba(0,255,156,.12);
+    box-shadow:0 0 30px rgba(0,255,156,.3);
+    transform:translateY(-2px);
 }
 
-/* =========================
-   SECTIONS
-========================= */
-
-section {
-    padding: 110px 6vw;
-
-    position: relative;
+.packet-box{
+    position:absolute;
+    right:30px;
+    bottom:30px;
+    z-index:10;
+    font-family:Orbitron;
+    font-size:10px;
+    color:var(--muted);
+    line-height:1.8;
 }
 
-.section-header {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    margin-bottom: 35px;
-
-    border-bottom: 1px solid var(--line);
-
-    padding-bottom: 15px;
+.packet-box strong{
+    color:var(--green);
 }
 
-.section-title {
-    font-family: Orbitron;
+/* ================= SECTIONS ================= */
 
-    font-size: clamp(20px,3vw,30px);
-
-    color: white;
-
-    letter-spacing: 2px;
+section{
+    width:min(1200px,92%);
+    margin:0 auto;
+    padding:90px 0;
 }
 
-.section-title::before {
-    content: "> ";
-
-    color: var(--green);
+.section-label{
+    font-family:Orbitron;
+    color:var(--green);
+    font-size:11px;
+    letter-spacing:3px;
+    margin-bottom:8px;
 }
 
-.section-command {
-    color: var(--muted);
-
-    font-size: 11px;
+.section-title{
+    font-family:Orbitron;
+    font-size:32px;
+    letter-spacing:3px;
+    margin-bottom:10px;
 }
 
-/* =========================
-   OPERATIONS
-========================= */
-
-.operations {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap: 18px;
+.section-sub{
+    color:var(--muted);
+    margin-bottom:35px;
 }
 
-.card {
-    border: 1px solid var(--line);
+/* ================= OPERATIONS ================= */
 
-    background: var(--panel);
-
-    min-height: 220px;
-
-    padding: 25px;
-
-    cursor: pointer;
-
-    position: relative;
-
-    overflow: hidden;
-
-    transition: .3s;
+.operation-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
 }
 
-.card:hover {
-    transform: translateY(-6px);
+.operation{
+    min-height:300px;
+    padding:22px;
+    position:relative;
+    background:
+        linear-gradient(145deg,rgba(0,255,156,.06),rgba(0,0,0,.35)),
+        var(--panel);
+    border:1px solid rgba(0,255,156,.25);
+    cursor:pointer;
+    overflow:hidden;
+    transition:.3s;
+}
 
-    border-color: var(--green);
+.operation::after{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    right:-60px;
+    bottom:-60px;
+    border-radius:50%;
+    background:rgba(0,255,156,.1);
+    filter:blur(25px);
+}
 
+.operation:hover{
+    transform:translateY(-7px);
+    border-color:var(--green);
     box-shadow:
         0 0 30px rgba(0,255,156,.12),
-        inset 0 0 30px rgba(0,255,156,.03);
+        inset 0 0 30px rgba(0,255,156,.035);
 }
 
-.card::after {
-    content: "ACCESS →";
-
-    position: absolute;
-
-    bottom: 18px;
-    left: 25px;
-
-    color: var(--green);
-
-    font-size: 10px;
+.operation-icon{
+    width:50px;
+    height:50px;
+    border:1px solid var(--green);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--green);
+    font-size:22px;
+    margin-bottom:25px;
+    box-shadow:0 0 15px rgba(0,255,156,.1);
 }
 
-.card-icon {
-    font-size: 30px;
-
-    color: var(--green);
-
-    margin-bottom: 20px;
+.operation h3{
+    font-family:Orbitron;
+    font-size:16px;
+    letter-spacing:1px;
+    margin-bottom:10px;
 }
 
-.card h3 {
-    font-family: Orbitron;
-
-    color: white;
-
-    font-size: 16px;
-
-    margin-bottom: 15px;
+.operation p{
+    color:#83b9ac;
+    font-size:14px;
+    line-height:1.5;
 }
 
-.card p {
-    color: #6ca69b;
-
-    line-height: 1.7;
-
-    font-size: 12px;
+.launch{
+    position:absolute;
+    bottom:20px;
+    left:22px;
+    color:var(--green);
+    font-family:Orbitron;
+    font-size:10px;
+    letter-spacing:2px;
 }
 
-/* =========================
-   CASE FILES
-========================= */
+/* ================= LEARNING ================= */
 
-.case-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap: 20px;
+.learning-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
 }
 
-.case {
-    border: 1px solid var(--line);
-
-    background: rgba(0,12,14,.7);
-
-    padding: 25px;
-
-    cursor: pointer;
-
-    transition: .3s;
+.learning-card{
+    position:relative;
+    padding:25px;
+    min-height:230px;
+    background:rgba(2,15,13,.8);
+    border:1px solid rgba(0,255,156,.22);
+    overflow:hidden;
+    transition:.3s;
 }
 
-.case:hover {
-    border-color: var(--cyan);
+.learning-card:hover{
+    border-color:var(--green);
+    transform:translateY(-5px);
+    box-shadow:0 0 30px rgba(0,255,156,.12);
 }
 
-.case-top {
-    display: flex;
-
-    justify-content: space-between;
-
-    gap: 20px;
+.learning-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:2px;
+    background:linear-gradient(90deg,transparent,var(--green),transparent);
+    animation:laser 3s linear infinite;
 }
 
-.case-number {
-    color: var(--green);
-
-    font-size: 11px;
+@keyframes laser{
+    from{transform:translateX(-100%)}
+    to{transform:translateX(100%)}
 }
 
-.case h3 {
-    margin-top: 10px;
-
-    color: white;
-
-    font-family: Orbitron;
+.learning-number{
+    font-family:Orbitron;
+    color:var(--cyan);
+    font-size:10px;
+    letter-spacing:2px;
 }
 
-.badge {
-    height: fit-content;
-
-    border: 1px solid var(--green);
-
-    padding: 5px 9px;
-
-    color: var(--green);
-
-    font-size: 9px;
+.learning-card h3{
+    margin:25px 0 10px;
+    font-family:Orbitron;
+    color:var(--green);
+    font-size:18px;
 }
 
-.case-details {
-    max-height: 0;
-
-    overflow: hidden;
-
-    transition: .4s;
-
-    color: #72aaa0;
-
-    font-size: 12px;
-
-    line-height: 1.8;
+.learning-card p{
+    color:#7fa99f;
+    line-height:1.5;
+    min-height:65px;
 }
 
-.case.open .case-details {
-    max-height: 180px;
-
-    margin-top: 20px;
+.learning-link{
+    display:inline-block;
+    margin-top:18px;
+    padding:10px 15px;
+    border:1px solid var(--green);
+    color:var(--green);
+    text-decoration:none;
+    font-family:Orbitron;
+    font-size:9px;
+    letter-spacing:1px;
+    transition:.25s;
 }
 
-/* =========================
-   LEARNING PATH
-========================= */
-
-.learning-path {
-    display: grid;
-
-    grid-template-columns:
-        repeat(8,1fr);
-
-    gap: 8px;
+.learning-link:hover{
+    background:var(--green);
+    color:#00100b;
+    box-shadow:0 0 20px rgba(0,255,156,.4);
 }
 
-.step {
-    min-height: 150px;
+/* ================= CASE FILES ================= */
 
-    border: 1px solid var(--line);
-
-    background: rgba(0,12,14,.65);
-
-    padding: 18px 10px;
-
-    text-align: center;
-
-    cursor: pointer;
-
-    transition: .3s;
+.case-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
 }
 
-.step:hover,
-.step.active {
-    border-color: var(--green);
+.case{
+    padding:22px;
+    background:rgba(2,15,13,.8);
+    border:1px solid rgba(0,255,156,.2);
+}
 
-    background: rgba(0,255,156,.07);
+.case-id{
+    color:var(--cyan);
+    font-family:Orbitron;
+    font-size:10px;
+}
 
+.case h3{
+    margin:14px 0;
+    font-family:Orbitron;
+    font-size:15px;
+}
+
+.case p{
+    color:#7fa99f;
+    line-height:1.5;
+}
+
+.case-tag{
+    display:inline-block;
+    margin-top:20px;
+    padding:5px 8px;
+    border:1px solid rgba(0,255,156,.3);
+    color:var(--green);
+    font-size:9px;
+    font-family:Orbitron;
+}
+
+/* ================= COMMS ================= */
+
+.comms-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.social{
+    padding:25px;
+    border:1px solid rgba(0,255,156,.2);
+    background:rgba(2,15,13,.8);
+    text-decoration:none;
+    color:var(--text);
+    transition:.3s;
+}
+
+.social:hover{
+    border-color:var(--green);
+    box-shadow:0 0 25px rgba(0,255,156,.12);
+    transform:translateY(-4px);
+}
+
+.social-icon{
+    font-size:28px;
+    margin-bottom:15px;
+}
+
+.social span{
+    display:block;
+    color:var(--muted);
+    font-size:11px;
+    margin-top:7px;
+}
+
+/* ================= TERMINAL ================= */
+
+.terminal{
+    border:1px solid rgba(0,255,156,.35);
+    background:#010605;
+    padding:25px;
+    font-family:monospace;
+    color:#9affd7;
+    box-shadow:inset 0 0 40px rgba(0,255,156,.025);
+}
+
+.terminal-head{
+    display:flex;
+    justify-content:space-between;
+    color:var(--green);
+    margin-bottom:20px;
+}
+
+.terminal-line{
+    margin:7px 0;
+}
+
+.cursor{
+    display:inline-block;
+    width:8px;
+    height:15px;
+    background:var(--green);
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:0}
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,3,2,.88);
+    backdrop-filter:blur(12px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+    z-index:2000;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-box{
+    width:min(1050px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:
+        radial-gradient(circle at center,rgba(0,255,156,.06),transparent 50%),
+        #020a08;
+    border:1px solid var(--green);
     box-shadow:
-        0 0 20px rgba(0,255,156,.1);
+        0 0 50px rgba(0,255,156,.18),
+        inset 0 0 50px rgba(0,255,156,.03);
+    padding:25px;
+    position:relative;
 }
 
-.step-num {
-    color: var(--green);
-
-    font-size: 10px;
+.modal-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid rgba(0,255,156,.18);
+    padding-bottom:18px;
+    margin-bottom:20px;
 }
 
-.step-icon {
-    font-size: 23px;
-
-    margin: 20px 0 12px;
+.modal-title{
+    font-family:Orbitron;
+    color:var(--green);
+    letter-spacing:2px;
 }
 
-.step h4 {
-    color: white;
-
-    font-family: Orbitron;
-
-    font-size: 10px;
+.close{
+    background:none;
+    border:1px solid rgba(0,255,156,.4);
+    color:var(--green);
+    padding:8px 13px;
+    cursor:pointer;
+    font-family:Orbitron;
 }
 
-.step p {
-    color: var(--muted);
-
-    font-size: 9px;
-
-    margin-top: 8px;
+.diagram{
+    width:100%;
+    min-height:380px;
+    border:1px solid rgba(0,255,156,.15);
+    background:
+        linear-gradient(rgba(0,255,156,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,255,156,.025) 1px,transparent 1px);
+    background-size:35px 35px;
+    position:relative;
+    overflow:hidden;
 }
 
-/* =========================
-   COMMUNICATIONS
-========================= */
-
-.comms {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap: 18px;
+.diagram svg{
+    width:100%;
+    height:420px;
 }
 
-.comm {
-    border: 1px solid var(--line);
-
-    padding: 25px;
-
-    background: var(--panel);
-
-    color: var(--green);
-
-    text-decoration: none;
-
-    transition: .3s;
+.diagram-node{
+    cursor:pointer;
 }
 
-.comm:hover {
-    border-color: var(--cyan);
-
-    transform: translateY(-4px);
-
-    box-shadow:
-        0 0 25px rgba(0,234,255,.1);
+.diagram-node rect,
+.diagram-node circle{
+    fill:#03120e;
+    stroke:var(--green);
+    stroke-width:2;
+    filter:drop-shadow(0 0 7px rgba(0,255,156,.4));
+    transition:.25s;
 }
 
-.comm-label {
-    color: var(--muted);
-
-    font-size: 10px;
-
-    margin-bottom: 10px;
+.diagram-node:hover rect,
+.diagram-node:hover circle{
+    fill:rgba(0,255,156,.15);
+    stroke:var(--cyan);
+    filter:drop-shadow(0 0 18px rgba(0,255,156,.9));
 }
 
-.comm-name {
-    color: white;
-
-    font-family: Orbitron;
+.diagram-node text{
+    fill:var(--green);
+    font-family:Orbitron;
+    font-size:12px;
+    pointer-events:none;
 }
 
-/* =========================
-   TERMINAL
-========================= */
-
-.terminal-btn {
-    position: fixed;
-
-    right: 25px;
-    bottom: 25px;
-
-    width: 48px;
-    height: 48px;
-
-    border-radius: 50%;
-
-    background: #00100d;
-
-    border: 1px solid var(--green);
-
-    color: var(--green);
-
-    cursor: pointer;
-
-    box-shadow:
-        0 0 20px rgba(0,255,156,.2);
-
-    z-index: 80;
+.flow-line{
+    stroke:var(--cyan);
+    stroke-width:2;
+    stroke-dasharray:8 10;
+    animation:flow 2.5s linear infinite;
+    opacity:.6;
 }
 
-.terminal-modal {
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(0,4,5,.85);
-
-    backdrop-filter: blur(8px);
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    transition: .3s;
-
-    z-index: 90;
+.detail-panel{
+    margin-top:18px;
+    padding:18px;
+    border-left:2px solid var(--green);
+    background:rgba(0,255,156,.035);
 }
 
-.terminal-modal.show {
-    opacity: 1;
-
-    visibility: visible;
+.detail-panel strong{
+    color:var(--green);
+    font-family:Orbitron;
+    font-size:12px;
 }
 
-.terminal {
-    width: min(750px,90%);
-
-    background: #02090a;
-
-    border: 1px solid var(--green);
-
-    box-shadow:
-        0 0 50px rgba(0,255,156,.15);
-
-    padding: 20px;
+.detail-panel p{
+    color:#83b9ac;
+    margin-top:7px;
+    line-height:1.5;
 }
 
-.terminal-header {
-    display: flex;
+/* ================= BOOT ================= */
 
-    justify-content: space-between;
-
-    border-bottom: 1px solid var(--line);
-
-    padding-bottom: 12px;
-
-    margin-bottom: 20px;
-
-    color: var(--green);
+.boot{
+    position:fixed;
+    inset:0;
+    background:#000;
+    z-index:5000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+    transition:opacity .6s;
 }
 
-.terminal-output {
-    min-height: 250px;
-
-    color: #73cdb8;
-
-    font-size: 13px;
-
-    line-height: 1.8;
+.boot.hidden{
+    opacity:0;
+    pointer-events:none;
 }
 
-.terminal-input {
-    display: flex;
-
-    gap: 10px;
+.boot-terminal{
+    width:min(650px,100%);
+    font-family:monospace;
+    color:var(--green);
+    line-height:1.8;
+    font-size:13px;
 }
 
-.terminal-input span {
-    color: var(--green);
+.boot-bar{
+    height:3px;
+    width:100%;
+    background:#06251b;
+    margin-top:20px;
+    overflow:hidden;
 }
 
-.terminal-input input {
-    flex: 1;
-
-    background: transparent;
-
-    border: none;
-
-    outline: none;
-
-    color: white;
-
-    font-family: inherit;
+.boot-progress{
+    height:100%;
+    width:0;
+    background:var(--green);
+    box-shadow:0 0 15px var(--green);
+    transition:width .15s;
 }
 
-/* =========================
-   BOOT SCREEN
-========================= */
+/* ================= FOOTER ================= */
 
-.boot {
-    position: fixed;
-
-    inset: 0;
-
-    background: #010606;
-
-    z-index: 200;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    pointer-events: none;
-
-    transition: opacity .5s;
+footer{
+    padding:35px 5%;
+    border-top:1px solid rgba(0,255,156,.15);
+    display:flex;
+    justify-content:space-between;
+    color:#4e8275;
+    font-family:Orbitron;
+    font-size:9px;
+    letter-spacing:1px;
 }
 
-.boot.active {
-    opacity: 1;
+/* ================= MOBILE ================= */
 
-    visibility: visible;
+@media(max-width:900px){
 
-    pointer-events: all;
-}
-
-.boot-box {
-    width: min(700px,85%);
-}
-
-.boot-title {
-    color: var(--green);
-
-    font-family: Orbitron;
-
-    font-size: 20px;
-
-    margin-bottom: 25px;
-}
-
-.boot-lines {
-    color: #6dc4b2;
-
-    font-size: 13px;
-
-    line-height: 2;
-
-    min-height: 170px;
-}
-
-.progress {
-    height: 5px;
-
-    background: rgba(0,255,156,.1);
-
-    margin-top: 25px;
-
-    overflow: hidden;
-}
-
-.progress span {
-    display: block;
-
-    height: 100%;
-
-    width: 0;
-
-    background: var(--green);
-
-    box-shadow:
-        0 0 15px var(--green);
-
-    transition: width 3s linear;
-}
-
-.boot.active .progress span {
-    width: 100%;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer {
-    padding: 35px 6vw;
-
-    border-top: 1px solid var(--line);
-
-    display: flex;
-
-    justify-content: space-between;
-
-    color: var(--muted);
-
-    font-size: 11px;
-}
-
-footer strong {
-    color: var(--green);
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width:1000px) {
-
-    .hero {
-        min-height: auto;
-
-        padding-top: 80px;
-        padding-bottom: 80px;
-
-        display: block;
+    nav{
+        height:64px;
     }
 
-    .hero-content {
-        width: 100%;
-
-        position: relative;
-
-        z-index: 20;
+    .nav-links{
+        display:none;
     }
 
-    .operator-zone {
-        position: relative;
-
-        right: auto;
-
-        width: 100%;
-
-        height: 650px;
-
-        margin-top: -40px;
+    .logo{
+        font-size:16px;
     }
 
-    .operations {
-        grid-template-columns:
-            repeat(2,1fr);
+    .hero{
+        padding-top:95px;
+        min-height:auto;
     }
 
-    .learning-path {
-        grid-template-columns:
-            repeat(4,1fr);
+    .command-center{
+        min-height:620px;
     }
 
-}
-
-@media (max-width:650px) {
-
-    nav {
-        padding: 0 20px;
+    .operator{
+        width:80%;
+        top:48%;
     }
 
-    .hero {
-        padding-left: 20px;
-        padding-right: 20px;
+    .command-title{
+        left:18px;
+        top:22px;
     }
 
-    .hero h1 {
-        font-size: 50px;
+    .enter-btn{
+        left:18px;
+        bottom:20px;
     }
 
-    .operator-zone {
-        height: 480px;
+    .packet-box{
+        right:18px;
+        bottom:20px;
     }
 
-    .operator {
-        width: 110%;
-    }
-
-    .hud {
-        transform: scale(.75);
-    }
-
-    .hud-left {
-        left: -15%;
-    }
-
-    .hud-right {
-        right: -15%;
-    }
-
-    .hud-bottom {
-        display: none;
-    }
-
-    .operations,
+    .operation-grid,
+    .learning-grid,
     .case-grid,
-    .comms {
-        grid-template-columns: 1fr;
+    .comms-grid{
+        grid-template-columns:1fr;
     }
 
-    .learning-path {
-        grid-template-columns:
-            repeat(2,1fr);
+    section{
+        padding:65px 0;
     }
 
-    section {
-        padding: 80px 20px;
+    .section-title{
+        font-size:25px;
     }
 
-    footer {
-        flex-direction: column;
-
-        gap: 15px;
+    .modal{
+        padding:10px;
     }
 
+    .modal-box{
+        padding:15px;
+    }
+
+    .diagram svg{
+        height:350px;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:10px;
+    }
 }
 
+@media(max-width:500px){
+
+    .status{
+        display:none;
+    }
+
+    .command-center{
+        min-height:570px;
+    }
+
+    .operator{
+        width:100%;
+        max-height:390px;
+    }
+
+    .command-title span{
+        font-size:10px;
+    }
+
+    .command-title p{
+        font-size:9px;
+    }
+
+    .packet-box{
+        font-size:8px;
+    }
+
+    .enter-btn{
+        font-size:9px;
+        padding:12px 15px;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     NAVIGATION
-========================= -->
+<!-- ================= BOOT SCREEN ================= -->
+
+<div class="boot" id="boot">
+    <div class="boot-terminal">
+        <div>> INITIALIZING BRYAN // SEC</div>
+        <div>> LOADING OPERATIONS ENVIRONMENT...</div>
+        <div>> ESTABLISHING SECURE CONNECTION...</div>
+        <div>> LOADING PRACTITIONER MODULES...</div>
+        <div>> SYSTEM READY.</div>
+
+        <div class="boot-bar">
+            <div class="boot-progress" id="bootProgress"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= NAV ================= -->
 
 <nav>
-
     <div class="logo">
         BRYAN // SEC
+        <small>WEB SECURITY // PENTEST // INVESTIGATION</small>
+    </div>
+
+    <div class="nav-links">
+        <a href="#operations">OPERATIONS</a>
+        <a href="#cases">CASE FILES</a>
+        <a href="#learning">LEARNING</a>
+        <a href="#comms">COMMS</a>
     </div>
 
     <div class="status">
-
         <span class="status-dot"></span>
-
         SYSTEM ONLINE
-
     </div>
-
 </nav>
 
+<!-- ================= HERO ================= -->
 
-<!-- =========================
-     HERO
-========================= -->
+<header class="hero">
 
-<main>
+<div class="command-center">
 
-<section class="hero">
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
 
-    <div class="hero-content">
-
-        <div class="pretitle">
-            CYBERSECURITY OPERATIONS
-        </div>
-
-        <h1>
-            BRYAN<br>
-            // SEC
-        </h1>
-
-        <div class="identity">
-
-            <div>ETHICAL HACKER</div>
-
-            <div>
-                WEB SECURITY INVESTIGATOR
-            </div>
-
-            <div>
-                PENTESTER // APPRENTICE
-            </div>
-
-        </div>
-
-        <p class="hero-description">
-
-            I don't just find vulnerabilities.
-            I investigate how systems break,
-            understand why they break,
-            and document what I discover.
-
-        </p>
-
-        <button
-            class="enter-btn"
-            id="enterSystem"
-        >
-            ENTER SYSTEM →
-
-        </button>
-
+    <div class="command-title">
+        <span>> SYSTEM / COMMAND CENTER</span>
+        <p>EXPLORE. ANALYZE. LEARN. IMPROVE.</p>
     </div>
 
-
-    <!-- OPERATOR ENVIRONMENT -->
-
-    <div
-        class="operator-zone"
-        id="operatorZone"
+    <!-- Operator image -->
+    <img
+        src="operator.png"
+        class="operator"
+        alt="Cyber operations visual"
+        onerror="this.style.display='none';document.getElementById('operatorFallback').style.display='flex';"
     >
 
-        <div class="network">
-
-            <div class="network-line line1"></div>
-
-            <div class="network-line line2"></div>
-
-            <div class="network-line line3"></div>
-
-            <div class="network-line line4"></div>
-
-
-            <div class="node n1">
-
-                <span class="node-label">
-                    RECON
-                </span>
-
-            </div>
-
-
-            <div class="node n2">
-
-                <span class="node-label">
-                    WEB-SRV
-                </span>
-
-            </div>
-
-
-            <div class="node n3">
-
-                <span class="node-label">
-                    AUTH
-                </span>
-
-            </div>
-
-
-            <div class="node n4">
-
-                <span class="node-label">
-                    DNS
-                </span>
-
-            </div>
-
-
-            <div class="node n5">
-
-                <span class="node-label">
-                    LAB
-                </span>
-
-            </div>
-
-
-            <div class="node n6">
-
-                <span class="node-label">
-                    CORE
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <!-- LEFT HUD -->
-
-        <div class="hud hud-left">
-
-            <div class="hud-title">
-                NETWORK MONITOR
-            </div>
-
-            <div class="hud-data">
-
-                packets:
-                <span id="packets">
-                    04821
-                </span>
-
-                <br>
-
-                nodes: 06
-
-                <br>
-
-                encryption: AES-256
-
-                <br>
-
-                status: ACTIVE
-
-                <div class="bar">
-                    <span></span>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- RIGHT HUD -->
-
-        <div class="hud hud-right">
-
-            <div class="hud-title">
-                ACTIVE MODULE
-            </div>
-
-            <div
-                class="hud-data"
-                id="moduleText"
-            >
-
-                WEB SECURITY<br>
-                reconnaissance<br>
-                authentication<br>
-                analysis
-
-            </div>
-
-        </div>
-
-
-        <!-- BOTTOM HUD -->
-
-        <div class="hud hud-bottom">
-
-            <div class="hud-title">
-                SYSTEM TIME
-            </div>
-
-            <div
-                class="hud-data"
-                id="clock"
-            >
-                --:--:--
-            </div>
-
-        </div>
-
-
-        <!-- HOODED OPERATOR -->
-
-        <div
-            class="operator"
-            id="operator"
-        >
-
-            <img
-                src="operator.png"
-                alt="Cybersecurity operator"
-            >
-
-        </div>
-
+    <div class="operator-fallback" id="operatorFallback">
+        OPERATOR VISUAL<br>
+        OFFLINE
     </div>
 
-</section>
+    <!-- Interactive network -->
+    <div class="network">
 
+        <svg viewBox="0 0 1200 650">
 
-<!-- =========================
-     OPERATIONS
-========================= -->
+            <line class="net-line" x1="170" y1="190" x2="470" y2="300"/>
+            <line class="net-line" x1="170" y1="420" x2="470" y2="340"/>
+            <line class="net-line" x1="1000" y1="190" x2="730" y2="300"/>
+            <line class="net-line" x1="1000" y1="420" x2="730" y2="340"/>
+            <line class="net-line" x1="170" y1="190" x2="1000" y2="420"/>
+            <line class="net-line" x1="170" y1="420" x2="1000" y2="190"/>
+
+            <g class="net-node" onclick="openOperation('recon')" transform="translate(150,180)">
+                <circle class="node-ring" r="28"></circle>
+                <circle r="25"></circle>
+                <text x="-27" y="52">RECON</text>
+                <text x="-7" y="5">⌕</text>
+            </g>
+
+            <g class="net-node" onclick="openOperation('web')" transform="translate(150,430)">
+                <circle class="node-ring" r="28"></circle>
+                <circle r="25"></circle>
+                <text x="-20" y="52">DNS</text>
+                <text x="-8" y="5">◎</text>
+            </g>
+
+            <g class="net-node" onclick="openOperation('burp')" transform="translate(1030,180)">
+                <circle class="node-ring" r="28"></circle>
+                <circle r="25"></circle>
+                <text x="-32" y="52">WEB-SRV</text>
+                <text x="-8" y="5">◉</text>
+            </g>
+
+            <g class="net-node" onclick="openOperation('pentest')" transform="translate(1030,430)">
+                <circle class="node-ring" r="28"></circle>
+                <circle r="25"></circle>
+                <text x="-15" y="52">LAB</text>
+                <text x="-8" y="5">⌬</text>
+            </g>
+
+        </svg>
+    </div>
+
+    <button class="enter-btn" onclick="enterSystem()">
+        INITIALIZE OPERATIONS →
+    </button>
+
+    <div class="packet-box">
+        PACKETS <strong id="packets">04821</strong><br>
+        THREAT LEVEL <strong>LOW</strong><br>
+        ENCRYPTION <strong>AES-256</strong>
+    </div>
+
+</div>
+</header>
+
+<!-- ================= OPERATIONS ================= -->
 
 <section id="operations">
 
-    <div class="section-header">
+    <div class="section-label">01 // OPERATIONS</div>
+    <h2 class="section-title">SELECT AN OPERATION</h2>
+    <p class="section-sub">
+        Every module opens an interactive visual. Click the systems and explore.
+    </p>
 
-        <h2 class="section-title">
-            OPERATIONS
-        </h2>
+    <div class="operation-grid">
 
-        <div class="section-command">
-            CLICK MODULE TO EXPLORE
+        <div class="operation" onclick="openOperation('web')">
+            <div class="operation-icon">◎</div>
+            <h3>WEB SECURITY</h3>
+            <p>
+                Explore how browsers, applications, APIs and databases
+                communicate across a modern web environment.
+            </p>
+            <div class="launch">LAUNCH →</div>
+        </div>
+
+        <div class="operation" onclick="openOperation('recon')">
+            <div class="operation-icon">⌕</div>
+            <h3>RECONNAISSANCE</h3>
+            <p>
+                Map domains, DNS, hosts and services to understand
+                an application's attack surface.
+            </p>
+            <div class="launch">LAUNCH →</div>
+        </div>
+
+        <div class="operation" onclick="openOperation('burp')">
+            <div class="operation-icon">⇄</div>
+            <h3>BURP SUITE</h3>
+            <p>
+                Visualize HTTP traffic flowing through an interception
+                proxy and analysis tools.
+            </p>
+            <div class="launch">LAUNCH →</div>
+        </div>
+
+        <div class="operation" onclick="openOperation('pentest')">
+            <div class="operation-icon">◇</div>
+            <h3>PENTESTING</h3>
+            <p>
+                Follow the assessment lifecycle from reconnaissance
+                through validation and evidence collection.
+            </p>
+            <div class="launch">LAUNCH →</div>
         </div>
 
     </div>
-
-
-    <div class="operations">
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                ◎
-            </div>
-
-            <h3>
-                WEB SECURITY
-            </h3>
-
-            <p>
-
-                Investigate web applications,
-                identify vulnerabilities and
-                understand attack surfaces.
-
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                ◉
-            </div>
-
-            <h3>
-                RECON
-            </h3>
-
-            <p>
-
-                Map targets, gather intelligence,
-                enumerate services and identify
-                potential entry points.
-
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                ◇
-            </div>
-
-            <h3>
-                PENTESTING
-            </h3>
-
-            <p>
-
-                Think like an attacker.
-                Test assumptions.
-                Validate weaknesses.
-                Document findings.
-
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                ⌘
-            </div>
-
-            <h3>
-                BURP SUITE
-            </h3>
-
-            <p>
-
-                Intercept.
-                Modify.
-                Analyze.
-                Investigate web traffic.
-
-            </p>
-
-        </div>
-
-    </div>
-
 </section>
 
+<!-- ================= CASE FILES ================= -->
 
-<!-- =========================
-     CASE FILES
-========================= -->
+<section id="cases">
 
-<section>
-
-    <div class="section-header">
-
-        <h2 class="section-title">
-            CASE FILES
-        </h2>
-
-        <div class="section-command">
-            INVESTIGATION DATABASE
-        </div>
-
-    </div>
-
+    <div class="section-label">02 // CASE FILES</div>
+    <h2 class="section-title">INVESTIGATION LOG</h2>
+    <p class="section-sub">
+        Practical techniques, lab investigations and security analysis.
+    </p>
 
     <div class="case-grid">
 
-
         <div class="case">
-
-            <div class="case-top">
-
-                <div>
-
-                    <div class="case-number">
-                        CASE #001
-                    </div>
-
-                    <h3>
-                        SQL INJECTION
-                    </h3>
-
-                </div>
-
-                <div class="badge">
-                    SOLVED
-                </div>
-
-            </div>
-
-            <div class="case-details">
-
-                TARGET: Web Application<br>
-
-                VECTOR: SQL Injection<br>
-
-                TOOLS: Burp Suite<br><br>
-
-                Investigated database behavior,
-                parameter handling and response
-                differences in a controlled lab.
-
-            </div>
-
+            <div class="case-id">CASE_007</div>
+            <h3>AUTHENTICATION ANALYSIS</h3>
+            <p>
+                Investigating login behavior, authentication logic,
+                response differences and session security.
+            </p>
+            <span class="case-tag">SOLVED</span>
         </div>
 
-
         <div class="case">
-
-            <div class="case-top">
-
-                <div>
-
-                    <div class="case-number">
-                        CASE #002
-                    </div>
-
-                    <h3>
-                        AUTHENTICATION
-                    </h3>
-
-                </div>
-
-                <div class="badge">
-                    SOLVED
-                </div>
-
-            </div>
-
-            <div class="case-details">
-
-                TARGET: Login System<br>
-
-                VECTOR: Authentication Logic<br>
-
-                TOOLS: Burp Suite / Intruder<br><br>
-
-                Investigated authentication behavior,
-                request manipulation and controlled
-                credential testing.
-
-            </div>
-
+            <div class="case-id">CASE_011</div>
+            <h3>SQL INJECTION</h3>
+            <p>
+                Studying injection behavior, query structure,
+                authentication bypass concepts and controlled validation.
+            </p>
+            <span class="case-tag">SOLVED</span>
         </div>
 
-
         <div class="case">
-
-            <div class="case-top">
-
-                <div>
-
-                    <div class="case-number">
-                        CASE #003
-                    </div>
-
-                    <h3>
-                        RECON
-                    </h3>
-
-                </div>
-
-                <div class="badge">
-                    ACTIVE
-                </div>
-
-            </div>
-
-            <div class="case-details">
-
-                TARGET: Authorized Lab Environments<br>
-
-                VECTOR: Enumeration<br>
-
-                TOOLS: Nmap / Gobuster<br><br>
-
-                Mapping services, directories,
-                virtual hosts and potential attack
-                surfaces.
-
-            </div>
-
-        </div>
-
-
-        <div class="case">
-
-            <div class="case-top">
-
-                <div>
-
-                    <div class="case-number">
-                        CASE #004
-                    </div>
-
-                    <h3>
-                        ACCESS CONTROL
-                    </h3>
-
-                </div>
-
-                <div class="badge">
-                    ACTIVE
-                </div>
-
-            </div>
-
-            <div class="case-details">
-
-                TARGET: Web Application<br>
-
-                VECTOR: Authorization Logic<br>
-
-                TOOLS: Burp Suite<br><br>
-
-                Studying how applications separate
-                authentication from authorization
-                and where access controls fail.
-
-            </div>
-
+            <div class="case-id">CASE_014</div>
+            <h3>RECON & ENUMERATION</h3>
+            <p>
+                Mapping services, discovering attack surface and
+                organizing information before testing.
+            </p>
+            <span class="case-tag">IN PROGRESS</span>
         </div>
 
     </div>
-
 </section>
 
+<!-- ================= LEARNING ================= -->
 
-<!-- =========================
-     LEARNING PATH
-========================= -->
+<section id="learning">
 
-<section>
+    <div class="section-label">03 // LEARNING PATHS</div>
+    <h2 class="section-title">ENTER THE LABS</h2>
+    <p class="section-sub">
+        External training environments used to build practical cybersecurity skills.
+    </p>
 
-    <div class="section-header">
+    <div class="learning-grid">
 
-        <h2 class="section-title">
-            LEARNING PATH
-        </h2>
+        <div class="learning-card">
+            <div class="learning-number">CHANNEL_01</div>
+            <h3>TRYHACKME</h3>
+            <p>
+                Hands-on rooms, guided learning paths and practical
+                cybersecurity labs.
+            </p>
 
-        <div class="section-command">
-            OPERATOR DEVELOPMENT
+            <a
+                class="learning-link"
+                href="https://tryhackme.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                OPEN CHANNEL →
+            </a>
+        </div>
+
+        <div class="learning-card">
+            <div class="learning-number">CHANNEL_02</div>
+            <h3>HACK THE BOX</h3>
+            <p>
+                HTB Academy provides guided modules, skill paths,
+                exercises and browser-based security labs.
+            </p>
+
+            <a
+                class="learning-link"
+                href="https://academy.hackthebox.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                OPEN CHANNEL →
+            </a>
+        </div>
+
+        <div class="learning-card">
+            <div class="learning-number">CHANNEL_03</div>
+            <h3>PORTSWIGGER</h3>
+            <p>
+                Web Security Academy provides interactive web-security
+                labs and Burp Suite learning material.
+            </p>
+
+            <a
+                class="learning-link"
+                href="https://portswigger.net/web-security"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                OPEN CHANNEL →
+            </a>
         </div>
 
     </div>
-
-
-    <div class="learning-path">
-
-
-        <div class="step active">
-
-            <div class="step-num">
-                01
-            </div>
-
-            <div class="step-icon">
-                ⌂
-            </div>
-
-            <h4>
-                LINUX
-            </h4>
-
-            <p>
-                FOUNDATIONS
-            </p>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-num">
-                02
-            </div>
-
-            <div class="step-icon">
-                ◌
-            </div>
-
-            <h4>
-                NETWORKING
-            </h4>
-
-            <p>
-                TCP/IP
-            </p>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-num">
-                03
-            </div>
-
-            <div class="step-icon">
-                ⌕
-            </div>
-
-            <h4>
-                RECON
-            </h4>
-
-            <p>
-                ENUMERATION
-            </p>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-num">
-                04
-            </div>
-
-            <div class="step-icon">
-                ◎
-            </div>
-
-            <h4>
-                WEB SECURITY
-            </h4>
-
-            <p>
-                OWASP
-            </p>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-num">
-                05
-            </div>
-
-            <div class="step-icon">
-                ⌘
-            </div>
-
-            <h4>
-                BURP SUITE
-            </h4>
-
-            <p>
-                PROXY / INTRUDER
-            </p>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-num">
-                06
-            </div>
-
-            <div class="step-icon">
-                ◇
-            </div>
-
-            <h4>
-                OWASP
-            </h4>
-
-            <p>
-                TOP 10
-            </p>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-num">
-                07
-            </div>
-
-            <div class="step-icon">
-                ⚑
-            </div>
-
-            <h4>
-                CTFs / LABS
-            </h4>
-
-            <p>
-                PRACTICE
-            </p>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-num">
-                08
-            </div>
-
-            <div class="step-icon">
-                ◈
-            </div>
-
-            <h4>
-                PENTESTING
-            </h4>
-
-            <p>
-                FULL CYCLE
-            </p>
-
-        </div>
-
-    </div>
-
 </section>
 
+<!-- ================= COMMS ================= -->
 
-<!-- =========================
-     COMMUNICATIONS
-========================= -->
+<section id="comms">
 
-<section>
+    <div class="section-label">04 // COMMUNICATIONS</div>
+    <h2 class="section-title">STAY CONNECTED</h2>
 
-    <div class="section-header">
-
-        <h2 class="section-title">
-            COMMUNICATIONS
-        </h2>
-
-        <div class="section-command">
-            ESTABLISH CONNECTION
-        </div>
-
-    </div>
-
-
-    <div class="comms">
-
+    <div class="comms-grid">
 
         <a
-            class="comm"
+            class="social"
             href="https://instagram.com/oj_the_menace"
             target="_blank"
             rel="noopener noreferrer"
         >
-
-            <div class="comm-label">
-                CHANNEL 01 // INSTAGRAM
-            </div>
-
-            <div class="comm-name">
-                @oj_the_menace →
-            </div>
-
+            <div class="social-icon">◎</div>
+            INSTAGRAM
+            <span>@oj_the_menace</span>
         </a>
 
-
         <a
-            class="comm"
+            class="social"
             href="https://x.com/BryanITPentest"
             target="_blank"
             rel="noopener noreferrer"
         >
-
-            <div class="comm-label">
-                CHANNEL 02 // X
-            </div>
-
-            <div class="comm-name">
-                @BryanITPentest →
-            </div>
-
+            <div class="social-icon">𝕏</div>
+            X / TWITTER
+            <span>@BryanITPentest</span>
         </a>
 
-
         <a
-            class="comm"
+            class="social"
             href="https://github.com/kingbryan13"
             target="_blank"
             rel="noopener noreferrer"
         >
-
-            <div class="comm-label">
-                CHANNEL 03 // GITHUB
-            </div>
-
-            <div class="comm-name">
-                kingbryan13 →
-            </div>
-
+            <div class="social-icon">⌘</div>
+            GITHUB
+            <span>kingbryan13</span>
         </a>
 
     </div>
-
 </section>
 
-</main>
+<!-- ================= TERMINAL ================= -->
 
+<section>
 
-<!-- =========================
-     TERMINAL BUTTON
-========================= -->
-
-<button
-    class="terminal-btn"
-    id="terminalButton"
->
-    >
-</button>
-
-
-<!-- =========================
-     TERMINAL
-========================= -->
-
-<div
-    class="terminal-modal"
-    id="terminalModal"
->
+    <div class="section-label">05 // SECURE TERMINAL</div>
 
     <div class="terminal">
 
-        <div class="terminal-header">
-
-            <span>
-                BRYAN // SEC TERMINAL
-            </span>
-
-            <span
-                id="terminalClose"
-                style="cursor:pointer;"
-            >
-                [ X ]
-            </span>
-
+        <div class="terminal-head">
+            <span>root@bryan:~#</span>
+            <span>ONLINE</span>
         </div>
 
-
-        <div
-            class="terminal-output"
-            id="terminalOutput"
-        >
-
-            > Secure terminal initialized.<br>
-
-            > Type <strong>help</strong>
-            for available commands.
-
-        </div>
-
-
-        <div class="terminal-input">
-
-            <span>
-                operator@bryan:~$
-            </span>
-
-            <input
-                id="terminalInput"
-                autocomplete="off"
-                spellcheck="false"
-            >
-
+        <div class="terminal-line">> help</div>
+        <div class="terminal-line">Available commands:</div>
+        <div class="terminal-line">&nbsp;&nbsp;operations - open operations</div>
+        <div class="terminal-line">&nbsp;&nbsp;learning - open training channels</div>
+        <div class="terminal-line">&nbsp;&nbsp;cases - view investigation files</div>
+        <div class="terminal-line">&nbsp;&nbsp;status - system status</div>
+        <div class="terminal-line">&nbsp;&nbsp;clear - clear terminal</div>
+        <br>
+        <div class="terminal-line">
+            root@bryan:~# <span class="cursor"></span>
         </div>
 
     </div>
+</section>
 
-</div>
-
-
-<!-- =========================
-     BOOT SCREEN
-========================= -->
-
-<div
-    class="boot"
-    id="boot"
->
-
-    <div class="boot-box">
-
-        <div class="boot-title">
-
-            INITIALIZING SECURE ENVIRONMENT...
-
-        </div>
-
-
-        <div class="boot-lines">
-
-            <div>
-                > Loading security modules...
-            </div>
-
-            <div>
-                > Establishing encrypted connection...
-            </div>
-
-            <div>
-                > Activating network monitor...
-            </div>
-
-            <div>
-                > Mounting investigation database...
-            </div>
-
-            <div>
-                > Authenticating operator...
-            </div>
-
-            <div id="bootFinal">
-                > Awaiting authorization...
-            </div>
-
-        </div>
-
-
-        <div class="progress">
-
-            <span></span>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     FOOTER
-========================= -->
+<!-- ================= FOOTER ================= -->
 
 <footer>
-
-    <strong>
-        BRYAN // SEC
-    </strong>
-
-    <span>
-        BUILDING A SAFER DIGITAL WORLD
-    </span>
-
-    <span>
-        © 2026
-    </span>
-
+    <span>BRYAN // SEC</span>
+    <span>BUILDING A SAFER DIGITAL WORLD</span>
+    <span>© 2026</span>
 </footer>
 
+<!-- ================= OPERATION MODAL ================= -->
+
+<div class="modal" id="operationModal">
+
+    <div class="modal-box">
+
+        <div class="modal-top">
+            <div class="modal-title" id="modalTitle">
+                OPERATION
+            </div>
+
+            <button class="close" onclick="closeModal()">
+                CLOSE ×
+            </button>
+        </div>
+
+        <div class="diagram" id="diagram"></div>
+
+        <div class="detail-panel">
+            <strong id="detailTitle">SYSTEM COMPONENT</strong>
+            <p id="detailText">
+                Select a component inside the visualization.
+            </p>
+        </div>
+
+    </div>
+</div>
 
 <script>
 
-/* =========================
-   ENTER SYSTEM
-========================= */
+/* ================= BOOT ================= */
 
-const enterButton =
-    document.getElementById("enterSystem");
+let progress = 0;
 
-const boot =
-    document.getElementById("boot");
+const bootProgress = document.getElementById("bootProgress");
+
+const bootTimer = setInterval(() => {
+
+    progress += 5;
+
+    bootProgress.style.width = progress + "%";
+
+    if(progress >= 100){
+
+        clearInterval(bootTimer);
+
+        setTimeout(() => {
+            document.getElementById("boot").classList.add("hidden");
+        },500);
+    }
+
+},80);
 
 
-enterButton.addEventListener(
-    "click",
-    function() {
+/* ================= SYSTEM BUTTON ================= */
 
-        boot.classList.add("active");
+function enterSystem(){
 
-        document.getElementById("bootFinal")
-            .textContent =
-            "> Operator authorization accepted.";
+    document.getElementById("operations").scrollIntoView({
+        behavior:"smooth"
+    });
 
-        setTimeout(
-            function() {
+}
 
-                boot.classList.remove("active");
 
-                document.body.classList
-                    .add("system-active");
+/* ================= PACKET COUNTER ================= */
 
-                document.getElementById(
-                    "operations"
-                ).scrollIntoView({
-                    behavior: "smooth"
-                });
+let packets = 4821;
 
-            },
-            3200
-        );
+setInterval(() => {
+
+    packets += Math.floor(Math.random()*4);
+
+    document.getElementById("packets").textContent =
+        packets.toString().padStart(5,"0");
+
+},1400);
+
+
+/* ================= OPERATION DATA ================= */
+
+const operationData = {
+
+    web:{
+
+        title:"OPERATION // WEB SECURITY",
+
+        diagram:`
+
+        <svg viewBox="0 0 1000 420">
+
+            <line class="flow-line" x1="150" y1="210" x2="330" y2="210"/>
+            <line class="flow-line" x1="400" y1="210" x2="580" y2="210"/>
+            <line class="flow-line" x1="650" y1="210" x2="830" y2="210"/>
+
+            <g class="diagram-node" onclick="showDetail('BROWSER','Client-side entry point. Requests are sent toward the application.')"
+               transform="translate(100,175)">
+                <rect width="130" height="70" rx="5"/>
+                <text x="65" y="40" text-anchor="middle">BROWSER</text>
+            </g>
+
+            <g class="diagram-node" onclick="showDetail('WEB APPLICATION','Application layer handling routes, input, authentication and business logic.')"
+               transform="translate(330,175)">
+                <rect width="130" height="70" rx="5"/>
+                <text x="65" y="40" text-anchor="middle">WEB APP</text>
+            </g>
+
+            <g class="diagram-node" onclick="showDetail('API / SERVER','Backend services process requests and communicate with application resources.')"
+               transform="translate(560,175)">
+                <rect width="130" height="70" rx="5"/>
+                <text x="65" y="40" text-anchor="middle">API / SERVER</text>
+            </g>
+
+            <g class="diagram-node" onclick="showDetail('DATABASE','Stores application data. Access control and query handling are critical security boundaries.')"
+               transform="translate(790,175)">
+                <rect width="130" height="70" rx="5"/>
+                <text x="65" y="40" text-anchor="middle">DATABASE</text>
+            </g>
+
+            <text x="500" y="100"
+                text-anchor="middle"
+                fill="#00ff9c"
+                font-family="Orbitron"
+                font-size="15">
+                WEB APPLICATION ARCHITECTURE
+            </text>
+
+            <text x="500" y="315"
+                text-anchor="middle"
+                fill="#65a899"
+                font-family="Rajdhani"
+                font-size="15">
+                CLICK A COMPONENT TO INSPECT THE SYSTEM
+            </text>
+
+        </svg>
+        `
+
+    },
+
+    recon:{
+
+        title:"OPERATION // RECONNAISSANCE",
+
+        diagram:`
+
+        <svg viewBox="0 0 1000 420">
+
+            <line class="flow-line" x1="130" y1="210" x2="300" y2="210"/>
+            <line class="flow-line" x1="370" y1="210" x2="470" y2="210"/>
+            <line class="flow-line" x1="540" y1="210" x2="630" y2="210"/>
+            <line class="flow-line" x1="700" y1="210" x2="850" y2="210"/>
+
+            <g class="diagram-node" onclick="showDetail('INTERNET','Starting point for mapping the externally visible environment.')"
+               transform="translate(60,175)">
+                <circle cx="35" cy="35" r="35"/>
+                <text x="35" y="40" text-anchor="middle">NET</text>
+            </g>
+
+            <g class="diagram-node" onclick="showDetail('DNS','Maps domain names to infrastructure and can reveal useful scope information.')"
+               transform="translate(300,175)">
+                <circle cx="35" cy="35" r="35"/>
+                <text x="35" y="40" text-anchor="middle">DNS</text>
+            </g>
+
+            <g class="diagram-node" onclick="showDetail('SUBDOMAINS','Discovering related hosts helps build an organized attack-surface map.')"
+               transform="translate(470,175)">
+                <rect width="100" height="70" rx="5"/>
+                <text x="50" y="32" text-anchor="middle">SUB</text>
+                <text x="50" y="50" text-anchor="middle">DOMAINS</text>
+            </g>
+
+            <g class="diagram-node" onclick="showDetail('HOSTS / SERVICES','Identify reachable services and organize what exists before deeper testing.')"
+               transform="translate(630,175)">
+                <rect width="100" height="70" rx="5"/>
+                <text x="50" y="32" text-anchor="middle">HOSTS</text>
+                <text x="50" y="50" text-anchor="middle">SERVICES</text>
+            </g>
+
+            <g class="diagram-node" onclick="showDetail('ATTACK SURFACE','The final map summarizes discovered assets and possible testing areas.')"
+               transform="translate(820,175)">
+                <circle cx="35" cy="35" r="35"/>
+                <text x="35" y="32" text-anchor="middle">MAP</text>
+                <text x="35" y="48" text-anchor="middle">SURFACE</text>
+            </g>
+
+            <text x="500" y="100"
+                text-anchor="middle"
+                fill="#00ff9c"
+                font-family="Orbitron"
+                font-size="15">
+                RECONNAISSANCE FLOW
+            </text>
+
+        </svg>
+        `
+
+    },
+
+    burp:{
+
+        title:"OPERATION // BURP SUITE",
+
+        diagram:`
+
+        <svg viewBox="0 0 1000 420">
+
+            <line class="flow-line" x1="150" y1="210" x2="330" y2="210"/>
+            <line class="flow-line" x1="400" y1="210" x2="560" y2="210"/>
+            <line class="flow-line" x1="630" y1="210" x2="820" y2="210"/>
+
+            <g class="diagram-node" onclick="showDetail('BROWSER','Generates HTTP requests and receives HTTP responses.')"
+               transform="translate(80,175)">
+                <rect width="130" height="70" rx="5"/>
+                <text x="65" y="40" text-anchor="middle">BROWSER</text>
+            </g>
+
+            <g class="diagram-node" onclick="showDetail('BURP PROXY','Intercepting layer used to inspect and modify HTTP traffic in an authorized lab.')"
+               transform="translate(330,175)">
+                <rect width="130" height="70" rx="5"/>
+                <text x="65" y="40" text-anchor="middle">BURP PROXY</text>
+            </g>
+
+            <g class="diagram-node" onclick="showDetail('REPEATER / INTRUDER','Tools used to resend requests, test controlled variations and analyze responses.')"
+               transform="translate(560,175)">
+                <rect width="150" height="70" rx="5"/>
+                <text x="75" y="32" text-anchor="middle">REPEATER</text>
+                <text x="75" y="50" text-anchor="middle">INTRUDER</text>
+            </g>
+
+            <g class="diagram-node" onclick="showDetail('TARGET SERVER','Authorized application receiving the request and returning a response.')"
+               transform="translate(820,175)">
+                <rect width="110" height="70" rx="5"/>
+                <text x="55" y="40" text-anchor="middle">TARGET</text>
+            </g>
+
+            <text x="500" y="100"
+                text-anchor="middle"
+                fill="#00ff9c"
+                font-family="Orbitron"
+                font-size="15">
+                HTTP TRAFFIC ANALYSIS
+            </text>
+
+            <text x="500" y="315"
+                text-anchor="middle"
+                fill="#65a899"
+                font-family="Rajdhani"
+                font-size="15">
+                REQUEST → INTERCEPT → ANALYZE → RESPONSE
+            </text>
+
+        </svg>
+        `
+
+    },
+
+    pentest:{
+
+        title:"OPERATION // PENTESTING",
+
+        diagram:`
+
+        <svg viewBox="0 0 1000 420">
+
+            <line class="flow-line" x1="130" y1="210" x2="290" y2="210"/>
+            <line class="flow-line" x1="350" y1="210" x2="450" y2="210"/>
+            <line class="flow-line" x1="510" y1="210" x2="610" y2="210"/>
+            <line class="flow-line" x1="670" y1="210" x2="770" y2="210"/>
+
+            <g class="diagram-node" onclick="showDetail('RECON','Understand the authorized target and collect relevant information.')"
+               transform="translate(60,175)">
+                <circle cx="35" cy="35" r="35"/>
+                <text x="35" y="40" text-anchor="middle">RECON</text>
+            </g>
+
+            <g class="diagram-node" onclick="showDetail('ENUMERATION','Identify services, technologies and application behavior.')"
+               transform="translate(290,175)">
+                <circle cx="35" cy="35" r="35"/>
+                <text x="35" y="40" text-anchor="middle">ENUM</text>
+            </g>
+
+            <g class="diagram-node" onclick="showDetail('VALIDATION','Safely verify whether a suspected weakness is actually present.')"
+               transform="translate(450,175)">
+                <circle cx="35" cy="35" r="35"/>
+                <text x="35" y="40" text-anchor="middle">VALIDATE</text>
+            </g>
+
+            <g class="diagram-node" onclick="showDetail('CONTROLLED TEST','Demonstrate impact only within the authorized scope and rules of engagement.')"
+               transform="translate(610,175)">
+                <circle cx="35" cy="35" r="35"/>
+                <text x="35" y="40" text-anchor="middle">TEST</text>
+            </g>
+
+            <g class="diagram-node" onclick="showDetail('EVIDENCE / REPORT','Document observations, evidence, impact and remediation recommendations.')"
+               transform="translate(770,175)">
+                <circle cx="35" cy="35" r="35"/>
+                <text x="35" y="32" text-anchor="middle">REPORT</text>
+            </g>
+
+            <text x="500" y="100"
+                text-anchor="middle"
+                fill="#00ff9c"
+                font-family="Orbitron"
+                font-size="15">
+                PENTESTING LIFECYCLE
+            </text>
+
+        </svg>
+        `
 
     }
-);
-
-
-/* =========================
-   MOUSE PARALLAX
-========================= */
-
-const operatorZone =
-    document.getElementById(
-        "operatorZone"
-    );
-
-const operator =
-    document.getElementById(
-        "operator"
-    );
-
-
-operatorZone.addEventListener(
-    "mousemove",
-    function(e) {
-
-        const rect =
-            operatorZone.getBoundingClientRect();
-
-        const x =
-            (e.clientX - rect.left)
-            / rect.width - .5;
-
-        const y =
-            (e.clientY - rect.top)
-            / rect.height - .5;
-
-        operator.style.transform =
-            `translate(${x * 18}px, ${y * 18}px)`;
-
-    }
-);
-
-
-operatorZone.addEventListener(
-    "mouseleave",
-    function() {
-
-        operator.style.transform =
-            "translate(0,0)";
-
-    }
-);
-
-
-/* =========================
-   NETWORK NODES
-========================= */
-
-const nodes =
-    document.querySelectorAll(".node");
-
-const moduleText =
-    document.getElementById(
-        "moduleText"
-    );
-
-
-const nodeMessages = {
-
-    n1:
-        "RECON<br>" +
-        "enumeration<br>" +
-        "attack surface<br>" +
-        "intelligence",
-
-    n2:
-        "WEB-SRV<br>" +
-        "HTTP<br>" +
-        "application layer<br>" +
-        "testing",
-
-    n3:
-        "AUTH<br>" +
-        "login logic<br>" +
-        "authorization<br>" +
-        "session testing",
-
-    n4:
-        "DNS<br>" +
-        "subdomains<br>" +
-        "virtual hosts<br>" +
-        "mapping",
-
-    n5:
-        "LAB<br>" +
-        "controlled environment<br>" +
-        "CTF<br>" +
-        "practice",
-
-    n6:
-        "CORE<br>" +
-        "operator system<br>" +
-        "all modules<br>" +
-        "ACTIVE"
 
 };
 
 
-nodes.forEach(
-    function(node) {
+/* ================= OPEN OPERATION ================= */
 
-        node.addEventListener(
-            "click",
-            function() {
+function openOperation(type){
 
-                const classes =
-                    [...node.classList];
+    const data = operationData[type];
 
-                const key =
-                    classes.find(
-                        c => nodeMessages[c]
-                    );
+    if(!data) return;
 
-                if (key) {
+    document.getElementById("modalTitle").textContent =
+        data.title;
 
-                    moduleText.innerHTML =
-                        nodeMessages[key];
+    document.getElementById("diagram").innerHTML =
+        data.diagram;
 
-                }
+    document.getElementById("detailTitle").textContent =
+        "SYSTEM COMPONENT";
 
-            }
-        );
+    document.getElementById("detailText").textContent =
+        "Select a component inside the visualization.";
 
-    }
-);
-
-
-/* =========================
-   CASE FILES
-========================= */
-
-document.querySelectorAll(".case")
-    .forEach(
-        function(caseFile) {
-
-            caseFile.addEventListener(
-                "click",
-                function() {
-
-                    this.classList.toggle(
-                        "open"
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-/* =========================
-   LEARNING PATH
-========================= */
-
-document.querySelectorAll(".step")
-    .forEach(
-        function(step) {
-
-            step.addEventListener(
-                "click",
-                function() {
-
-                    document
-                        .querySelectorAll(".step")
-                        .forEach(
-                            s =>
-                            s.classList
-                                .remove("active")
-                        );
-
-                    this.classList.add(
-                        "active"
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-/* =========================
-   CLOCK
-========================= */
-
-function updateClock() {
-
-    const now =
-        new Date();
-
-    document.getElementById("clock")
-        .textContent =
-        now.toLocaleTimeString();
+    document.getElementById("operationModal")
+        .classList.add("active");
 
 }
 
-updateClock();
 
-setInterval(
-    updateClock,
-    1000
-);
+/* ================= COMPONENT DETAILS ================= */
 
+function showDetail(title,text){
 
-/* =========================
-   VISUAL PACKET ACTIVITY
-========================= */
+    document.getElementById("detailTitle").textContent =
+        title;
 
-function updatePackets() {
-
-    const number =
-        Math.floor(
-            4000 +
-            Math.random() * 2500
-        );
-
-    document.getElementById(
-        "packets"
-    ).textContent =
-        String(number)
-        .padStart(5,"0");
+    document.getElementById("detailText").textContent =
+        text;
 
 }
 
-setInterval(
-    updatePackets,
-    1200
-);
 
+/* ================= CLOSE MODAL ================= */
 
-/* =========================
-   TERMINAL
-========================= */
+function closeModal(){
 
-const terminalButton =
-    document.getElementById(
-        "terminalButton"
-    );
+    document.getElementById("operationModal")
+        .classList.remove("active");
 
-const terminalModal =
-    document.getElementById(
-        "terminalModal"
-    );
+}
 
-const terminalClose =
-    document.getElementById(
-        "terminalClose"
-    );
+document.getElementById("operationModal")
+.addEventListener("click",function(e){
 
-const terminalInput =
-    document.getElementById(
-        "terminalInput"
-    );
-
-const terminalOutput =
-    document.getElementById(
-        "terminalOutput"
-    );
-
-
-terminalButton.addEventListener(
-    "click",
-    function() {
-
-        terminalModal.classList
-            .add("show");
-
-        setTimeout(
-            function() {
-
-                terminalInput.focus();
-
-            },
-            200
-        );
-
+    if(e.target === this){
+        closeModal();
     }
-);
+
+});
 
 
-terminalClose.addEventListener(
-    "click",
-    function() {
+document.addEventListener("keydown",function(e){
 
-        terminalModal.classList
-            .remove("show");
-
+    if(e.key === "Escape"){
+        closeModal();
     }
-);
+
+});
 
 
-terminalModal.addEventListener(
-    "click",
-    function(e) {
+/* ================= MOUSE PARALLAX ================= */
 
-        if (
-            e.target === terminalModal
-        ) {
+const commandCenter =
+    document.querySelector(".command-center");
 
-            terminalModal.classList
-                .remove("show");
+document.addEventListener("mousemove",function(e){
 
-        }
+    if(window.innerWidth < 800) return;
 
-    }
-);
+    const x =
+        (e.clientX / window.innerWidth - .5) * 8;
 
+    const y =
+        (e.clientY / window.innerHeight - .5) * 8;
 
-terminalInput.addEventListener(
-    "keydown",
-    function(e) {
+    commandCenter.style.transform =
+        `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
 
-        if (e.key !== "Enter")
-            return;
+});
 
-        const command =
-            terminalInput.value
-            .trim()
-            .toLowerCase();
+document.addEventListener("mouseleave",function(){
 
-        terminalInput.value = "";
+    commandCenter.style.transform =
+        "perspective(1000px) rotateY(0deg) rotateX(0deg)";
 
-        let response = "";
-
-
-        if (command === "help") {
-
-            response =
-                "Available commands:<br>" +
-                "help — show commands<br>" +
-                "whoami — operator identity<br>" +
-                "status — system status<br>" +
-                "clear — clear terminal";
-
-        }
-
-        else if (
-            command === "whoami"
-        ) {
-
-            response =
-                "operator: BRYAN<br>" +
-                "role: ethical hacker<br>" +
-                "focus: web security / pentesting";
-
-        }
-
-        else if (
-            command === "status"
-        ) {
-
-            response =
-                "SYSTEM: ONLINE<br>" +
-                "NETWORK: MONITORED<br>" +
-                "SECURITY MODULES: ACTIVE<br>" +
-                "AUTHORIZATION: REQUIRED FOR TARGETED TESTING";
-
-        }
-
-        else if (
-            command === "clear"
-        ) {
-
-            terminalOutput.innerHTML = "";
-
-            return;
-
-        }
-
-        else if (
-            command === ""
-        ) {
-
-            return;
-
-        }
-
-        else {
-
-            response =
-                "command not recognized.<br>" +
-                "type <strong>help</strong>.";
-
-        }
-
-
-        terminalOutput.innerHTML +=
-            "<br>> " +
-            command +
-            "<br>" +
-            response +
-            "<br>";
-
-        terminalOutput.scrollTop =
-            terminalOutput.scrollHeight;
-
-    }
-);
-
-
-/* =========================
-   ESCAPE KEY
-========================= */
-
-document.addEventListener(
-    "keydown",
-    function(e) {
-
-        if (e.key === "Escape") {
-
-            terminalModal.classList
-                .remove("show");
-
-            boot.classList
-                .remove("active");
-
-        }
-
-    }
-);
+});
 
 </script>
 
