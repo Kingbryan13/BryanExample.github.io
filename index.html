@@ -163,6 +163,10 @@ nav{
         0 0 50px rgba(0,255,156,.06),
         inset 0 0 80px rgba(0,255,156,.025);
     overflow:hidden;
+
+    transition:
+        transform .35s ease,
+        box-shadow 1s ease;
 }
 
 .command-center::before{
@@ -241,18 +245,196 @@ nav{
     margin-top:4px;
 }
 
+/* ================= OPERATOR ================= */
+
 .operator{
     position:absolute;
     left:50%;
     top:50%;
-    transform:translate(-50%,-43%);
+
+    transform:
+        translate(-50%,-43%)
+        scale(1)
+        rotateX(0deg);
+
     width:min(470px,58%);
     max-height:560px;
     object-fit:contain;
+
     filter:
         drop-shadow(0 0 25px rgba(0,255,156,.35))
         drop-shadow(0 0 70px rgba(0,234,255,.12));
-    z-index:3;
+
+    z-index:5;
+    cursor:pointer;
+
+    transition:
+        transform 1.15s cubic-bezier(.2,.8,.2,1),
+        filter 1.15s ease;
+}
+
+/*
+    OPERATOR WAKE STATE
+
+    The operator moves forward/upward,
+    while the red eye effect activates.
+*/
+
+.command-center.operator-awake .operator{
+    transform:
+        translate(-50%,-48%)
+        scale(1.045)
+        rotateX(5deg);
+
+    filter:
+        drop-shadow(0 0 30px rgba(0,255,156,.45))
+        drop-shadow(0 0 45px rgba(255,0,0,.25))
+        drop-shadow(0 0 95px rgba(255,0,0,.12));
+}
+
+/* ================= RED EYES ================= */
+
+.operator-eyes{
+    position:absolute;
+
+    /*
+        Eye position.
+        This can be fine-tuned once we see the exact
+        operator image.
+    */
+    left:50%;
+    top:43%;
+
+    width:95px;
+    height:30px;
+
+    transform:
+        translate(-50%,-50%)
+        scale(.8);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    z-index:8;
+
+    transition:
+        opacity .45s ease,
+        transform 1s cubic-bezier(.2,.8,.2,1);
+}
+
+.operator-eyes span{
+    width:27px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#ff0000;
+
+    box-shadow:
+        0 0 5px #ff0000,
+        0 0 15px #ff0000,
+        0 0 30px rgba(255,0,0,.9);
+
+    transform:scaleX(.65);
+
+    transition:.3s;
+}
+
+.command-center.operator-awake .operator-eyes{
+    opacity:1;
+
+    transform:
+        translate(-50%,-50%)
+        scale(1.15);
+}
+
+.command-center.operator-awake .operator-eyes span{
+    animation:eyePulse 1.25s infinite alternate;
+}
+
+@keyframes eyePulse{
+
+    0%{
+        opacity:.65;
+
+        box-shadow:
+            0 0 5px #ff0000,
+            0 0 15px #ff0000,
+            0 0 25px rgba(255,0,0,.7);
+    }
+
+    100%{
+        opacity:1;
+
+        box-shadow:
+            0 0 8px #ff0000,
+            0 0 22px #ff0000,
+            0 0 45px rgba(255,0,0,1);
+    }
+}
+
+/* ================= OPERATOR ENERGY ================= */
+
+.operator-energy{
+    position:absolute;
+    left:50%;
+    top:50%;
+
+    width:280px;
+    height:280px;
+
+    transform:translate(-50%,-50%) scale(.75);
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,0,0,0);
+
+    box-shadow:
+        0 0 0 rgba(255,0,0,0);
+
+    opacity:0;
+
+    pointer-events:none;
+
+    z-index:4;
+
+    transition:
+        opacity 1s ease,
+        transform 1.2s ease,
+        border-color 1s ease,
+        box-shadow 1s ease;
+}
+
+.command-center.operator-awake .operator-energy{
+    opacity:1;
+
+    transform:
+        translate(-50%,-50%)
+        scale(1);
+
+    border-color:rgba(255,0,0,.18);
+
+    box-shadow:
+        0 0 70px rgba(255,0,0,.08),
+        inset 0 0 70px rgba(255,0,0,.04);
+
+    animation:energyPulse 2.5s infinite;
+}
+
+@keyframes energyPulse{
+
+    0%,100%{
+        opacity:.35;
+    }
+
+    50%{
+        opacity:.8;
+    }
 }
 
 .operator-fallback{
@@ -884,6 +1066,11 @@ footer{
         top:48%;
     }
 
+    .operator-eyes{
+        top:42%;
+        width:85px;
+    }
+
     .command-title{
         left:18px;
         top:22px;
@@ -945,6 +1132,16 @@ footer{
     .operator{
         width:100%;
         max-height:390px;
+    }
+
+    .operator-eyes{
+        top:40%;
+        width:80px;
+    }
+
+    .operator-eyes span{
+        width:23px;
+        height:6px;
     }
 
     .command-title span{
@@ -1022,13 +1219,26 @@ footer{
         <p>EXPLORE. ANALYZE. LEARN. IMPROVE.</p>
     </div>
 
-    <!-- Operator image -->
+    <!-- OPERATOR -->
+
     <img
         src="operator.png"
         class="operator"
+        id="operator"
         alt="Cyber operations visual"
         onerror="this.style.display='none';document.getElementById('operatorFallback').style.display='flex';"
     >
+
+    <!-- RED EYES -->
+
+    <div class="operator-eyes" aria-hidden="true">
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- ENERGY FIELD -->
+
+    <div class="operator-energy" aria-hidden="true"></div>
 
     <div class="operator-fallback" id="operatorFallback">
         OPERATOR VISUAL<br>
@@ -1036,6 +1246,7 @@ footer{
     </div>
 
     <!-- Interactive network -->
+
     <div class="network">
 
         <svg viewBox="0 0 1200 650">
@@ -1375,20 +1586,26 @@ footer{
 
 let progress = 0;
 
-const bootProgress = document.getElementById("bootProgress");
+const bootProgress =
+    document.getElementById("bootProgress");
 
 const bootTimer = setInterval(() => {
 
     progress += 5;
 
-    bootProgress.style.width = progress + "%";
+    bootProgress.style.width =
+        progress + "%";
 
     if(progress >= 100){
 
         clearInterval(bootTimer);
 
         setTimeout(() => {
-            document.getElementById("boot").classList.add("hidden");
+
+            document
+                .getElementById("boot")
+                .classList.add("hidden");
+
         },500);
     }
 
@@ -1399,8 +1616,46 @@ const bootTimer = setInterval(() => {
 
 function enterSystem(){
 
-    document.getElementById("operations").scrollIntoView({
-        behavior:"smooth"
+    const center =
+        document.querySelector(".command-center");
+
+    /*
+        Wake the operator first.
+    */
+
+    center.classList.add("operator-awake");
+
+    /*
+        Give the animation time to play
+        before moving into Operations.
+    */
+
+    setTimeout(() => {
+
+        document
+            .getElementById("operations")
+            .scrollIntoView({
+                behavior:"smooth"
+            });
+
+    },1200);
+}
+
+
+/* ================= OPERATOR CLICK ================= */
+
+const operator =
+    document.getElementById("operator");
+
+if(operator){
+
+    operator.addEventListener("click",function(){
+
+        const center =
+            document.querySelector(".command-center");
+
+        center.classList.toggle("operator-awake");
+
     });
 
 }
@@ -1412,10 +1667,14 @@ let packets = 4821;
 
 setInterval(() => {
 
-    packets += Math.floor(Math.random()*4);
+    packets +=
+        Math.floor(Math.random()*4);
 
-    document.getElementById("packets").textContent =
-        packets.toString().padStart(5,"0");
+    document.getElementById("packets")
+        .textContent =
+        packets
+        .toString()
+        .padStart(5,"0");
 
 },1400);
 
@@ -1661,25 +1920,29 @@ const operationData = {
 
 function openOperation(type){
 
-    const data = operationData[type];
+    const data =
+        operationData[type];
 
     if(!data) return;
 
-    document.getElementById("modalTitle").textContent =
+    document.getElementById("modalTitle")
+        .textContent =
         data.title;
 
-    document.getElementById("diagram").innerHTML =
+    document.getElementById("diagram")
+        .innerHTML =
         data.diagram;
 
-    document.getElementById("detailTitle").textContent =
+    document.getElementById("detailTitle")
+        .textContent =
         "SYSTEM COMPONENT";
 
-    document.getElementById("detailText").textContent =
+    document.getElementById("detailText")
+        .textContent =
         "Select a component inside the visualization.";
 
     document.getElementById("operationModal")
         .classList.add("active");
-
 }
 
 
@@ -1687,12 +1950,13 @@ function openOperation(type){
 
 function showDetail(title,text){
 
-    document.getElementById("detailTitle").textContent =
+    document.getElementById("detailTitle")
+        .textContent =
         title;
 
-    document.getElementById("detailText").textContent =
+    document.getElementById("detailText")
+        .textContent =
         text;
-
 }
 
 
@@ -1702,8 +1966,8 @@ function closeModal(){
 
     document.getElementById("operationModal")
         .classList.remove("active");
-
 }
+
 
 document.getElementById("operationModal")
 .addEventListener("click",function(e){
@@ -1733,6 +1997,15 @@ document.addEventListener("mousemove",function(e){
 
     if(window.innerWidth < 800) return;
 
+    /*
+        Don't apply parallax while the operator
+        is in the wake animation.
+    */
+
+    if(commandCenter.classList.contains("operator-awake")){
+        return;
+    }
+
     const x =
         (e.clientX / window.innerWidth - .5) * 8;
 
@@ -1744,7 +2017,12 @@ document.addEventListener("mousemove",function(e){
 
 });
 
+
 document.addEventListener("mouseleave",function(){
+
+    if(commandCenter.classList.contains("operator-awake")){
+        return;
+    }
 
     commandCenter.style.transform =
         "perspective(1000px) rotateY(0deg) rotateX(0deg)";
