@@ -1,0 +1,1375 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BRYAN // SEC</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --green:#00ff9c;
+    --cyan:#00eaff;
+    --red:#ff1515;
+    --dark:#020706;
+    --panel:rgba(3,15,13,.88);
+    --line:rgba(0,255,156,.25);
+    --text:#d9fff2;
+    --muted:#67a998;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+        radial-gradient(circle at 50% 35%,rgba(0,255,156,.08),transparent 35%),
+        radial-gradient(circle at 50% 70%,rgba(0,234,255,.04),transparent 40%),
+        #020706;
+    color:var(--text);
+    font-family:Rajdhani,sans-serif;
+    overflow-x:hidden;
+}
+
+/* GRID */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(0,255,156,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,255,156,.035) 1px,transparent 1px);
+    background-size:40px 40px;
+    pointer-events:none;
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,.018) 0px,
+        rgba(255,255,255,.018) 1px,
+        transparent 2px,
+        transparent 5px
+    );
+    pointer-events:none;
+    z-index:50;
+    opacity:.35;
+}
+
+/* NAV */
+
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:70px;
+    padding:0 35px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:rgba(1,6,5,.82);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+    z-index:100;
+}
+
+.logo{
+    font-family:Orbitron,sans-serif;
+    color:var(--green);
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+}
+
+.nav-links a{
+    color:#8dc9b8;
+    text-decoration:none;
+    font-size:13px;
+    letter-spacing:1.5px;
+    transition:.25s;
+}
+
+.nav-links a:hover{
+    color:var(--green);
+    text-shadow:0 0 12px var(--green);
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:Orbitron;
+    font-size:10px;
+    color:var(--green);
+}
+
+.status-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 12px var(--green);
+    animation:pulse 1.5s infinite;
+}
+
+/* HERO */
+
+.hero{
+    min-height:100vh;
+    padding:100px 25px 40px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.command-center{
+    position:relative;
+    width:min(1200px,100%);
+    min-height:720px;
+    border:1px solid rgba(0,255,156,.25);
+    background:
+        radial-gradient(circle at 50% 48%,rgba(0,255,156,.075),transparent 28%),
+        rgba(1,8,7,.82);
+    box-shadow:
+        0 0 60px rgba(0,255,156,.05),
+        inset 0 0 80px rgba(0,255,156,.025);
+    overflow:hidden;
+}
+
+/* CORNER DETAILS */
+
+.corner{
+    position:absolute;
+    width:25px;
+    height:25px;
+    border-color:var(--green);
+    opacity:.7;
+}
+
+.corner.tl{
+    top:-1px;
+    left:-1px;
+    border-top:2px solid;
+    border-left:2px solid;
+}
+
+.corner.tr{
+    top:-1px;
+    right:-1px;
+    border-top:2px solid;
+    border-right:2px solid;
+}
+
+.corner.bl{
+    bottom:-1px;
+    left:-1px;
+    border-bottom:2px solid;
+    border-left:2px solid;
+}
+
+.corner.br{
+    bottom:-1px;
+    right:-1px;
+    border-bottom:2px solid;
+    border-right:2px solid;
+}
+
+/* TITLE */
+
+.command-title{
+    position:absolute;
+    top:35px;
+    left:40px;
+    z-index:20;
+}
+
+.command-title small{
+    color:var(--green);
+    font-family:Orbitron;
+    font-size:11px;
+    letter-spacing:3px;
+}
+
+.command-title h1{
+    font-family:Orbitron;
+    font-size:clamp(25px,4vw,48px);
+    letter-spacing:4px;
+    margin-top:8px;
+}
+
+.command-title p{
+    color:var(--muted);
+    letter-spacing:3px;
+    font-size:13px;
+    margin-top:8px;
+}
+
+/* OPERATOR AREA */
+
+.operator-stage{
+    position:absolute;
+    left:50%;
+    top:48%;
+    width:470px;
+    height:550px;
+    transform:translate(-50%,-45%);
+    cursor:pointer;
+    z-index:10;
+    transition:
+        transform 1.25s cubic-bezier(.2,.8,.2,1),
+        filter 1s ease;
+}
+
+/* GREEN AURA */
+
+.operator-aura{
+    position:absolute;
+    left:50%;
+    top:48%;
+    width:390px;
+    height:390px;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,255,156,.16),
+            rgba(0,255,156,.05) 35%,
+            transparent 70%
+        );
+    filter:blur(12px);
+    opacity:.55;
+    transition:1s;
+}
+
+/* HOOD */
+
+.operator-hood{
+    position:absolute;
+    left:50%;
+    top:35px;
+    width:310px;
+    height:360px;
+    transform:translateX(-50%);
+    border-radius:48% 48% 42% 42%;
+    background:
+        radial-gradient(
+            ellipse at 50% 32%,
+            #18201e 0%,
+            #080d0c 38%,
+            #020403 70%
+        );
+    box-shadow:
+        inset 20px 0 30px rgba(255,255,255,.025),
+        inset -20px 0 30px rgba(0,0,0,.8),
+        0 20px 50px rgba(0,0,0,.8);
+    transition:
+        transform 1.15s cubic-bezier(.2,.8,.2,1),
+        filter 1s;
+}
+
+/* HOOD RIM */
+
+.operator-hood::before{
+    content:"";
+    position:absolute;
+    inset:12px;
+    border-radius:46% 46% 40% 40%;
+    border:1px solid rgba(255,255,255,.035);
+}
+
+.operator-hood::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:80px;
+    width:205px;
+    height:230px;
+    transform:translateX(-50%);
+    border-radius:50%;
+    background:
+        radial-gradient(
+            ellipse at 50% 35%,
+            #000 0%,
+            #010202 58%,
+            transparent 72%
+        );
+}
+
+/* FACE SHADOW */
+
+.operator-face{
+    position:absolute;
+    left:50%;
+    top:125px;
+    width:165px;
+    height:185px;
+    transform:translateX(-50%) rotate(4deg);
+    border-radius:48% 48% 42% 42%;
+    background:
+        linear-gradient(
+            150deg,
+            #101715,
+            #000 55%,
+            #050807
+        );
+    box-shadow:
+        inset 0 0 30px #000,
+        0 10px 25px #000;
+    transition:
+        transform 1.15s cubic-bezier(.2,.8,.2,1),
+        top 1.15s cubic-bezier(.2,.8,.2,1);
+    z-index:3;
+}
+
+/* FACE LOWER SHADOW */
+
+.operator-face::after{
+    content:"";
+    position:absolute;
+    bottom:0;
+    left:20px;
+    right:20px;
+    height:75px;
+    border-radius:50%;
+    background:linear-gradient(to bottom,transparent,#000);
+}
+
+/* EYES */
+
+.operator-eyes{
+    position:absolute;
+    left:50%;
+    top:195px;
+    width:105px;
+    height:25px;
+    transform:translateX(-50%) rotate(4deg);
+    display:flex;
+    justify-content:space-between;
+    opacity:0;
+    z-index:8;
+    transition:
+        opacity .4s,
+        transform 1.15s cubic-bezier(.2,.8,.2,1);
+}
+
+.operator-eyes span{
+    width:32px;
+    height:7px;
+    background:#ff0000;
+    border-radius:50%;
+    box-shadow:
+        0 0 5px #ff0000,
+        0 0 15px #ff0000,
+        0 0 30px #ff0000,
+        0 0 60px rgba(255,0,0,.7);
+}
+
+/* BODY */
+
+.operator-body{
+    position:absolute;
+    left:50%;
+    top:300px;
+    width:390px;
+    height:230px;
+    transform:translateX(-50%);
+    background:
+        linear-gradient(
+            160deg,
+            #151c1a,
+            #050807 45%,
+            #010202
+        );
+    clip-path:polygon(
+        25% 0,
+        75% 0,
+        94% 30%,
+        100% 100%,
+        0 100%,
+        6% 30%
+    );
+    box-shadow:0 30px 40px #000;
+    z-index:2;
+}
+
+/* SHOULDERS */
+
+.operator-body::before{
+    content:"";
+    position:absolute;
+    left:20px;
+    right:20px;
+    top:15px;
+    height:100px;
+    border-radius:50%;
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,.035),
+            transparent
+        );
+}
+
+/* ARMS */
+
+.arm{
+    position:absolute;
+    width:115px;
+    height:170px;
+    background:linear-gradient(
+        160deg,
+        #131a18,
+        #030504 65%
+    );
+    z-index:3;
+}
+
+.arm.left{
+    left:35px;
+    top:320px;
+    transform:rotate(18deg);
+    border-radius:40px 20px 10px 30px;
+}
+
+.arm.right{
+    right:35px;
+    top:320px;
+    transform:rotate(-18deg);
+    border-radius:20px 40px 30px 10px;
+}
+
+/* LAPTOP */
+
+.laptop{
+    position:absolute;
+    left:50%;
+    top:395px;
+    width:245px;
+    height:135px;
+    transform:translateX(-50%);
+    z-index:8;
+}
+
+.laptop-screen{
+    position:absolute;
+    left:15px;
+    top:0;
+    width:215px;
+    height:105px;
+    border:5px solid #151b19;
+    border-radius:8px 8px 3px 3px;
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(0,255,156,.25),
+            rgba(0,40,30,.8)
+        );
+    box-shadow:
+        0 0 20px rgba(0,255,156,.12),
+        inset 0 0 25px rgba(0,255,156,.12);
+    overflow:hidden;
+}
+
+.laptop-screen::before{
+    content:"ACCESS // TERMINAL";
+    position:absolute;
+    left:10px;
+    top:12px;
+    color:var(--green);
+    font:9px Orbitron;
+    letter-spacing:1px;
+}
+
+.laptop-screen::after{
+    content:"█ █ █ █ █ █ █ █";
+    position:absolute;
+    left:10px;
+    bottom:15px;
+    color:rgba(0,255,156,.5);
+    font-size:10px;
+    animation:terminalFlicker 1s infinite;
+}
+
+.laptop-base{
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:245px;
+    height:28px;
+    clip-path:polygon(5% 0,95% 0,100% 100%,0 100%);
+    background:linear-gradient(#333b38,#090d0c);
+    box-shadow:0 8px 20px #000;
+}
+
+/* ENERGY RING */
+
+.operator-energy{
+    position:absolute;
+    left:50%;
+    top:49%;
+    width:390px;
+    height:390px;
+    transform:translate(-50%,-50%) scale(.65);
+    border-radius:50%;
+    border:1px solid rgba(255,0,0,0);
+    opacity:0;
+    z-index:1;
+    transition:
+        opacity 1s,
+        transform 1.2s,
+        border-color 1s;
+}
+
+/* INITIAL STATE = HEAD DOWN */
+
+.operator-stage:not(.awake) .operator-face{
+    transform:translateX(-50%) rotate(9deg) translateY(20px);
+}
+
+.operator-stage:not(.awake) .operator-hood{
+    transform:translateX(-50%) rotate(3deg) translateY(12px);
+}
+
+/* AWAKEN */
+
+.command-center.operator-awake .operator-stage{
+    transform:translate(-50%,-48%) scale(1.035);
+    filter:
+        drop-shadow(0 0 25px rgba(255,0,0,.18))
+        drop-shadow(0 0 70px rgba(0,255,156,.12));
+}
+
+.command-center.operator-awake .operator-face{
+    top:105px;
+    transform:translateX(-50%) rotate(0deg) translateY(-12px);
+}
+
+.command-center.operator-awake .operator-hood{
+    transform:translateX(-50%) rotate(0deg) translateY(-12px);
+    filter:
+        drop-shadow(0 0 25px rgba(255,0,0,.18));
+}
+
+.command-center.operator-awake .operator-eyes{
+    opacity:1;
+    transform:translateX(-50%) rotate(0deg);
+}
+
+.command-center.operator-awake .operator-eyes span{
+    animation:eyePulse 1.1s infinite alternate;
+}
+
+.command-center.operator-awake .operator-energy{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1);
+    border-color:rgba(255,0,0,.18);
+    box-shadow:
+        0 0 60px rgba(255,0,0,.08),
+        inset 0 0 60px rgba(255,0,0,.05);
+    animation:energyPulse 2.5s infinite;
+}
+
+.command-center.operator-awake .operator-aura{
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,0,0,.12),
+            rgba(0,255,156,.08) 35%,
+            transparent 70%
+        );
+}
+
+/* BUTTON */
+
+.enter-btn{
+    position:absolute;
+    left:50%;
+    bottom:42px;
+    transform:translateX(-50%);
+    padding:15px 30px;
+    border:1px solid var(--green);
+    background:rgba(0,255,156,.04);
+    color:var(--green);
+    font-family:Orbitron;
+    font-size:11px;
+    letter-spacing:2px;
+    cursor:pointer;
+    z-index:20;
+    transition:.3s;
+}
+
+.enter-btn:hover{
+    background:rgba(0,255,156,.12);
+    box-shadow:
+        0 0 20px rgba(0,255,156,.2),
+        inset 0 0 20px rgba(0,255,156,.04);
+    transform:translateX(-50%) translateY(-3px);
+}
+
+.command-center.operator-awake .enter-btn{
+    border-color:var(--red);
+    color:#ff4a4a;
+}
+
+/* INFO PANELS */
+
+.panel{
+    position:absolute;
+    padding:15px;
+    border:1px solid var(--line);
+    background:rgba(1,8,7,.78);
+    font-family:Orbitron;
+    font-size:9px;
+    letter-spacing:1px;
+    z-index:20;
+}
+
+.panel strong{
+    display:block;
+    color:var(--green);
+    margin-bottom:8px;
+}
+
+.panel.left{
+    left:25px;
+    bottom:35px;
+}
+
+.panel.right{
+    right:25px;
+    bottom:35px;
+}
+
+.panel span{
+    color:#73a99a;
+}
+
+/* SECTIONS */
+
+section.content{
+    width:min(1200px,calc(100% - 40px));
+    margin:70px auto;
+}
+
+.section-title{
+    font-family:Orbitron;
+    color:var(--green);
+    font-size:14px;
+    letter-spacing:3px;
+    margin-bottom:25px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.card{
+    min-height:170px;
+    padding:25px;
+    border:1px solid var(--line);
+    background:var(--panel);
+    cursor:pointer;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    border-color:var(--green);
+    box-shadow:0 0 25px rgba(0,255,156,.08);
+}
+
+.card h3{
+    font-family:Orbitron;
+    font-size:13px;
+    color:var(--green);
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#7faea0;
+    line-height:1.6;
+    font-size:14px;
+}
+
+/* LEARNING */
+
+.learning{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.learning a{
+    display:block;
+    padding:25px;
+    color:var(--text);
+    text-decoration:none;
+    border:1px solid var(--line);
+    background:var(--panel);
+    transition:.3s;
+}
+
+.learning a:hover{
+    border-color:var(--cyan);
+    box-shadow:0 0 25px rgba(0,234,255,.08);
+    transform:translateY(-5px);
+}
+
+.learning strong{
+    display:block;
+    color:var(--cyan);
+    font-family:Orbitron;
+    margin-bottom:10px;
+}
+
+/* TERMINAL */
+
+.terminal{
+    border:1px solid var(--line);
+    background:#010504;
+    padding:25px;
+    font-family:monospace;
+    color:var(--green);
+    line-height:1.8;
+    box-shadow:inset 0 0 40px rgba(0,255,156,.025);
+}
+
+.cursor{
+    animation:blink 1s infinite;
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:50px 20px;
+    color:#47786c;
+    font-family:Orbitron;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+/* ANIMATIONS */
+
+@keyframes eyePulse{
+    from{
+        opacity:.65;
+        box-shadow:
+            0 0 5px #ff0000,
+            0 0 15px #ff0000,
+            0 0 25px #ff0000;
+    }
+    to{
+        opacity:1;
+        box-shadow:
+            0 0 8px #ff0000,
+            0 0 25px #ff0000,
+            0 0 55px #ff0000,
+            0 0 90px rgba(255,0,0,.5);
+    }
+}
+
+@keyframes energyPulse{
+    0%,100%{
+        transform:translate(-50%,-50%) scale(1);
+        opacity:.6;
+    }
+    50%{
+        transform:translate(-50%,-50%) scale(1.07);
+        opacity:1;
+    }
+}
+
+@keyframes pulse{
+    50%{
+        opacity:.35;
+    }
+}
+
+@keyframes blink{
+    50%{
+        opacity:0;
+    }
+}
+
+@keyframes terminalFlicker{
+    50%{
+        opacity:.4;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+    nav{
+        padding:0 15px;
+    }
+
+    .nav-links{
+        display:none;
+    }
+
+    .command-center{
+        min-height:680px;
+    }
+
+    .command-title{
+        left:20px;
+        top:25px;
+    }
+
+    .operator-stage{
+        width:390px;
+        transform:translate(-50%,-42%) scale(.85);
+    }
+
+    .panel{
+        display:none;
+    }
+
+    .grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .learning{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:500px){
+
+    .hero{
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .command-center{
+        min-height:650px;
+    }
+
+    .command-title h1{
+        font-size:22px;
+    }
+
+    .command-title p{
+        font-size:10px;
+    }
+
+    .operator-stage{
+        width:370px;
+        transform:translate(-50%,-38%) scale(.72);
+    }
+
+    .enter-btn{
+        width:85%;
+        font-size:9px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+
+<nav>
+
+    <div class="logo">BRYAN // SEC</div>
+
+    <div class="nav-links">
+        <a href="#operations">OPERATIONS</a>
+        <a href="#cases">CASE FILES</a>
+        <a href="#learning">LEARNING</a>
+        <a href="#comms">COMMS</a>
+    </div>
+
+    <div class="status">
+        <span class="status-dot"></span>
+        SYSTEM ONLINE
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<main class="hero">
+
+<div class="command-center" id="commandCenter">
+
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+
+    <div class="command-title">
+
+        <small>&gt; SYSTEM / COMMAND CENTER</small>
+
+        <h1>ENTER THE NETWORK</h1>
+
+        <p>EXPLORE // ANALYZE // LEARN // IMPROVE</p>
+
+    </div>
+
+
+    <!-- OPERATOR -->
+
+    <div
+        class="operator-stage"
+        id="operator"
+        onclick="wakeOperator()"
+        aria-label="Interactive cyber operator"
+    >
+
+        <div class="operator-aura"></div>
+
+        <div class="operator-energy"></div>
+
+        <div class="operator-hood"></div>
+
+        <div class="operator-face"></div>
+
+        <div class="operator-eyes">
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="operator-body"></div>
+
+        <div class="arm left"></div>
+        <div class="arm right"></div>
+
+        <div class="laptop">
+
+            <div class="laptop-screen"></div>
+
+            <div class="laptop-base"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SIDE INFORMATION -->
+
+    <div class="panel left">
+        <strong>OPERATOR STATUS</strong>
+        <span id="operatorStatus">STANDBY</span>
+    </div>
+
+    <div class="panel right">
+        <strong>THREAT LEVEL</strong>
+        <span id="threatLevel">LOW // MONITORED</span>
+    </div>
+
+
+    <!-- BUTTON -->
+
+    <button
+        class="enter-btn"
+        onclick="wakeOperator()"
+        id="enterButton"
+    >
+        INITIALIZE OPERATIONS →
+    </button>
+
+</div>
+
+</main>
+
+
+<!-- OPERATIONS -->
+
+<section class="content" id="operations">
+
+    <div class="section-title">
+        &gt; OPERATIONS
+    </div>
+
+    <div class="grid">
+
+        <div class="card" onclick="showMessage('WEB SECURITY','Analyze applications, authentication, input handling, access control and common web vulnerabilities.')">
+
+            <h3>WEB SECURITY</h3>
+
+            <p>
+                Investigate applications and understand how
+                vulnerabilities actually work.
+            </p>
+
+        </div>
+
+
+        <div class="card" onclick="showMessage('RECONNAISSANCE','Map targets, identify services, enumerate attack surface and organize findings.')">
+
+            <h3>RECON</h3>
+
+            <p>
+                Discover attack surface before attempting
+                exploitation.
+            </p>
+
+        </div>
+
+
+        <div class="card" onclick="showMessage('BURP SUITE','Intercept, inspect and manipulate HTTP requests inside authorized web-security labs.')">
+
+            <h3>BURP SUITE</h3>
+
+            <p>
+                Analyze HTTP traffic and investigate
+                application behavior.
+            </p>
+
+        </div>
+
+
+        <div class="card" onclick="showMessage('PENTESTING','Combine reconnaissance, enumeration, exploitation and documentation inside authorized environments.')">
+
+            <h3>PENTESTING</h3>
+
+            <p>
+                Think like an attacker while operating
+                within authorized boundaries.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CASE FILES -->
+
+<section class="content" id="cases">
+
+    <div class="section-title">
+        &gt; CASE FILES
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+
+            <h3>CASE_007</h3>
+
+            <p>
+                AUTHENTICATION ANALYSIS
+                <br><br>
+                STATUS: <b style="color:#00ff9c">SOLVED</b>
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>CASE_011</h3>
+
+            <p>
+                SQL INJECTION
+                <br><br>
+                STATUS: <b style="color:#00ff9c">SOLVED</b>
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>CASE_014</h3>
+
+            <p>
+                RECON & ENUMERATION
+                <br><br>
+                STATUS: <b style="color:#ffd000">IN PROGRESS</b>
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>CASE_???</h3>
+
+            <p>
+                NEXT INVESTIGATION
+                <br><br>
+                STATUS: <b style="color:#00eaff">LOCKED</b>
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- LEARNING -->
+
+<section class="content" id="learning">
+
+    <div class="section-title">
+        &gt; LEARNING PATHWAYS
+    </div>
+
+    <div class="learning">
+
+        <a
+            href="https://tryhackme.com"
+            target="_blank"
+        >
+            <strong>TRYHACKME</strong>
+            Hands-on rooms, guided labs and practical cybersecurity training.
+        </a>
+
+
+        <a
+            href="https://academy.hackthebox.com"
+            target="_blank"
+        >
+            <strong>HACK THE BOX ACADEMY</strong>
+            Deeper technical training and realistic security exercises.
+        </a>
+
+
+        <a
+            href="https://portswigger.net/web-security"
+            target="_blank"
+        >
+            <strong>PORTSWIGGER ACADEMY</strong>
+            Web-security labs focused on real application vulnerabilities.
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- COMMS -->
+
+<section class="content" id="comms">
+
+    <div class="section-title">
+        &gt; COMMS
+    </div>
+
+    <div class="learning">
+
+        <a
+            href="https://instagram.com/oj_the_menace"
+            target="_blank"
+        >
+            <strong>INSTAGRAM</strong>
+            @oj_the_menace
+        </a>
+
+
+        <a
+            href="https://x.com/BryanITPentest"
+            target="_blank"
+        >
+            <strong>X / TWITTER</strong>
+            @BryanITPentest
+        </a>
+
+
+        <a
+            href="https://github.com/Kingbryan13"
+            target="_blank"
+        >
+            <strong>GITHUB</strong>
+            SOURCE // PROJECTS
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- TERMINAL -->
+
+<section class="content">
+
+    <div class="section-title">
+        &gt; TERMINAL
+    </div>
+
+    <div class="terminal">
+
+        root@bryan-sec:~$ whoami
+        <br>
+        operator
+        <br><br>
+
+        root@bryan-sec:~$ status
+        <br>
+        system_online
+        <br>
+        learning_mode: active
+        <br>
+        authorization: required
+        <br><br>
+
+        root@bryan-sec:~$ _
+        <span class="cursor">█</span>
+
+    </div>
+
+</section>
+
+
+<footer>
+    BRYAN // SEC — AUTHORIZED OPERATIONS ONLY
+</footer>
+
+
+<script>
+
+/* WAKE OPERATOR */
+
+function wakeOperator(){
+
+    const center =
+        document.getElementById("commandCenter");
+
+    const status =
+        document.getElementById("operatorStatus");
+
+    const threat =
+        document.getElementById("threatLevel");
+
+    const button =
+        document.getElementById("enterButton");
+
+    center.classList.toggle("operator-awake");
+
+    if(center.classList.contains("operator-awake")){
+
+        status.textContent = "ACTIVE // AWAKE";
+
+        threat.textContent = "ELEVATED // MONITORED";
+
+        button.textContent =
+            "OPERATIONS ACTIVE ↓";
+
+    }else{
+
+        status.textContent = "STANDBY";
+
+        threat.textContent = "LOW // MONITORED";
+
+        button.textContent =
+            "INITIALIZE OPERATIONS →";
+
+    }
+
+}
+
+
+/* CARD INFORMATION */
+
+function showMessage(title,text){
+
+    alert(
+        title +
+        "\n\n" +
+        text
+    );
+
+}
+
+
+/* MOUSE PARALLAX */
+
+const commandCenter =
+    document.getElementById("commandCenter");
+
+commandCenter.addEventListener(
+    "mousemove",
+    function(event){
+
+        if(
+            commandCenter.classList.contains(
+                "operator-awake"
+            )
+        ){
+            return;
+        }
+
+        const rect =
+            commandCenter.getBoundingClientRect();
+
+        const x =
+            (event.clientX - rect.left) /
+            rect.width -
+            .5;
+
+        const y =
+            (event.clientY - rect.top) /
+            rect.height -
+            .5;
+
+        const operator =
+            document.getElementById("operator");
+
+        operator.style.marginLeft =
+            `${x * 12}px`;
+
+        operator.style.marginTop =
+            `${y * 8}px`;
+
+    }
+);
+
+commandCenter.addEventListener(
+    "mouseleave",
+    function(){
+
+        const operator =
+            document.getElementById("operator");
+
+        operator.style.marginLeft = "0";
+
+        operator.style.marginTop = "0";
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```
+
