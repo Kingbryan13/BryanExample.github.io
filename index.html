@@ -1,2035 +1,581 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#020706">
-<title>BRYAN // SEC</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-:root{
-    --green:#00ff9c;
-    --cyan:#00eaff;
-    --dark:#020706;
-    --panel:rgba(2,15,13,.86);
-    --line:rgba(0,255,156,.24);
-    --text:#d9fff2;
-    --muted:#65a899;
-}
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    background:
-        radial-gradient(circle at 50% 10%,rgba(0,255,156,.08),transparent 30%),
-        #020706;
-    color:var(--text);
-    font-family:Rajdhani,sans-serif;
-    overflow-x:hidden;
-}
-
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:
-        linear-gradient(rgba(0,255,156,.035) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(0,255,156,.035) 1px,transparent 1px);
-    background-size:40px 40px;
-    pointer-events:none;
-    z-index:-5;
-}
-
-body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:repeating-linear-gradient(
-        to bottom,
-        transparent 0px,
-        transparent 3px,
-        rgba(0,255,156,.025) 4px
-    );
-    pointer-events:none;
-    z-index:999;
-}
-
-/* ================= NAV ================= */
-
-nav{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:76px;
-    padding:10px 3%;
-    padding-top:max(10px,env(safe-area-inset-top));
-    background:rgba(1,8,7,.88);
-    backdrop-filter:blur(14px);
-    border-bottom:1px solid var(--line);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    z-index:1000;
-}
-
-.logo{
-    font-family:Orbitron,sans-serif;
-    font-size:20px;
-    font-weight:800;
-    color:var(--green);
-    letter-spacing:2px;
-}
-
-.logo small{
-    display:block;
-    color:var(--muted);
-    font-family:Rajdhani;
-    font-size:9px;
-    letter-spacing:2px;
-}
-
-.nav-links{
-    display:flex;
-    gap:25px;
-}
-
-.nav-links a{
-    color:#7fb9aa;
-    text-decoration:none;
-    font-size:12px;
-    letter-spacing:1.5px;
-    transition:.25s;
-}
-
-.nav-links a:hover{
-    color:var(--green);
-    text-shadow:0 0 12px var(--green);
-}
-
-.status{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:10px;
-    color:var(--green);
-}
-
-.status-dot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 15px var(--green);
-    animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse{
-    0%,100%{opacity:1;transform:scale(1)}
-    50%{opacity:.45;transform:scale(.65)}
-}
-
-/* ================= HERO ================= */
-
-.hero{
-    min-height:100vh;
-    padding:120px 5% 50px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.command-center{
-    width:min(1200px,100%);
-    min-height:650px;
-    position:relative;
-    border:1px solid rgba(0,255,156,.4);
-    background:
-        radial-gradient(circle at center,rgba(0,255,156,.08),transparent 45%),
-        rgba(0,10,8,.72);
-    box-shadow:
-        0 0 50px rgba(0,255,156,.06),
-        inset 0 0 80px rgba(0,255,156,.025);
-    overflow:hidden;
-
-    transition:
-        transform .35s ease,
-        box-shadow 1s ease;
-}
-
-.command-center::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:35%;
-    height:100%;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        rgba(0,255,156,.08),
-        transparent
-    );
-    animation:scan 7s linear infinite;
-}
-
-@keyframes scan{
-    to{left:130%}
-}
-
-.corner{
-    position:absolute;
-    width:35px;
-    height:35px;
-    border-color:var(--green);
-    opacity:.8;
-}
-
-.corner.tl{
-    top:10px;
-    left:10px;
-    border-top:2px solid;
-    border-left:2px solid;
-}
-
-.corner.tr{
-    top:10px;
-    right:10px;
-    border-top:2px solid;
-    border-right:2px solid;
-}
-
-.corner.bl{
-    bottom:10px;
-    left:10px;
-    border-bottom:2px solid;
-    border-left:2px solid;
-}
-
-.corner.br{
-    bottom:10px;
-    right:10px;
-    border-bottom:2px solid;
-    border-right:2px solid;
-}
-
-.command-title{
-    position:absolute;
-    top:25px;
-    left:30px;
-    z-index:10;
-}
-
-.command-title span{
-    color:var(--green);
-    font-family:Orbitron;
-    font-size:13px;
-    letter-spacing:2px;
-}
-
-.command-title p{
-    color:var(--muted);
-    font-size:11px;
-    margin-top:4px;
-}
-
-/* ================= OPERATOR ================= */
-
-.operator{
-    position:absolute;
-    left:50%;
-    top:50%;
-
-    transform:
-        translate(-50%,-43%)
-        scale(1)
-        rotateX(0deg);
-
-    width:min(470px,58%);
-    max-height:560px;
-    object-fit:contain;
-
-    filter:
-        drop-shadow(0 0 25px rgba(0,255,156,.35))
-        drop-shadow(0 0 70px rgba(0,234,255,.12));
-
-    z-index:5;
-    cursor:pointer;
-
-    transition:
-        transform 1.15s cubic-bezier(.2,.8,.2,1),
-        filter 1.15s ease;
-}
-
-/*
-    OPERATOR WAKE STATE
-
-    The operator moves forward/upward,
-    while the red eye effect activates.
-*/
-
-.command-center.operator-awake .operator{
-    transform:
-        translate(-50%,-48%)
-        scale(1.045)
-        rotateX(5deg);
-
-    filter:
-        drop-shadow(0 0 30px rgba(0,255,156,.45))
-        drop-shadow(0 0 45px rgba(255,0,0,.25))
-        drop-shadow(0 0 95px rgba(255,0,0,.12));
-}
-
-/* ================= RED EYES ================= */
-
-.operator-eyes{
-    position:absolute;
-
-    /*
-        Eye position.
-        This can be fine-tuned once we see the exact
-        operator image.
-    */
-    left:50%;
-    top:43%;
-
-    width:95px;
-    height:30px;
-
-    transform:
-        translate(-50%,-50%)
-        scale(.8);
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    opacity:0;
-
-    pointer-events:none;
-
-    z-index:8;
-
-    transition:
-        opacity .45s ease,
-        transform 1s cubic-bezier(.2,.8,.2,1);
-}
-
-.operator-eyes span{
-    width:27px;
-    height:7px;
-
-    border-radius:50%;
-
-    background:#ff0000;
-
-    box-shadow:
-        0 0 5px #ff0000,
-        0 0 15px #ff0000,
-        0 0 30px rgba(255,0,0,.9);
-
-    transform:scaleX(.65);
-
-    transition:.3s;
-}
-
-.command-center.operator-awake .operator-eyes{
-    opacity:1;
-
-    transform:
-        translate(-50%,-50%)
-        scale(1.15);
-}
-
-.command-center.operator-awake .operator-eyes span{
-    animation:eyePulse 1.25s infinite alternate;
-}
-
-@keyframes eyePulse{
-
-    0%{
-        opacity:.65;
-
-        box-shadow:
-            0 0 5px #ff0000,
-            0 0 15px #ff0000,
-            0 0 25px rgba(255,0,0,.7);
-    }
-
-    100%{
-        opacity:1;
-
-        box-shadow:
-            0 0 8px #ff0000,
-            0 0 22px #ff0000,
-            0 0 45px rgba(255,0,0,1);
-    }
-}
-
-/* ================= OPERATOR ENERGY ================= */
-
-.operator-energy{
-    position:absolute;
-    left:50%;
-    top:50%;
-
-    width:280px;
-    height:280px;
-
-    transform:translate(-50%,-50%) scale(.75);
-
-    border-radius:50%;
-
-    border:1px solid rgba(255,0,0,0);
-
-    box-shadow:
-        0 0 0 rgba(255,0,0,0);
-
-    opacity:0;
-
-    pointer-events:none;
-
-    z-index:4;
-
-    transition:
-        opacity 1s ease,
-        transform 1.2s ease,
-        border-color 1s ease,
-        box-shadow 1s ease;
-}
-
-.command-center.operator-awake .operator-energy{
-    opacity:1;
-
-    transform:
-        translate(-50%,-50%)
-        scale(1);
-
-    border-color:rgba(255,0,0,.18);
-
-    box-shadow:
-        0 0 70px rgba(255,0,0,.08),
-        inset 0 0 70px rgba(255,0,0,.04);
-
-    animation:energyPulse 2.5s infinite;
-}
-
-@keyframes energyPulse{
-
-    0%,100%{
-        opacity:.35;
-    }
-
-    50%{
-        opacity:.8;
-    }
-}
-
-.operator-fallback{
-    position:absolute;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-45%);
-    width:280px;
-    height:320px;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    color:var(--green);
-    border:1px dashed rgba(0,255,156,.4);
-    background:rgba(0,255,156,.025);
-    font-family:Orbitron;
-    font-size:11px;
-    letter-spacing:2px;
-}
-
-/* ================= HERO NETWORK ================= */
-
-.network{
-    position:absolute;
-    inset:0;
-    z-index:2;
-}
-
-.network svg{
-    width:100%;
-    height:100%;
-}
-
-.net-line{
-    stroke:var(--green);
-    stroke-width:1;
-    opacity:.25;
-    stroke-dasharray:5 8;
-    animation:flow 4s linear infinite;
-}
-
-@keyframes flow{
-    to{stroke-dashoffset:-100}
-}
-
-.net-node{
-    cursor:pointer;
-}
-
-.net-node circle{
-    fill:#03130f;
-    stroke:var(--green);
-    stroke-width:2;
-    filter:drop-shadow(0 0 8px rgba(0,255,156,.65));
-    transition:.25s;
-}
-
-.net-node:hover circle{
-    fill:rgba(0,255,156,.16);
-    stroke:var(--cyan);
-    filter:drop-shadow(0 0 20px var(--green));
-}
-
-.net-node text{
-    fill:var(--green);
-    font-family:Orbitron;
-    font-size:11px;
-    letter-spacing:1px;
-    pointer-events:none;
-}
-
-.node-ring{
-    fill:none;
-    stroke:var(--cyan);
-    opacity:.3;
-    animation:ring 2s infinite;
-}
-
-@keyframes ring{
-    0%{r:25;opacity:.5}
-    100%{r:45;opacity:0}
-}
-
-/* ================= HERO BUTTON ================= */
-
-.enter-btn{
-    position:absolute;
-    left:35px;
-    bottom:35px;
-    padding:15px 25px;
-    background:rgba(0,255,156,.04);
-    color:var(--green);
-    border:1px solid var(--green);
-    font-family:Orbitron;
-    letter-spacing:2px;
-    cursor:pointer;
-    box-shadow:0 0 20px rgba(0,255,156,.08);
-    transition:.3s;
-    z-index:20;
-}
-
-.enter-btn:hover{
-    background:rgba(0,255,156,.12);
-    box-shadow:0 0 30px rgba(0,255,156,.3);
-    transform:translateY(-2px);
-}
-
-.packet-box{
-    position:absolute;
-    right:30px;
-    bottom:30px;
-    z-index:10;
-    font-family:Orbitron;
-    font-size:10px;
-    color:var(--muted);
-    line-height:1.8;
-}
-
-.packet-box strong{
-    color:var(--green);
-}
-
-/* ================= SECTIONS ================= */
-
-section{
-    width:min(1200px,92%);
-    margin:0 auto;
-    padding:90px 0;
-}
-
-.section-label{
-    font-family:Orbitron;
-    color:var(--green);
-    font-size:11px;
-    letter-spacing:3px;
-    margin-bottom:8px;
-}
-
-.section-title{
-    font-family:Orbitron;
-    font-size:32px;
-    letter-spacing:3px;
-    margin-bottom:10px;
-}
-
-.section-sub{
-    color:var(--muted);
-    margin-bottom:35px;
-}
-
-/* ================= OPERATIONS ================= */
-
-.operation-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
-}
-
-.operation{
-    min-height:300px;
-    padding:22px;
-    position:relative;
-    background:
-        linear-gradient(145deg,rgba(0,255,156,.06),rgba(0,0,0,.35)),
-        var(--panel);
-    border:1px solid rgba(0,255,156,.25);
-    cursor:pointer;
-    overflow:hidden;
-    transition:.3s;
-}
-
-.operation::after{
-    content:"";
-    position:absolute;
-    width:120px;
-    height:120px;
-    right:-60px;
-    bottom:-60px;
-    border-radius:50%;
-    background:rgba(0,255,156,.1);
-    filter:blur(25px);
-}
-
-.operation:hover{
-    transform:translateY(-7px);
-    border-color:var(--green);
-    box-shadow:
-        0 0 30px rgba(0,255,156,.12),
-        inset 0 0 30px rgba(0,255,156,.035);
-}
-
-.operation-icon{
-    width:50px;
-    height:50px;
-    border:1px solid var(--green);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:var(--green);
-    font-size:22px;
-    margin-bottom:25px;
-    box-shadow:0 0 15px rgba(0,255,156,.1);
-}
-
-.operation h3{
-    font-family:Orbitron;
-    font-size:16px;
-    letter-spacing:1px;
-    margin-bottom:10px;
-}
-
-.operation p{
-    color:#83b9ac;
-    font-size:14px;
-    line-height:1.5;
-}
-
-.launch{
-    position:absolute;
-    bottom:20px;
-    left:22px;
-    color:var(--green);
-    font-family:Orbitron;
-    font-size:10px;
-    letter-spacing:2px;
-}
-
-/* ================= LEARNING ================= */
-
-.learning-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.learning-card{
-    position:relative;
-    padding:25px;
-    min-height:230px;
-    background:rgba(2,15,13,.8);
-    border:1px solid rgba(0,255,156,.22);
-    overflow:hidden;
-    transition:.3s;
-}
-
-.learning-card:hover{
-    border-color:var(--green);
-    transform:translateY(-5px);
-    box-shadow:0 0 30px rgba(0,255,156,.12);
-}
-
-.learning-card::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:2px;
-    background:linear-gradient(90deg,transparent,var(--green),transparent);
-    animation:laser 3s linear infinite;
-}
-
-@keyframes laser{
-    from{transform:translateX(-100%)}
-    to{transform:translateX(100%)}
-}
-
-.learning-number{
-    font-family:Orbitron;
-    color:var(--cyan);
-    font-size:10px;
-    letter-spacing:2px;
-}
-
-.learning-card h3{
-    margin:25px 0 10px;
-    font-family:Orbitron;
-    color:var(--green);
-    font-size:18px;
-}
-
-.learning-card p{
-    color:#7fa99f;
-    line-height:1.5;
-    min-height:65px;
-}
-
-.learning-link{
-    display:inline-block;
-    margin-top:18px;
-    padding:10px 15px;
-    border:1px solid var(--green);
-    color:var(--green);
-    text-decoration:none;
-    font-family:Orbitron;
-    font-size:9px;
-    letter-spacing:1px;
-    transition:.25s;
-}
-
-.learning-link:hover{
-    background:var(--green);
-    color:#00100b;
-    box-shadow:0 0 20px rgba(0,255,156,.4);
-}
-
-/* ================= CASE FILES ================= */
-
-.case-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.case{
-    padding:22px;
-    background:rgba(2,15,13,.8);
-    border:1px solid rgba(0,255,156,.2);
-}
-
-.case-id{
-    color:var(--cyan);
-    font-family:Orbitron;
-    font-size:10px;
-}
-
-.case h3{
-    margin:14px 0;
-    font-family:Orbitron;
-    font-size:15px;
-}
-
-.case p{
-    color:#7fa99f;
-    line-height:1.5;
-}
-
-.case-tag{
-    display:inline-block;
-    margin-top:20px;
-    padding:5px 8px;
-    border:1px solid rgba(0,255,156,.3);
-    color:var(--green);
-    font-size:9px;
-    font-family:Orbitron;
-}
-
-/* ================= COMMS ================= */
-
-.comms-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.social{
-    padding:25px;
-    border:1px solid rgba(0,255,156,.2);
-    background:rgba(2,15,13,.8);
-    text-decoration:none;
-    color:var(--text);
-    transition:.3s;
-}
-
-.social:hover{
-    border-color:var(--green);
-    box-shadow:0 0 25px rgba(0,255,156,.12);
-    transform:translateY(-4px);
-}
-
-.social-icon{
-    font-size:28px;
-    margin-bottom:15px;
-}
-
-.social span{
-    display:block;
-    color:var(--muted);
-    font-size:11px;
-    margin-top:7px;
-}
-
-/* ================= TERMINAL ================= */
-
-.terminal{
-    border:1px solid rgba(0,255,156,.35);
-    background:#010605;
-    padding:25px;
-    font-family:monospace;
-    color:#9affd7;
-    box-shadow:inset 0 0 40px rgba(0,255,156,.025);
-}
-
-.terminal-head{
-    display:flex;
-    justify-content:space-between;
-    color:var(--green);
-    margin-bottom:20px;
-}
-
-.terminal-line{
-    margin:7px 0;
-}
-
-.cursor{
-    display:inline-block;
-    width:8px;
-    height:15px;
-    background:var(--green);
-    animation:blink 1s infinite;
-}
-
-@keyframes blink{
-    50%{opacity:0}
-}
-
-/* ================= MODAL ================= */
-
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,3,2,.88);
-    backdrop-filter:blur(12px);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:25px;
-    z-index:2000;
-}
-
-.modal.active{
-    display:flex;
-}
-
-.modal-box{
-    width:min(1050px,100%);
-    max-height:90vh;
-    overflow:auto;
-    background:
-        radial-gradient(circle at center,rgba(0,255,156,.06),transparent 50%),
-        #020a08;
-    border:1px solid var(--green);
-    box-shadow:
-        0 0 50px rgba(0,255,156,.18),
-        inset 0 0 50px rgba(0,255,156,.03);
-    padding:25px;
-    position:relative;
-}
-
-.modal-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom:1px solid rgba(0,255,156,.18);
-    padding-bottom:18px;
-    margin-bottom:20px;
-}
-
-.modal-title{
-    font-family:Orbitron;
-    color:var(--green);
-    letter-spacing:2px;
-}
-
-.close{
-    background:none;
-    border:1px solid rgba(0,255,156,.4);
-    color:var(--green);
-    padding:8px 13px;
-    cursor:pointer;
-    font-family:Orbitron;
-}
-
-.diagram{
-    width:100%;
-    min-height:380px;
-    border:1px solid rgba(0,255,156,.15);
-    background:
-        linear-gradient(rgba(0,255,156,.025) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(0,255,156,.025) 1px,transparent 1px);
-    background-size:35px 35px;
-    position:relative;
-    overflow:hidden;
-}
-
-.diagram svg{
-    width:100%;
-    height:420px;
-}
-
-.diagram-node{
-    cursor:pointer;
-}
-
-.diagram-node rect,
-.diagram-node circle{
-    fill:#03120e;
-    stroke:var(--green);
-    stroke-width:2;
-    filter:drop-shadow(0 0 7px rgba(0,255,156,.4));
-    transition:.25s;
-}
-
-.diagram-node:hover rect,
-.diagram-node:hover circle{
-    fill:rgba(0,255,156,.15);
-    stroke:var(--cyan);
-    filter:drop-shadow(0 0 18px rgba(0,255,156,.9));
-}
-
-.diagram-node text{
-    fill:var(--green);
-    font-family:Orbitron;
-    font-size:12px;
-    pointer-events:none;
-}
-
-.flow-line{
-    stroke:var(--cyan);
-    stroke-width:2;
-    stroke-dasharray:8 10;
-    animation:flow 2.5s linear infinite;
-    opacity:.6;
-}
-
-.detail-panel{
-    margin-top:18px;
-    padding:18px;
-    border-left:2px solid var(--green);
-    background:rgba(0,255,156,.035);
-}
-
-.detail-panel strong{
-    color:var(--green);
-    font-family:Orbitron;
-    font-size:12px;
-}
-
-.detail-panel p{
-    color:#83b9ac;
-    margin-top:7px;
-    line-height:1.5;
-}
-
-/* ================= BOOT ================= */
-
-.boot{
-    position:fixed;
-    inset:0;
-    background:#000;
-    z-index:5000;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:30px;
-    transition:opacity .6s;
-}
-
-.boot.hidden{
-    opacity:0;
-    pointer-events:none;
-}
-
-.boot-terminal{
-    width:min(650px,100%);
-    font-family:monospace;
-    color:var(--green);
-    line-height:1.8;
-    font-size:13px;
-}
-
-.boot-bar{
-    height:3px;
-    width:100%;
-    background:#06251b;
-    margin-top:20px;
-    overflow:hidden;
-}
-
-.boot-progress{
-    height:100%;
-    width:0;
-    background:var(--green);
-    box-shadow:0 0 15px var(--green);
-    transition:width .15s;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-    padding:35px 5%;
-    border-top:1px solid rgba(0,255,156,.15);
-    display:flex;
-    justify-content:space-between;
-    color:#4e8275;
-    font-family:Orbitron;
-    font-size:9px;
-    letter-spacing:1px;
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:900px){
-
-    nav{
-        height:64px;
-    }
-
-    .nav-links{
-        display:none;
-    }
-
-    .logo{
-        font-size:16px;
-    }
-
-    .hero{
-        padding-top:95px;
-        min-height:auto;
-    }
-
-    .command-center{
-        min-height:620px;
-    }
-
-    .operator{
-        width:80%;
-        top:48%;
-    }
-
-    .operator-eyes{
-        top:42%;
-        width:85px;
-    }
-
-    .command-title{
-        left:18px;
-        top:22px;
-    }
-
-    .enter-btn{
-        left:18px;
-        bottom:20px;
-    }
-
-    .packet-box{
-        right:18px;
-        bottom:20px;
-    }
-
-    .operation-grid,
-    .learning-grid,
-    .case-grid,
-    .comms-grid{
-        grid-template-columns:1fr;
-    }
-
-    section{
-        padding:65px 0;
-    }
-
-    .section-title{
-        font-size:25px;
-    }
-
-    .modal{
-        padding:10px;
-    }
-
-    .modal-box{
-        padding:15px;
-    }
-
-    .diagram svg{
-        height:350px;
-    }
-
-    footer{
-        flex-direction:column;
-        gap:10px;
-    }
-}
-
-@media(max-width:500px){
-
-    .status{
-        display:none;
-    }
-
-    .command-center{
-        min-height:570px;
-    }
-
-    .operator{
-        width:100%;
-        max-height:390px;
-    }
-
-    .operator-eyes{
-        top:40%;
-        width:80px;
-    }
-
-    .operator-eyes span{
-        width:23px;
-        height:6px;
-    }
-
-    .command-title span{
-        font-size:10px;
-    }
-
-    .command-title p{
-        font-size:9px;
-    }
-
-    .packet-box{
-        font-size:8px;
-    }
-
-    .enter-btn{
-        font-size:9px;
-        padding:12px 15px;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPERATOR // SECURITY OPERATIONS CENTER</title>
+    <style>
+        :root {
+            --bg-color: #08090a;
+            --panel-bg: rgba(16, 20, 24, 0.85);
+            --border-color: #1e293b;
+            --accent-green: #00ff66;
+            --accent-red: #ff0033;
+            --accent-blue: #00ccff;
+            --text-main: #e2e8f0;
+            --text-dim: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* Boot Loader */
+        #boot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        #boot.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .boot-bar-container {
+            width: 300px;
+            height: 8px;
+            border: 1px solid var(--accent-green);
+            margin-top: 15px;
+            padding: 2px;
+        }
+
+        .boot-bar {
+            width: 0%;
+            height: 100%;
+            background-color: var(--accent-green);
+            transition: width 0.1s linear;
+        }
+
+        /* Layout Architecture */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-green);
+            letter-spacing: 2px;
+        }
+
+        /* Command Center Section */
+        .command-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            transition: border-color 0.3s ease;
+        }
+
+        .operator-wrapper {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .operator-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%) brightness(0.7);
+            transition: all 0.4s ease;
+        }
+
+        /* Operator Interactive / Awake Visual State */
+        .command-center.operator-awake {
+            border-color: var(--accent-red);
+        }
+
+        .command-center.operator-awake .operator-img {
+            filter: grayscale(0%) brightness(1.2) drop-shadow(0 0 20px rgba(255, 0, 51, 0.8));
+        }
+
+        .status-badge {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .command-center.operator-awake .status-badge {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+
+        .btn-enter {
+            margin-top: 20px;
+            background: transparent;
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            padding: 10px 24px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-enter:hover {
+            background: var(--accent-green);
+            color: #000;
+        }
+
+        /* Operations Cards Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        .card h3 {
+            color: var(--accent-blue);
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        /* Modal Component */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-body {
+            background: var(--bg-color);
+            border: 1px solid var(--accent-blue);
+            width: 90%;
+            max-width: 950px;
+            padding: 30px;
+            border-radius: 6px;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            color: var(--accent-blue);
+            font-size: 1.1rem;
+        }
+
+        .close {
+            background: none;
+            border: none;
+            color: var(--accent-red);
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .diagram {
+            width: 100%;
+            height: 320px;
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .diagram svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .diagram-node {
+            cursor: pointer;
+            fill: #161b22;
+            stroke: var(--accent-blue);
+            stroke-width: 2;
+            transition: all 0.2s ease;
+        }
+
+        .diagram-node:hover {
+            fill: #1f2937;
+            stroke: var(--accent-green);
+        }
+
+        .diagram-node text {
+            fill: var(--text-main);
+            font-size: 12px;
+            font-family: monospace;
+        }
+
+        .flow-line {
+            stroke: var(--border-color);
+            stroke-width: 2;
+            stroke-dasharray: 6;
+            animation: dash 20s linear infinite;
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: -1000; }
+        }
+
+        .detail-panel {
+            background: #0d1117;
+            border-left: 3px solid var(--accent-green);
+            padding: 15px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        .detail-panel strong {
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- ================= BOOT SCREEN ================= -->
-
-<div class="boot" id="boot">
-    <div class="boot-terminal">
-        <div>> INITIALIZING BRYAN // SEC</div>
-        <div>> LOADING OPERATIONS ENVIRONMENT...</div>
-        <div>> ESTABLISHING SECURE CONNECTION...</div>
-        <div>> LOADING PRACTITIONER MODULES...</div>
-        <div>> SYSTEM READY.</div>
-
-        <div class="boot-bar">
-            <div class="boot-progress" id="bootProgress"></div>
+    <!-- BOOT SCREEN LOADER -->
+    <div id="boot">
+        <p style="color: var(--accent-green);">SYSTEM INITIALIZING...</p>
+        <div class="boot-bar-container">
+            <div class="boot-bar" id="bootProgress"></div>
         </div>
     </div>
-</div>
 
-<!-- ================= NAV ================= -->
+    <!-- MAIN INTERFACE -->
+    <div class="container">
+        <header>
+            <div class="logo">// OPERATOR_TERMINAL v2.6</div>
+            <div style="font-size: 0.85rem; color: var(--text-dim);">
+                PACKETS PROCESSED: <span id="packets" style="color: var(--accent-green);">04281</span>
+            </div>
+        </header>
 
-<nav>
-    <div class="logo">
-        BRYAN // SEC
-        <small>WEB SECURITY // PENTEST // INVESTIGATION</small>
+        <!-- COMMAND CENTER / INTERACTIVE OPERATOR -->
+        <section class="command-center">
+            <div class="operator-wrapper">
+                <!-- Replace src with your local or hosted operator image path -->
+                <img id="operator" class="operator-img" src="https://via.placeholder.com/200/000000/00ff66?text=OPERATOR" alt="Operator Interface">
+            </div>
+            <h2>COMMANDER NODE</h2>
+            <div class="status-badge" id="opStatus">SYSTEM STANDBY // CLICK OR HOVER OPERATOR</div>
+            <br>
+            <button class="btn-enter" onclick="enterSystem()">INITIALIZE SYSTEM SWEEP</button>
+        </section>
+
+        <!-- OPERATIONS PANELS -->
+        <section id="operations" class="grid">
+            <div class="card" onclick="openOperation('web')">
+                <h3>01 // WEB ARCHITECTURE</h3>
+                <p>Inspect multi-tier data boundaries, CORS setups, and reverse proxy routing paths.</p>
+            </div>
+            <div class="card" onclick="openOperation('recon')">
+                <h3>02 // RECONNAISSANCE</h3>
+                <p>Audit target surface boundaries, DNS topologies, and active service footprints.</p>
+            </div>
+            <div class="card" onclick="openOperation('burp')">
+                <h3>03 // TRAFFIC INTERCEPTION</h3>
+                <p>Analyze HTTP request mutation, header manipulation, and response behavior.</p>
+            </div>
+            <div class="card" onclick="openOperation('pentest')">
+                <h3>04 // ASSESSMENT LIFECYCLE</h3>
+                <p>Review standard penetration testing methodologies, scanning, and remediation workflows.</p>
+            </div>
+        </section>
     </div>
 
-    <div class="nav-links">
-        <a href="#operations">OPERATIONS</a>
-        <a href="#cases">CASE FILES</a>
-        <a href="#learning">LEARNING</a>
-        <a href="#comms">COMMS</a>
-    </div>
-
-    <div class="status">
-        <span class="status-dot"></span>
-        SYSTEM ONLINE
-    </div>
-</nav>
-
-<!-- ================= HERO ================= -->
-
-<header class="hero">
-
-<div class="command-center">
-
-    <div class="corner tl"></div>
-    <div class="corner tr"></div>
-    <div class="corner bl"></div>
-    <div class="corner br"></div>
-
-    <div class="command-title">
-        <span>> SYSTEM / COMMAND CENTER</span>
-        <p>EXPLORE. ANALYZE. LEARN. IMPROVE.</p>
-    </div>
-
-    <!-- OPERATOR -->
-
-    <img
-        src="operator.png"
-        class="operator"
-        id="operator"
-        alt="Cyber operations visual"
-        onerror="this.style.display='none';document.getElementById('operatorFallback').style.display='flex';"
-    >
-
-    <!-- RED EYES -->
-
-    <div class="operator-eyes" aria-hidden="true">
-        <span></span>
-        <span></span>
-    </div>
-
-    <!-- ENERGY FIELD -->
-
-    <div class="operator-energy" aria-hidden="true"></div>
-
-    <div class="operator-fallback" id="operatorFallback">
-        OPERATOR VISUAL<br>
-        OFFLINE
-    </div>
-
-    <!-- Interactive network -->
-
-    <div class="network">
-
-        <svg viewBox="0 0 1200 650">
-
-            <line class="net-line" x1="170" y1="190" x2="470" y2="300"/>
-            <line class="net-line" x1="170" y1="420" x2="470" y2="340"/>
-            <line class="net-line" x1="1000" y1="190" x2="730" y2="300"/>
-            <line class="net-line" x1="1000" y1="420" x2="730" y2="340"/>
-            <line class="net-line" x1="170" y1="190" x2="1000" y2="420"/>
-            <line class="net-line" x1="170" y1="420" x2="1000" y2="190"/>
-
-            <g class="net-node" onclick="openOperation('recon')" transform="translate(150,180)">
-                <circle class="node-ring" r="28"></circle>
-                <circle r="25"></circle>
-                <text x="-27" y="52">RECON</text>
-                <text x="-7" y="5">⌕</text>
-            </g>
-
-            <g class="net-node" onclick="openOperation('web')" transform="translate(150,430)">
-                <circle class="node-ring" r="28"></circle>
-                <circle r="25"></circle>
-                <text x="-20" y="52">DNS</text>
-                <text x="-8" y="5">◎</text>
-            </g>
-
-            <g class="net-node" onclick="openOperation('burp')" transform="translate(1030,180)">
-                <circle class="node-ring" r="28"></circle>
-                <circle r="25"></circle>
-                <text x="-32" y="52">WEB-SRV</text>
-                <text x="-8" y="5">◉</text>
-            </g>
-
-            <g class="net-node" onclick="openOperation('pentest')" transform="translate(1030,430)">
-                <circle class="node-ring" r="28"></circle>
-                <circle r="25"></circle>
-                <text x="-15" y="52">LAB</text>
-                <text x="-8" y="5">⌬</text>
-            </g>
-
-        </svg>
-    </div>
-
-    <button class="enter-btn" onclick="enterSystem()">
-        INITIALIZE OPERATIONS →
-    </button>
-
-    <div class="packet-box">
-        PACKETS <strong id="packets">04821</strong><br>
-        THREAT LEVEL <strong>LOW</strong><br>
-        ENCRYPTION <strong>AES-256</strong>
-    </div>
-
-</div>
-</header>
-
-<!-- ================= OPERATIONS ================= -->
-
-<section id="operations">
-
-    <div class="section-label">01 // OPERATIONS</div>
-    <h2 class="section-title">SELECT AN OPERATION</h2>
-    <p class="section-sub">
-        Every module opens an interactive visual. Click the systems and explore.
-    </p>
-
-    <div class="operation-grid">
-
-        <div class="operation" onclick="openOperation('web')">
-            <div class="operation-icon">◎</div>
-            <h3>WEB SECURITY</h3>
-            <p>
-                Explore how browsers, applications, APIs and databases
-                communicate across a modern web environment.
-            </p>
-            <div class="launch">LAUNCH →</div>
-        </div>
-
-        <div class="operation" onclick="openOperation('recon')">
-            <div class="operation-icon">⌕</div>
-            <h3>RECONNAISSANCE</h3>
-            <p>
-                Map domains, DNS, hosts and services to understand
-                an application's attack surface.
-            </p>
-            <div class="launch">LAUNCH →</div>
-        </div>
-
-        <div class="operation" onclick="openOperation('burp')">
-            <div class="operation-icon">⇄</div>
-            <h3>BURP SUITE</h3>
-            <p>
-                Visualize HTTP traffic flowing through an interception
-                proxy and analysis tools.
-            </p>
-            <div class="launch">LAUNCH →</div>
-        </div>
-
-        <div class="operation" onclick="openOperation('pentest')">
-            <div class="operation-icon">◇</div>
-            <h3>PENTESTING</h3>
-            <p>
-                Follow the assessment lifecycle from reconnaissance
-                through validation and evidence collection.
-            </p>
-            <div class="launch">LAUNCH →</div>
-        </div>
-
-    </div>
-</section>
-
-<!-- ================= CASE FILES ================= -->
-
-<section id="cases">
-
-    <div class="section-label">02 // CASE FILES</div>
-    <h2 class="section-title">INVESTIGATION LOG</h2>
-    <p class="section-sub">
-        Practical techniques, lab investigations and security analysis.
-    </p>
-
-    <div class="case-grid">
-
-        <div class="case">
-            <div class="case-id">CASE_007</div>
-            <h3>AUTHENTICATION ANALYSIS</h3>
-            <p>
-                Investigating login behavior, authentication logic,
-                response differences and session security.
-            </p>
-            <span class="case-tag">SOLVED</span>
-        </div>
-
-        <div class="case">
-            <div class="case-id">CASE_011</div>
-            <h3>SQL INJECTION</h3>
-            <p>
-                Studying injection behavior, query structure,
-                authentication bypass concepts and controlled validation.
-            </p>
-            <span class="case-tag">SOLVED</span>
-        </div>
-
-        <div class="case">
-            <div class="case-id">CASE_014</div>
-            <h3>RECON & ENUMERATION</h3>
-            <p>
-                Mapping services, discovering attack surface and
-                organizing information before testing.
-            </p>
-            <span class="case-tag">IN PROGRESS</span>
-        </div>
-
-    </div>
-</section>
-
-<!-- ================= LEARNING ================= -->
-
-<section id="learning">
-
-    <div class="section-label">03 // LEARNING PATHS</div>
-    <h2 class="section-title">ENTER THE LABS</h2>
-    <p class="section-sub">
-        External training environments used to build practical cybersecurity skills.
-    </p>
-
-    <div class="learning-grid">
-
-        <div class="learning-card">
-            <div class="learning-number">CHANNEL_01</div>
-            <h3>TRYHACKME</h3>
-            <p>
-                Hands-on rooms, guided learning paths and practical
-                cybersecurity labs.
-            </p>
-
-            <a
-                class="learning-link"
-                href="https://tryhackme.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                OPEN CHANNEL →
-            </a>
-        </div>
-
-        <div class="learning-card">
-            <div class="learning-number">CHANNEL_02</div>
-            <h3>HACK THE BOX</h3>
-            <p>
-                HTB Academy provides guided modules, skill paths,
-                exercises and browser-based security labs.
-            </p>
-
-            <a
-                class="learning-link"
-                href="https://academy.hackthebox.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                OPEN CHANNEL →
-            </a>
-        </div>
-
-        <div class="learning-card">
-            <div class="learning-number">CHANNEL_03</div>
-            <h3>PORTSWIGGER</h3>
-            <p>
-                Web Security Academy provides interactive web-security
-                labs and Burp Suite learning material.
-            </p>
-
-            <a
-                class="learning-link"
-                href="https://portswigger.net/web-security"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                OPEN CHANNEL →
-            </a>
-        </div>
-
-    </div>
-</section>
-
-<!-- ================= COMMS ================= -->
-
-<section id="comms">
-
-    <div class="section-label">04 // COMMUNICATIONS</div>
-    <h2 class="section-title">STAY CONNECTED</h2>
-
-    <div class="comms-grid">
-
-        <a
-            class="social"
-            href="https://instagram.com/oj_the_menace"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            <div class="social-icon">◎</div>
-            INSTAGRAM
-            <span>@oj_the_menace</span>
-        </a>
-
-        <a
-            class="social"
-            href="https://x.com/BryanITPentest"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            <div class="social-icon">𝕏</div>
-            X / TWITTER
-            <span>@BryanITPentest</span>
-        </a>
-
-        <a
-            class="social"
-            href="https://github.com/kingbryan13"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            <div class="social-icon">⌘</div>
-            GITHUB
-            <span>kingbryan13</span>
-        </a>
-
-    </div>
-</section>
-
-<!-- ================= TERMINAL ================= -->
-
-<section>
-
-    <div class="section-label">05 // SECURE TERMINAL</div>
-
-    <div class="terminal">
-
-        <div class="terminal-head">
-            <span>root@bryan:~#</span>
-            <span>ONLINE</span>
-        </div>
-
-        <div class="terminal-line">> help</div>
-        <div class="terminal-line">Available commands:</div>
-        <div class="terminal-line">&nbsp;&nbsp;operations - open operations</div>
-        <div class="terminal-line">&nbsp;&nbsp;learning - open training channels</div>
-        <div class="terminal-line">&nbsp;&nbsp;cases - view investigation files</div>
-        <div class="terminal-line">&nbsp;&nbsp;status - system status</div>
-        <div class="terminal-line">&nbsp;&nbsp;clear - clear terminal</div>
-        <br>
-        <div class="terminal-line">
-            root@bryan:~# <span class="cursor"></span>
-        </div>
-
-    </div>
-</section>
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-    <span>BRYAN // SEC</span>
-    <span>BUILDING A SAFER DIGITAL WORLD</span>
-    <span>© 2026</span>
-</footer>
-
-<!-- ================= OPERATION MODAL ================= -->
-
-<div class="modal" id="operationModal">
-
-    <div class="modal-box">
-
-        <div class="modal-top">
-            <div class="modal-title" id="modalTitle">
-                OPERATION
+    <!-- MODAL POPUP -->
+    <div class="modal-overlay" id="operationModal">
+        <div class="modal-body">
+            <div class="modal-header">
+                <h2 id="modalTitle">OPERATION DETAILS</h2>
+                <button class="close" onclick="closeModal()">CLOSE [X]</button>
             </div>
 
-            <button class="close" onclick="closeModal()">
-                CLOSE ×
-            </button>
+            <div class="diagram" id="diagramContainer">
+                <!-- Dynamic SVG Diagram Injected via JS -->
+            </div>
+
+            <div class="detail-panel" id="detailPanel">
+                <strong>SYSTEM DETAIL:</strong>
+                <p id="detailText">Click on any node in the architecture diagram above to inspect system telemetry, flow logic, and vulnerability attack vectors.</p>
+            </div>
         </div>
-
-        <div class="diagram" id="diagram"></div>
-
-        <div class="detail-panel">
-            <strong id="detailTitle">SYSTEM COMPONENT</strong>
-            <p id="detailText">
-                Select a component inside the visualization.
-            </p>
-        </div>
-
     </div>
-</div>
 
-<script>
-
-/* ================= BOOT ================= */
-
-let progress = 0;
-
-const bootProgress =
-    document.getElementById("bootProgress");
-
-const bootTimer = setInterval(() => {
-
-    progress += 5;
-
-    bootProgress.style.width =
-        progress + "%";
-
-    if(progress >= 100){
-
-        clearInterval(bootTimer);
-
-        setTimeout(() => {
-
-            document
-                .getElementById("boot")
-                .classList.add("hidden");
-
-        },500);
-    }
-
-},80);
-
-
-/* ================= SYSTEM BUTTON ================= */
-
-function enterSystem(){
-
-    const center =
-        document.querySelector(".command-center");
-
-    /*
-        Wake the operator first.
-    */
-
-    center.classList.add("operator-awake");
-
-    /*
-        Give the animation time to play
-        before moving into Operations.
-    */
-
-    setTimeout(() => {
-
-        document
-            .getElementById("operations")
-            .scrollIntoView({
-                behavior:"smooth"
-            });
-
-    },1200);
-}
-
-
-/* ================= OPERATOR CLICK ================= */
-
-const operator =
-    document.getElementById("operator");
-
-if(operator){
-
-    operator.addEventListener("click",function(){
-
-        const center =
-            document.querySelector(".command-center");
-
-        center.classList.toggle("operator-awake");
-
+    <!-- SYSTEM LOGIC -->
+    <script>
+    /* Boot Screen Loader */
+    window.addEventListener('load', () => {
+        const progress = document.getElementById('bootProgress');
+        const boot = document.getElementById('boot');
+        let width = 0;
+        const interval = setInterval(() => {
+            if (width >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    boot.classList.add('hidden');
+                }, 300);
+            } else {
+                width += 5;
+                progress.style.width = width + '%';
+            }
+        }, 30);
     });
 
-}
+    /* Packet Counter Simulator */
+    setInterval(() => {
+        const packets = document.getElementById('packets');
+        if (packets) {
+            const val = Math.floor(4000 + Math.random() * 2000);
+            packets.textContent = val.toString().padStart(5, '0');
+        }
+    }, 2000);
 
+    /* Dedicated Operator Interactivity */
+    const commandCenter = document.querySelector('.command-center');
+    const operatorImg = document.getElementById('operator');
+    const opStatus = document.getElementById('opStatus');
 
-/* ================= PACKET COUNTER ================= */
+    if (operatorImg && commandCenter) {
+        operatorImg.addEventListener('mouseenter', () => {
+            commandCenter.classList.add('operator-awake');
+            if (opStatus) opStatus.textContent = "OPERATOR ACTIVE // SENSORS ONLINE";
+        });
 
-let packets = 4821;
+        operatorImg.addEventListener('mouseleave', () => {
+            commandCenter.classList.remove('operator-awake');
+            if (opStatus) opStatus.textContent = "SYSTEM STANDBY // CLICK OR HOVER OPERATOR";
+        });
 
-setInterval(() => {
-
-    packets +=
-        Math.floor(Math.random()*4);
-
-    document.getElementById("packets")
-        .textContent =
-        packets
-        .toString()
-        .padStart(5,"0");
-
-},1400);
-
-
-/* ================= OPERATION DATA ================= */
-
-const operationData = {
-
-    web:{
-
-        title:"OPERATION // WEB SECURITY",
-
-        diagram:`
-
-        <svg viewBox="0 0 1000 420">
-
-            <line class="flow-line" x1="150" y1="210" x2="330" y2="210"/>
-            <line class="flow-line" x1="400" y1="210" x2="580" y2="210"/>
-            <line class="flow-line" x1="650" y1="210" x2="830" y2="210"/>
-
-            <g class="diagram-node" onclick="showDetail('BROWSER','Client-side entry point. Requests are sent toward the application.')"
-               transform="translate(100,175)">
-                <rect width="130" height="70" rx="5"/>
-                <text x="65" y="40" text-anchor="middle">BROWSER</text>
-            </g>
-
-            <g class="diagram-node" onclick="showDetail('WEB APPLICATION','Application layer handling routes, input, authentication and business logic.')"
-               transform="translate(330,175)">
-                <rect width="130" height="70" rx="5"/>
-                <text x="65" y="40" text-anchor="middle">WEB APP</text>
-            </g>
-
-            <g class="diagram-node" onclick="showDetail('API / SERVER','Backend services process requests and communicate with application resources.')"
-               transform="translate(560,175)">
-                <rect width="130" height="70" rx="5"/>
-                <text x="65" y="40" text-anchor="middle">API / SERVER</text>
-            </g>
-
-            <g class="diagram-node" onclick="showDetail('DATABASE','Stores application data. Access control and query handling are critical security boundaries.')"
-               transform="translate(790,175)">
-                <rect width="130" height="70" rx="5"/>
-                <text x="65" y="40" text-anchor="middle">DATABASE</text>
-            </g>
-
-            <text x="500" y="100"
-                text-anchor="middle"
-                fill="#00ff9c"
-                font-family="Orbitron"
-                font-size="15">
-                WEB APPLICATION ARCHITECTURE
-            </text>
-
-            <text x="500" y="315"
-                text-anchor="middle"
-                fill="#65a899"
-                font-family="Rajdhani"
-                font-size="15">
-                CLICK A COMPONENT TO INSPECT THE SYSTEM
-            </text>
-
-        </svg>
-        `
-
-    },
-
-    recon:{
-
-        title:"OPERATION // RECONNAISSANCE",
-
-        diagram:`
-
-        <svg viewBox="0 0 1000 420">
-
-            <line class="flow-line" x1="130" y1="210" x2="300" y2="210"/>
-            <line class="flow-line" x1="370" y1="210" x2="470" y2="210"/>
-            <line class="flow-line" x1="540" y1="210" x2="630" y2="210"/>
-            <line class="flow-line" x1="700" y1="210" x2="850" y2="210"/>
-
-            <g class="diagram-node" onclick="showDetail('INTERNET','Starting point for mapping the externally visible environment.')"
-               transform="translate(60,175)">
-                <circle cx="35" cy="35" r="35"/>
-                <text x="35" y="40" text-anchor="middle">NET</text>
-            </g>
-
-            <g class="diagram-node" onclick="showDetail('DNS','Maps domain names to infrastructure and can reveal useful scope information.')"
-               transform="translate(300,175)">
-                <circle cx="35" cy="35" r="35"/>
-                <text x="35" y="40" text-anchor="middle">DNS</text>
-            </g>
-
-            <g class="diagram-node" onclick="showDetail('SUBDOMAINS','Discovering related hosts helps build an organized attack-surface map.')"
-               transform="translate(470,175)">
-                <rect width="100" height="70" rx="5"/>
-                <text x="50" y="32" text-anchor="middle">SUB</text>
-                <text x="50" y="50" text-anchor="middle">DOMAINS</text>
-            </g>
-
-            <g class="diagram-node" onclick="showDetail('HOSTS / SERVICES','Identify reachable services and organize what exists before deeper testing.')"
-               transform="translate(630,175)">
-                <rect width="100" height="70" rx="5"/>
-                <text x="50" y="32" text-anchor="middle">HOSTS</text>
-                <text x="50" y="50" text-anchor="middle">SERVICES</text>
-            </g>
-
-            <g class="diagram-node" onclick="showDetail('ATTACK SURFACE','The final map summarizes discovered assets and possible testing areas.')"
-               transform="translate(820,175)">
-                <circle cx="35" cy="35" r="35"/>
-                <text x="35" y="32" text-anchor="middle">MAP</text>
-                <text x="35" y="48" text-anchor="middle">SURFACE</text>
-            </g>
-
-            <text x="500" y="100"
-                text-anchor="middle"
-                fill="#00ff9c"
-                font-family="Orbitron"
-                font-size="15">
-                RECONNAISSANCE FLOW
-            </text>
-
-        </svg>
-        `
-
-    },
-
-    burp:{
-
-        title:"OPERATION // BURP SUITE",
-
-        diagram:`
-
-        <svg viewBox="0 0 1000 420">
-
-            <line class="flow-line" x1="150" y1="210" x2="330" y2="210"/>
-            <line class="flow-line" x1="400" y1="210" x2="560" y2="210"/>
-            <line class="flow-line" x1="630" y1="210" x2="820" y2="210"/>
-
-            <g class="diagram-node" onclick="showDetail('BROWSER','Generates HTTP requests and receives HTTP responses.')"
-               transform="translate(80,175)">
-                <rect width="130" height="70" rx="5"/>
-                <text x="65" y="40" text-anchor="middle">BROWSER</text>
-            </g>
-
-            <g class="diagram-node" onclick="showDetail('BURP PROXY','Intercepting layer used to inspect and modify HTTP traffic in an authorized lab.')"
-               transform="translate(330,175)">
-                <rect width="130" height="70" rx="5"/>
-                <text x="65" y="40" text-anchor="middle">BURP PROXY</text>
-            </g>
-
-            <g class="diagram-node" onclick="showDetail('REPEATER / INTRUDER','Tools used to resend requests, test controlled variations and analyze responses.')"
-               transform="translate(560,175)">
-                <rect width="150" height="70" rx="5"/>
-                <text x="75" y="32" text-anchor="middle">REPEATER</text>
-                <text x="75" y="50" text-anchor="middle">INTRUDER</text>
-            </g>
-
-            <g class="diagram-node" onclick="showDetail('TARGET SERVER','Authorized application receiving the request and returning a response.')"
-               transform="translate(820,175)">
-                <rect width="110" height="70" rx="5"/>
-                <text x="55" y="40" text-anchor="middle">TARGET</text>
-            </g>
-
-            <text x="500" y="100"
-                text-anchor="middle"
-                fill="#00ff9c"
-                font-family="Orbitron"
-                font-size="15">
-                HTTP TRAFFIC ANALYSIS
-            </text>
-
-            <text x="500" y="315"
-                text-anchor="middle"
-                fill="#65a899"
-                font-family="Rajdhani"
-                font-size="15">
-                REQUEST → INTERCEPT → ANALYZE → RESPONSE
-            </text>
-
-        </svg>
-        `
-
-    },
-
-    pentest:{
-
-        title:"OPERATION // PENTESTING",
-
-        diagram:`
-
-        <svg viewBox="0 0 1000 420">
-
-            <line class="flow-line" x1="130" y1="210" x2="290" y2="210"/>
-            <line class="flow-line" x1="350" y1="210" x2="450" y2="210"/>
-            <line class="flow-line" x1="510" y1="210" x2="610" y2="210"/>
-            <line class="flow-line" x1="670" y1="210" x2="770" y2="210"/>
-
-            <g class="diagram-node" onclick="showDetail('RECON','Understand the authorized target and collect relevant information.')"
-               transform="translate(60,175)">
-                <circle cx="35" cy="35" r="35"/>
-                <text x="35" y="40" text-anchor="middle">RECON</text>
-            </g>
-
-            <g class="diagram-node" onclick="showDetail('ENUMERATION','Identify services, technologies and application behavior.')"
-               transform="translate(290,175)">
-                <circle cx="35" cy="35" r="35"/>
-                <text x="35" y="40" text-anchor="middle">ENUM</text>
-            </g>
-
-            <g class="diagram-node" onclick="showDetail('VALIDATION','Safely verify whether a suspected weakness is actually present.')"
-               transform="translate(450,175)">
-                <circle cx="35" cy="35" r="35"/>
-                <text x="35" y="40" text-anchor="middle">VALIDATE</text>
-            </g>
-
-            <g class="diagram-node" onclick="showDetail('CONTROLLED TEST','Demonstrate impact only within the authorized scope and rules of engagement.')"
-               transform="translate(610,175)">
-                <circle cx="35" cy="35" r="35"/>
-                <text x="35" y="40" text-anchor="middle">TEST</text>
-            </g>
-
-            <g class="diagram-node" onclick="showDetail('EVIDENCE / REPORT','Document observations, evidence, impact and remediation recommendations.')"
-               transform="translate(770,175)">
-                <circle cx="35" cy="35" r="35"/>
-                <text x="35" y="32" text-anchor="middle">REPORT</text>
-            </g>
-
-            <text x="500" y="100"
-                text-anchor="middle"
-                fill="#00ff9c"
-                font-family="Orbitron"
-                font-size="15">
-                PENTESTING LIFECYCLE
-            </text>
-
-        </svg>
-        `
-
+        operatorImg.addEventListener('click', () => {
+            commandCenter.classList.toggle('operator-awake');
+            if (opStatus) {
+                const isActive = commandCenter.classList.contains('operator-awake');
+                opStatus.textContent = isActive ? "OPERATOR ENGAGED // LOCKED ON" : "SYSTEM STANDBY // CLICK OR HOVER OPERATOR";
+            }
+        });
     }
 
-};
-
-
-/* ================= OPEN OPERATION ================= */
-
-function openOperation(type){
-
-    const data =
-        operationData[type];
-
-    if(!data) return;
-
-    document.getElementById("modalTitle")
-        .textContent =
-        data.title;
-
-    document.getElementById("diagram")
-        .innerHTML =
-        data.diagram;
-
-    document.getElementById("detailTitle")
-        .textContent =
-        "SYSTEM COMPONENT";
-
-    document.getElementById("detailText")
-        .textContent =
-        "Select a component inside the visualization.";
-
-    document.getElementById("operationModal")
-        .classList.add("active");
-}
-
-
-/* ================= COMPONENT DETAILS ================= */
-
-function showDetail(title,text){
-
-    document.getElementById("detailTitle")
-        .textContent =
-        title;
-
-    document.getElementById("detailText")
-        .textContent =
-        text;
-}
-
-
-/* ================= CLOSE MODAL ================= */
-
-function closeModal(){
-
-    document.getElementById("operationModal")
-        .classList.remove("active");
-}
-
-
-document.getElementById("operationModal")
-.addEventListener("click",function(e){
-
-    if(e.target === this){
-        closeModal();
+    function enterSystem() {
+        document.getElementById('operations').scrollIntoView({ behavior: 'smooth' });
     }
 
-});
+    /* Modal & Interactive SVG Diagram Engine */
+    const operationsData = {
+        web: {
+            title: "OPERATION // WEB SECURITY ARCHITECTURE",
+            svg: `
+            <svg viewBox="0 0 1000 320">
+                <line class="flow-line" x1="150" y1="160" x2="380" y2="160" />
+                <line class="flow-line" x1="480" y1="160" x2="710" y2="160" />
 
+                <g class="diagram-node" onclick="showDetail('Client / Browser', 'Initial execution point. Handles DOM rendering, cookie storage, and client-side JavaScript processing. Vulnerable to XSS, CSRF, and CORS misconfigurations.')" transform="translate(50, 110)">
+                    <rect width="130" height="100" rx="8" />
+                    <text x="35" y="55">BROWSER</text>
+                </g>
 
-document.addEventListener("keydown",function(e){
+                <g class="diagram-node" onclick="showDetail('API Gateway / Reverse Proxy', 'Receives inbound requests, handles TLS termination, rate limiting, and routes packets to microservices. Enforces WAF protection rules.')" transform="translate(380, 110)">
+                    <rect width="130" height="100" rx="8" />
+                    <text x="35" y="55">GATEWAY</text>
+                </g>
 
-    if(e.key === "Escape"){
-        closeModal();
+                <g class="diagram-node" onclick="showDetail('Database / Data Layer', 'Stores persistent application data. Critical focus area for SQL injection (SQLi) defense, data-at-rest encryption, and access control audit logs.')" transform="translate(710, 110)">
+                    <rect width="130" height="100" rx="8" />
+                    <text x="32" y="55">DATABASE</text>
+                </g>
+            </svg>
+            `
+        },
+        recon: {
+            title: "OPERATION // RECONNAISSANCE & MAPPING",
+            svg: `
+            <svg viewBox="0 0 1000 320">
+                <line class="flow-line" x1="180" y1="160" x2="430" y2="90" />
+                <line class="flow-line" x1="180" y1="160" x2="430" y2="230" />
+                <line class="flow-line" x1="560" y1="90" x2="780" y2="160" />
+                <line class="flow-line" x1="560" y1="230" x2="780" y2="160" />
+
+                <g class="diagram-node" onclick="showDetail('Target Scope', 'Initial domain or IP range specified in engagement rules. Defines boundaries for testing.')" transform="translate(80, 110)">
+                    <rect width="100" height="100" rx="50" />
+                    <text x="25" y="55">TARGET</text>
+                </g>
+
+                <g class="diagram-node" onclick="showDetail('DNS & Subdomain Discovery', 'Enumerates public records, subdomains, TXT records, and MX servers using passive OSINT and active brute-forcing.')" transform="translate(430, 50)">
+                    <rect width="130" height="80" rx="6" />
+                    <text x="30" y="45">DNS RECON</text>
+                </g>
+
+                <g class="diagram-node" onclick="showDetail('Port & Service Audit', 'Identifies open ports, service versions, OS signatures, and exposed perimeter entry points.')" transform="translate(430, 190)">
+                    <rect width="130" height="80" rx="6" />
+                    <text x="25" y="45">PORT SCAN</text>
+                </g>
+
+                <g class="diagram-node" onclick="showDetail('Attack Surface Map', 'Aggregated topology model identifying priority entry vectors and potential misconfigurations.')" transform="translate(780, 110)">
+                    <rect width="100" height="100" rx="50" />
+                    <text x="22" y="55">SURFACE</text>
+                </g>
+            </svg>
+            `
+        },
+        burp: {
+            title: "OPERATION // INTERCEPTION & TRAFFIC ANALYSIS",
+            svg: `
+            <svg viewBox="0 0 1000 320">
+                <line class="flow-line" x1="170" y1="160" x2="400" y2="160" />
+                <line class="flow-line" x1="550" y1="160" x2="780" y2="160" />
+
+                <g class="diagram-node" onclick="showDetail('HTTP Client Request', 'Raw outbound browser traffic containing headers, session tokens, and request parameters prior to proxy interception.')" transform="translate(50, 110)">
+                    <rect width="120" height="100" rx="8" />
+                    <text x="35" y="55">CLIENT</text>
+                </g>
+
+                <g class="diagram-node" onclick="showDetail('Burp Proxy Interceptor', 'Middleman hub allowing manual parameter manipulation, payload fuzzing via Intruder, and request replay via Repeater.')" transform="translate(400, 90)">
+                    <rect width="150" height="140" rx="10" />
+                    <text x="25" y="75">BURP PROXY</text>
+                </g>
+
+                <g class="diagram-node" onclick="showDetail('Destination Server', 'Target web application receiving modified requests. Analyzed for status codes, execution timing, and error responses.')" transform="translate(780, 110)">
+                    <rect width="120" height="100" rx="8" />
+                    <text x="32" y="55">SERVER</text>
+                </g>
+            </svg>
+            `
+        },
+        pentest: {
+            title: "OPERATION // PENTEST ASSESSMENT LIFECYCLE",
+            svg: `
+            <svg viewBox="0 0 1000 320">
+                <line class="flow-line" x1="180" y1="160" x2="280" y2="160" />
+                <line class="flow-line" x1="400" y1="160" x2="500" y2="160" />
+                <line class="flow-line" x1="620" y1="160" x2="720" y2="160" />
+
+                <g class="diagram-node" onclick="showDetail('Phase 1: Scope & Planning', 'Defining rules of engagement, target boundaries, communication paths, and authorized testing windows.')" transform="translate(60, 110)">
+                    <rect width="120" height="100" rx="6" />
+                    <text x="25" y="55">1. SCOPE</text>
+                </g>
+
+                <g class="diagram-node" onclick="showDetail('Phase 2: Vulnerability Analysis', 'Automated scans paired with manual validation to discover security flaws and injection vectors.')" transform="translate(280, 110)">
+                    <rect width="120" height="100" rx="6" />
+                    <text x="20" y="55">2. ANALYZE</text>
+                </g>
+
+                <g class="diagram-node" onclick="showDetail('Phase 3: Controlled Exploitation', 'Safely demonstrating risk impact through proof-of-concept payload execution without interrupting production uptime.')" transform="translate(500, 110)">
+                    <rect width="120" height="100" rx="6" />
+                    <text x="20" y="55">3. EXPLOIT</text>
+                </g>
+
+                <g class="diagram-node" onclick="showDetail('Phase 4: Remediation Reporting', 'Documenting actionable remediation steps, root-cause analysis, and executive summaries to strengthen security defenses.')" transform="translate(720, 110)">
+                    <rect width="120" height="100" rx="6" />
+                    <text x="22" y="55">4. REPORT</text>
+                </g>
+            </svg>
+            `
+        }
+    };
+
+    function openOperation(key) {
+        const data = operationsData[key];
+        if (!data) return;
+        
+        document.getElementById('modalTitle').textContent = data.title;
+        document.getElementById('diagramContainer').innerHTML = data.svg;
+        document.getElementById('detailPanel').innerHTML = `<strong>SYSTEM DETAIL:</strong><p id="detailText">Click on any node in the architecture diagram above to inspect system telemetry, flow logic, and vulnerability attack vectors.</p>`;
+        document.getElementById('operationModal').classList.add('active');
     }
 
-});
-
-
-/* ================= MOUSE PARALLAX ================= */
-
-const commandCenter =
-    document.querySelector(".command-center");
-
-document.addEventListener("mousemove",function(e){
-
-    if(window.innerWidth < 800) return;
-
-    /*
-        Don't apply parallax while the operator
-        is in the wake animation.
-    */
-
-    if(commandCenter.classList.contains("operator-awake")){
-        return;
+    function closeModal() {
+        document.getElementById('operationModal').classList.remove('active');
     }
 
-    const x =
-        (e.clientX / window.innerWidth - .5) * 8;
-
-    const y =
-        (e.clientY / window.innerHeight - .5) * 8;
-
-    commandCenter.style.transform =
-        `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
-
-});
-
-
-document.addEventListener("mouseleave",function(){
-
-    if(commandCenter.classList.contains("operator-awake")){
-        return;
+    function showDetail(title, text) {
+        const detailPanel = document.getElementById('detailPanel');
+        detailPanel.innerHTML = `<strong>COMPONENT // ${title.toUpperCase()}</strong><p>${text}</p>`;
     }
 
-    commandCenter.style.transform =
-        "perspective(1000px) rotateY(0deg) rotateX(0deg)";
-
-});
-
-</script>
-
+    /* Close Modal on Outside Click */
+    window.addEventListener('click', (e) => {
+        const modal = document.getElementById('operationModal');
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    </script>
 </body>
 </html>
